@@ -10,20 +10,21 @@
         padding: 0;
         background-color: #f4f4f4;
       }
-
       #quiz-container {
         width: 60%;
         margin: 0 auto;
+        margin-top: 15px;
+        margin-bottom: 15px;
         padding: 20px;
         background-color: #fff;
         border-radius: 5px;
         box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
       }
-
-      h1 {
+      h1,
+      h2,
+      h3 {
         text-align: center;
       }
-
       button {
         display: block;
         width: 100px;
@@ -57,9 +58,10 @@
       const quizContainer = document.getElementById("question-container");
       const nextButton = document.getElementById("next-btn");
       const restartButton = document.getElementById("restart-btn");
-      // nextButton.style.display = "none";
 
       let currentQuestionIndex = 0;
+      let score = 0;
+      let initialTime;
 
       const questions = [
         {
@@ -91,17 +93,23 @@
           alert("Please select an answer before proceeding.");
           return;
         }
-        console.log(selectedAnswerElement); // remove
 
         const userAnswer = selectedAnswerElement.value;
         const currentQuestion = questions[currentQuestionIndex];
 
+        currentTime = new Date();
+        let elapsedTime = Math.abs(currentTime - initialTime) / 1000;
+        score += ((30 / elapsedTime) * 100) / 3;
+        // console.log("score is: ", score); // remove
+
         if (userAnswer === currentQuestion.correctAnswer) {
           // Handle the case when the user's answer is correct
-          console.log("Correct!");
+          // console.log("Correct!");
+          // diaplay correct screen
         } else {
           // Handle the case when the user's answer is incorrect
-          console.log("Incorrect!");
+          // console.log("Incorrect!");
+          // display incorrect screen
         }
 
         currentQuestionIndex++;
@@ -116,14 +124,17 @@
       });
 
       restartButton.addEventListener("click", () => {
-        // currentQuestionIndex = 0;
+        // reset score and reload page
+        score = 0;
         location.reload();
       });
 
       function showQuestion() {
+        initialTime = new Date(); // restart timer on next question
         const question = questions[currentQuestionIndex];
         quizContainer.innerHTML = `
-              <h2>${question.question}</h2>
+              <h2> Question #${currentQuestionIndex + 1}</h2>
+              <h3>${question.question}</h2>
               ${question.answers
                 .map(
                   (answer, index) => `
