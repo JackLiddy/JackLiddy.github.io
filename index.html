@@ -39,7 +39,9 @@
       #restart-btn {
         display: none;
       }
-
+      #next-question-btn {
+        display: none;
+      }
       button:disabled {
         background-color: #ddd;
         cursor: not-allowed;
@@ -51,13 +53,15 @@
     <div id="quiz-container">
       <h1>Quiz</h1>
       <div id="question-container"></div>
-      <button id="next-btn">Next</button>
+      <button id="next-btn">Submit</button>
       <button id="restart-btn">Restart</button>
+      <button id="next-question-btn">Next</button>
     </div>
     <script>
       const quizContainer = document.getElementById("question-container");
       const nextButton = document.getElementById("next-btn");
       const restartButton = document.getElementById("restart-btn");
+      const nextQuestionButton = document.getElementById("next-question-btn");
 
       let currentQuestionIndex = 0;
       let score = 0;
@@ -100,27 +104,15 @@
         currentTime = new Date();
         let elapsedTime = Math.abs(currentTime - initialTime) / 1000;
         score += ((30 / elapsedTime) * 100) / 3;
-        // console.log("score is: ", score); // remove
 
         if (userAnswer === currentQuestion.correctAnswer) {
-          // Handle the case when the user's answer is correct
           // console.log("Correct!");
-          // diaplay correct screen
+          showAnswer(true);
         } else {
-          // Handle the case when the user's answer is incorrect
+          showAnswer(false);
           // console.log("Incorrect!");
-          // display incorrect screen
         }
-
         currentQuestionIndex++;
-        if (currentQuestionIndex < questions.length) {
-          showQuestion();
-          // restartButton.style.display = "none"; //fires on every question - fix
-        } else {
-          quizContainer.innerHTML = "<h2>You finished the quiz!</h2>";
-          nextButton.style.display = "none";
-          restartButton.style.display = "block";
-        }
       });
 
       restartButton.addEventListener("click", () => {
@@ -129,7 +121,34 @@
         location.reload();
       });
 
+      nextQuestionButton.addEventListener("click", () => {
+        // display next question or results page
+        if (currentQuestionIndex < questions.length) {
+          showQuestion();
+        } else {
+          quizContainer.innerHTML = "<h2>You finished the quiz!</h2>";
+          nextButton.style.display = "none";
+          nextQuestionButton.style.display = "none";
+          restartButton.style.display = "block";
+        }
+      });
+
+      // show whether previous answer was correct or incorrect
+      function showAnswer(isCorrect) {
+        let roundedScore = Math.round(score * 100) / 100;
+        nextButton.style.display = "none";
+        nextQuestionButton.style.display = "block";
+        const message = isCorrect ? "Correct" : "Incorrect";
+        quizContainer.innerHTML = `
+              <h2>Question #${currentQuestionIndex + 1}</h2>
+              <h3>${message}</h2>
+              <h3>Current Score: ${roundedScore}</h2>
+          `;
+      }
+
       function showQuestion() {
+        nextButton.style.display = "block";
+        nextQuestionButton.style.display = "none";
         initialTime = new Date(); // restart timer on next question
         const question = questions[currentQuestionIndex];
         quizContainer.innerHTML = `
@@ -147,7 +166,6 @@
                 .join("")}
           `;
       }
-
       showQuestion();
     </script>
   </body>
