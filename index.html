@@ -46,6 +46,11 @@
         background-color: #ddd;
         cursor: not-allowed;
       }
+      .center-img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
     </style>
   </head>
 
@@ -139,9 +144,11 @@
         nextButton.style.display = "none";
         nextQuestionButton.style.display = "block";
         const message = isCorrect ? "Correct" : "Incorrect";
+        const image = isCorrect ? "correct" : "incorrect";
         quizContainer.innerHTML = `
               <h2>Question #${currentQuestionIndex + 1}</h2>
               <h3>${message}</h2>
+              <img src="${image}.png" class="center-img" width="150" height="150" />
               <h3>Current Score: ${roundedScore}</h2>
           `;
       }
