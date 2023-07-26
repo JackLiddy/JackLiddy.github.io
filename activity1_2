@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Quiz</title>
+    <meta charset="UTF-8" />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+      }
+      #quiz-container {
+        width: 60%;
+        margin: 0 auto;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+      }
+      h1,
+      h2,
+      h3 {
+        text-align: center;
+      }
+      button {
+        display: block;
+        width: 100px;
+        height: 30px;
+        margin: 20px auto;
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+      #restart-btn {
+        display: none;
+      }
+      #next-question-btn {
+        display: none;
+      }
+      button:disabled {
+        background-color: #ddd;
+        cursor: not-allowed;
+      }
+      .center-img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="quiz-container">
+      <h1>Activity 1.2</h1>
+      <div id="question-container"></div>
+      <button id="next-btn">Submit</button>
+      <button id="restart-btn">Restart</button>
+      <button id="next-question-btn">Next</button>
+    </div>
+    <script>
+      const quizContainer = document.getElementById("question-container");
+      const nextButton = document.getElementById("next-btn");
+      const restartButton = document.getElementById("restart-btn");
+      const nextQuestionButton = document.getElementById("next-question-btn");
+
+      let currentQuestionIndex = 0;
+      let score = 0;
+      let initialTime;
+
+      const questions = [
+        {
+          question:
+            "What could reduce seizures in children with medically resistant focal epilepsy receiving standard care?",
+          answers: ["Good", "Great"],
+          correctAnswer: "Good"
+        },
+        {
+          question:
+            "Does cognitive behavioral therapy reduce self-reported anxiety symptoms more effectively than selective serotonin-reuptake inhibitors in adolescents?",
+          answers: ["Good", "Great"],
+          correctAnswer: "Great"
+        },
+        {
+          question:
+            "In adult smokers, how does nicotine replacement therapy compare to behavioral therapy?",
+          answers: ["Good", "Great"],
+          correctAnswer: "Good"
+        }
+      ];
+
+      nextButton.addEventListener("click", () => {
+        const selectedAnswerElement = document.querySelector(
+          'input[name="answer"]:checked'
+        );
+        if (!selectedAnswerElement) {
+          // Handle the case when the user hasn't selected an answer
+          alert("Please select an answer before proceeding.");
+          return;
+        }
+
+        const userAnswer = selectedAnswerElement.value;
+        const currentQuestion = questions[currentQuestionIndex];
+
+        currentTime = new Date();
+        let elapsedTime = Math.abs(currentTime - initialTime) / 1000;
+        score += ((30 / elapsedTime) * 100) / 3;
+
+        if (userAnswer === currentQuestion.correctAnswer) {
+          // console.log("Correct!");
+          showAnswer(true);
+        } else {
+          showAnswer(false);
+          // console.log("Incorrect!");
+        }
+        currentQuestionIndex++;
+      });
+
+      restartButton.addEventListener("click", () => {
+        // reset score and reload page
+        score = 0;
+        location.reload();
+      });
+
+      nextQuestionButton.addEventListener("click", () => {
+        // display next question or results page
+        if (currentQuestionIndex < questions.length) {
+          showQuestion();
+        } else {
+          quizContainer.innerHTML = "<h2>You finished the quiz!</h2>";
+          nextButton.style.display = "none";
+          nextQuestionButton.style.display = "none";
+          restartButton.style.display = "block";
+        }
+      });
+
+      // show whether previous answer was correct or incorrect
+      function showAnswer(isCorrect) {
+        let roundedScore = Math.round(score * 100) / 100;
+        nextButton.style.display = "none";
+        nextQuestionButton.style.display = "block";
+        const message = isCorrect ? "Correct" : "Incorrect";
+        const image = isCorrect ? "correct" : "incorrect";
+        quizContainer.innerHTML = `
+              <h2>Question #${currentQuestionIndex + 1}</h2>
+              <h3>${message}</h2>
+              <img src="${image}.png" class="center-img" width="150" height="150" />
+              <h3>Current Score: ${roundedScore}</h2>
+          `;
+      }
+
+      function showQuestion() {
+        nextButton.style.display = "block";
+        nextQuestionButton.style.display = "none";
+        initialTime = new Date(); // restart timer on next question
+        const question = questions[currentQuestionIndex];
+        quizContainer.innerHTML = `
+              <h2> Question #${currentQuestionIndex + 1}</h2>
+              <h3>${question.question}</h2>
+              ${question.answers
+                .map(
+                  (answer, index) => `
+                  <div>
+                      <input type="radio" id="answer${index}" name="answer" value="${answer}">
+                      <label for="answer${index}">${answer}</label>
+                  </div>
+              `
+                )
+                .join("")}
+          `;
+      }
+      showQuestion();
+    </script>
+  </body>
+</html>
