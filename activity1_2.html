@@ -75,6 +75,9 @@
 
       let currentQuestionIndex = 0;
       let score = 0;
+      let baselineScore = 0;
+      let trainingScore = 0;
+      let finalScore = 0;
       let initialTime;
       let phase = 1; // phases are baseline test, training phase, final test
 
@@ -84,7 +87,13 @@
 
       */
 
-      options = ["Population", "Intervention", "Comparison", "Outcome", "None"];
+      options = [
+        "Population",
+        "Intervention",
+        "Comparison",
+        "Outcome",
+        "None of the above"
+      ];
 
       test_examples = [
         {
@@ -105,7 +114,7 @@
         {
           Question:
             "Does cognitive behavioral therapy reduce self-reported anxiety symptoms more effectively than selective serotonin-reuptake inhibitors in adolescents?",
-          Answer: "None"
+          Answer: "None of the above"
         },
         {
           Question:
@@ -175,7 +184,7 @@
         {
           Question:
             "Is 6 months of daily aerobic exercise more effective than stretching for improvement of motor symptoms in sedentary patients with Parkinson's disease aged 30-75 with moderate disease severity?",
-          Answer: "None",
+          Answer: "None of the above",
           Annotation:
             "Is 6 months of daily aerobic exercise (I) more effective than stretching (C) for improvement of motor symptoms (O) in sedentary patients with Parkinson's disease aged 30-75 with moderate disease severity(P)?",
           Feedbacks: [
@@ -212,16 +221,32 @@
 
         if (phase === 1 || phase === 3) {
           // display next question or results page
+          // If remaining questions during phase 1 or 3
           if (currentQuestionIndex < test_examples.length - 1) {
+            // Increase score if correct
+            if (userAnswer === currentQuestion.Answer) {
+              score += ((30 / elapsedTime) * 100) / 3;
+            }
+
             currentQuestionIndex++;
             showQuestion();
           } else if (phase === 1) {
+            // At end of phase 1
+
+            baselineScore = score;
+            console.log("baseline score: ", baselineScore);
+            score = 0;
+            // display end of phase one
             quizContainer.innerHTML = "<h2>You finished the quiz!</h2>";
             submitButton.style.display = "none";
             nextButton.style.display = "none";
             // restartButton.style.display = "block";
             nextPhaseButton.style.display = "block";
           } else if (phase === 3) {
+            // At end of phase 3
+            finalScore = score;
+            console.log("finalScore: ", finalScore);
+            score = 0;
             showFinalResults();
           }
         } else {
@@ -249,6 +274,9 @@
         if (currentQuestionIndex < test_examples.length) {
           showQuestion();
         } else {
+          trainingScore = score;
+          score = 0;
+          // Generate end screen for phase 2
           quizContainer.innerHTML = "<h2>You finished the quiz!</h2>";
           submitButton.style.display = "none";
           nextButton.style.display = "none";
@@ -306,7 +334,8 @@
 
         quizContainer.innerHTML = `
               <h2> Question #${currentQuestionIndex + 1}</h2>
-              <h3>${question.Question}</h2>
+              <h3>In the following research question, which component is missing?</h3>
+              <h3>${question.Question}</h3>
               ${options
                 .map(
                   (answer, index) => `
@@ -325,7 +354,20 @@
       function showTraining() {}
       function showFinalTest() {}
       function showFinalResults() {
-        quizContainer.innerHTML = "<h2>*Compare results here*:</h2>";
+        let changeInScore = finalScore - baselineScore;
+        // Round to hundredths place
+        changeInScore = Math.round(changeInScore * 100) / 100;
+
+        let scoreMessage =
+          changeInScore >= 0
+            ? `After training, your score improved by ${changeInScore} points!`
+            : `After training, your score decreased by ${-changeInScore} points`;
+
+        quizContainer.innerHTML = `
+              <h2>${scoreMessage}</h2>
+          `;
+
+        // quizContainer.innerHTML = "<h2>*Compare results here*:</h2>";
         submitButton.style.display = "none";
         nextButton.style.display = "none";
         restartButton.style.display = "block";
