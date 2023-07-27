@@ -130,6 +130,12 @@
         location.reload();
       });
 
+      /*
+      function introScreen(){
+        quizContainer.innerHTML = "<h2>For the following </h2>";
+      }
+*/
+
       function showQuestion() {
         // console.log("showing question");
         nextButton.style.display = "block";
@@ -138,7 +144,8 @@
         const question = questions[currentQuestionIndex];
         quizContainer.innerHTML = `
               <h2> Question #${currentQuestionIndex + 1}</h2>
-              <h3>${question.question}</h2>
+              <h3> Evaluate the quality of this research question: </h3>
+              <h3>${question.question}</h3>
               ${question.answers
                 .map(
                   (answer, index) => `
