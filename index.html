@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Quiz</title>
+    <title>Activity 1.1</title>
     <meta charset="UTF-8" />
     <style>
       body {
@@ -56,17 +56,15 @@
 
   <body>
     <div id="quiz-container">
-      <h1>Quiz</h1>
+      <h1>Activity 1.1</h1>
       <div id="question-container"></div>
-      <button id="next-btn">Submit</button>
+      <button id="next-btn">Next</button>
       <button id="restart-btn">Restart</button>
-      <button id="next-question-btn">Next</button>
     </div>
     <script>
       const quizContainer = document.getElementById("question-container");
       const nextButton = document.getElementById("next-btn");
       const restartButton = document.getElementById("restart-btn");
-      const nextQuestionButton = document.getElementById("next-question-btn");
 
       let currentQuestionIndex = 0;
       let score = 0;
@@ -109,15 +107,21 @@
         currentTime = new Date();
         let elapsedTime = Math.abs(currentTime - initialTime) / 1000;
         score += ((30 / elapsedTime) * 100) / 3;
-
-        if (userAnswer === currentQuestion.correctAnswer) {
-          // console.log("Correct!");
-          showAnswer(true);
-        } else {
-          showAnswer(false);
-          // console.log("Incorrect!");
-        }
+        // to handle future scoreing / answer tracking
+        // if (userAnswer === currentQuestion.correctAnswer) {
+        //   console.log("Correct!");
+        // } else {
+        //   console.log("Incorrect!");
+        // }
         currentQuestionIndex++;
+
+        if (currentQuestionIndex < questions.length) {
+          showQuestion();
+        } else {
+          quizContainer.innerHTML = "<h2>You finished the quiz!</h2>";
+          nextButton.style.display = "none";
+          restartButton.style.display = "block";
+        }
       });
 
       restartButton.addEventListener("click", () => {
@@ -126,36 +130,10 @@
         location.reload();
       });
 
-      nextQuestionButton.addEventListener("click", () => {
-        // display next question or results page
-        if (currentQuestionIndex < questions.length) {
-          showQuestion();
-        } else {
-          quizContainer.innerHTML = "<h2>You finished the quiz!</h2>";
-          nextButton.style.display = "none";
-          nextQuestionButton.style.display = "none";
-          restartButton.style.display = "block";
-        }
-      });
-
-      // show whether previous answer was correct or incorrect
-      function showAnswer(isCorrect) {
-        let roundedScore = Math.round(score * 100) / 100;
-        nextButton.style.display = "none";
-        nextQuestionButton.style.display = "block";
-        const message = isCorrect ? "Correct" : "Incorrect";
-        const image = isCorrect ? "correct" : "incorrect";
-        quizContainer.innerHTML = `
-              <h2>Question #${currentQuestionIndex + 1}</h2>
-              <h3>${message}</h2>
-              <img src="${image}.png" class="center-img" width="150" height="150" />
-              <h3>Current Score: ${roundedScore}</h2>
-          `;
-      }
-
       function showQuestion() {
+        console.log("showing question");
         nextButton.style.display = "block";
-        nextQuestionButton.style.display = "none";
+        // nextQuestionButton.style.display = "none";
         initialTime = new Date(); // restart timer on next question
         const question = questions[currentQuestionIndex];
         quizContainer.innerHTML = `
