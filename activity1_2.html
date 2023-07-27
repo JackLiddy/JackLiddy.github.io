@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Quiz</title>
+    <title>Activity 1.2</title>
     <meta charset="UTF-8" />
     <style>
       body {
@@ -42,6 +42,9 @@
       #next-question-btn {
         display: none;
       }
+      #next-phase-btn {
+        display: none;
+      }
       button:disabled {
         background-color: #ddd;
         cursor: not-allowed;
@@ -58,42 +61,134 @@
     <div id="quiz-container">
       <h1>Activity 1.2</h1>
       <div id="question-container"></div>
-      <button id="next-btn">Submit</button>
-      <button id="restart-btn">Restart</button>
+      <button id="submit-btn">Submit</button>
+      <button id="restart-btn">Restart Activity</button>
       <button id="next-question-btn">Next</button>
+      <button id="next-phase-btn">Next Phase</button>
     </div>
     <script>
       const quizContainer = document.getElementById("question-container");
-      const nextButton = document.getElementById("next-btn");
+      const submitButton = document.getElementById("submit-btn");
       const restartButton = document.getElementById("restart-btn");
-      const nextQuestionButton = document.getElementById("next-question-btn");
+      const nextButton = document.getElementById("next-question-btn");
+      const nextPhaseButton = document.getElementById("next-phase-btn");
 
       let currentQuestionIndex = 0;
       let score = 0;
       let initialTime;
+      let phase = 1; // phases are baseline test, training phase, final test
 
-      const questions = [
+      /*
+      if phase 1
+        dont show answers
+
+      */
+
+      options = ["Population", "Intervention", "Comparison", "Outcome", "None"];
+
+      test_examples = [
         {
-          question:
+          Question:
+            "Is apixaban superior to aspirin in preventing ischemic lesions?",
+          Answer: "Population"
+        },
+        {
+          Question:
+            "In post-operative pediatric patients, does physical therapy improve mobility recovery?",
+          Answer: "Comparison"
+        },
+        {
+          Question:
             "What could reduce seizures in children with medically resistant focal epilepsy receiving standard care?",
-          answers: ["Good", "Great"],
-          correctAnswer: "Good"
+          Answer: "Intervention"
         },
         {
-          question:
+          Question:
             "Does cognitive behavioral therapy reduce self-reported anxiety symptoms more effectively than selective serotonin-reuptake inhibitors in adolescents?",
-          answers: ["Good", "Great"],
-          correctAnswer: "Great"
+          Answer: "None"
         },
         {
-          question:
+          Question:
             "In adult smokers, how does nicotine replacement therapy compare to behavioral therapy?",
-          answers: ["Good", "Great"],
-          correctAnswer: "Good"
+          Answer: "Outcome"
         }
       ];
 
-      nextButton.addEventListener("click", () => {
+      train_examples = [
+        {
+          Question:
+            "Is 6 months of daily aerobic exercise more effective than stretching for improvement of motor symptoms?",
+          Answer: "Population",
+          Annotation:
+            "Is 6 months of daily aerobic exercise (I) more effective than stretching (C) for improvement of motor symptoms?",
+          Feedbacks: [
+            "Awesome! The population being studied is missing from this research question. This is the P in PICO or who is being studied. In this case, the demographics of the patients need to be defined, including their age, diagnoses, and disease severity.",
+            "Good guess, but the intervention is not missing from this research question. Exercise is the intervention. The population being studied is missing. This is the P in PICO or who is being studied. In this case, the demographics of the patients need to be defined, including their age, diagnoses, and disease severity.",
+            "Nice try, but the comparison is not missing from this research question. Stretching is the comparison. The population being studied is missing. This is the P in PICO or who is being studied. In this case, the demographics of the patients need to be defined, including their age, diagnoses, and disease severity.",
+            "Good try, but the outcome is not missing from this research question. The outcome measured in this study is the improvement of motor symptoms. The population being studied is missing. This is the P in PICO or who is being studied. In this case, the demographics of the patients need to be defined, including their age, diagnoses, and disease severity.",
+            "Nice guess, but there is something missing from this research question. The population being studied is missing. This is the P in PICO or who is being studied. In this case, the demographics of the patients need to be defined, including their age, diagnoses, and disease severity."
+          ]
+        },
+
+        {
+          Question:
+            "How effective is 6 months of daily aerobic exercise upon improvement of motor symptoms in sedentary patients with Parkinson's disease aged 30-75 with moderate disease severity?",
+          Answer: "Comparison",
+          Annotation:
+            "How effective is 6 months of daily aerobic exercise (I) upon improvement of motor symptoms (O) in sedentary patients with Parkinson's disease aged 30-75 with moderate disease severity (P)?",
+          Feedbacks: [
+            "Great guess, but the population is not missing from this research question. The population is sedentary patients with Parkinson's disease aged 30-75 with moderate disease severity. It is the comparison that is missing. This is the C in PICO or what the intervention will be compared to. In this case, the comparison will be an alternative treatment, drug, activity, standard care, or placebo.",
+            "Good guess, but the intervention is not missing from this research question. Exercise is the intervention. The comparison is missing. This is the C in PICO or what the intervention will be compared to. In this case, the comparison will be an alternative treatment, drug, activity, standard care, or placebo.",
+            "Excellent! The comparison is missing from this research question. This is the C in PICO or what the intervention will be compared to. In this case, the comparison will be an alternative treatment, drug, activity, standard care, or placebo.",
+            "Good try, but the outcome is not missing from this research question. The outcome measured in this study is the improvement of motor symptoms. The comparison is missing. This is the C in PICO or what the intervention will be compared to. In this case, the comparison will be an alternative treatment, drug, activity, standard care, or placebo.",
+            "Nice guess, but there is something missing from this research question. The comparison is missing. This is the C in PICO or what the intervention will be compared to. In this case, the comparison will be an alternative treatment, drug, activity, standard care, or placebo."
+          ]
+        },
+        {
+          Question:
+            "What could improve the motor symptoms in sedentary patients with Parkinson's disease aged 30-75 with moderate disease severity better than stretching?",
+          Answer: "Intervention",
+          Annotation:
+            "What could improve the motor symptoms (O) in sedentary patients with Parkinson's disease aged 30-75 with moderate disease severity (P) better than stretching (C).",
+          Feedbacks: [
+            "Great guess, but the population is not missing from this research question. The population is sedentary patients with Parkinson's disease aged 30-75 with moderate disease severity. The intervention is missing. This is the I in PICO or what variable, activity, or treatment is being studied. In this case, the intervention is the treatment given to the Parkinson/'s patients.",
+            "Great job! The intervention is missing from this research question. This is the I in PICO or what variable, activity, or treatment is being studied. In this case, the intervention is the treatment given to the Parkinson/'s patients.",
+            "Nice try, but the comparison is not missing from this research question. The comparison is stretching. The intervention is missing. This is the I in PICO or what variable, activity, or treatment is being studied. In this case, the intervention is the treatment given to the Parkinson/'s patients.",
+            "Good try, but the outcome is not missing from this research question. The outcome measured in this study is the improvement of motor symptoms. The intervention is missing. This is the I in PICO or what variable, activity, or treatment is being studied. In this case, the intervention is the treatment given to the Parkinson/'s patients..",
+            "Nice guess, but there is something missing from this research question. The intervention is missing. This is the I in PICO or what variable, activity, or treatment is being studied. In this case, the intervention is the treatment given to the Parkinson/'s patients."
+          ]
+        },
+        {
+          Question:
+            "Is 6 months of daily aerobic exercise more effective than stretching in sedentary patients with Parkinson's disease aged 30-75 with moderate disease severity?",
+          Answer: "Outcome",
+          Annotation:
+            "Is 6 months of daily aerobic exercise (I) more effective than stretching (C) in sedentary patients with Parkinson's disease aged 30-75 with moderate disease severity (P)?",
+          Feedbacks: [
+            "Great guess, but the population is not missing from this research question. The population is sedentary patients with Parkinson's disease aged 30-75 with moderate disease severity. The outcome is missing. This is the O in PICO or what the study aims to measure. In this case, the outcome is a specific patient measurement relating to their disease or their health that the intervention aims to change.",
+            "Good guess, but the intervention is not missing from this research question. Exercise is the intervention. The outcome is missing. This is the O in PICO or what the study aims to measure. In this case, the outcome is a specific patient measurement relating to their disease or their health that the intervention aims to change.",
+            "Nice try, but the comparison is not missing from this research question. The comparison is stretching. The outcome is missing. This is the O in PICO or what the study aims to measure. In this case, the outcome is a specific patient measurement relating to their disease or their health that the intervention aims to change.",
+            "Nice work! The outcome is missing from this research question. This is the O in PICO or what the study aims to measure. In this case, the outcome is a specific patient measurement relating to their disease or their health that the intervention aims to change.",
+            "Nice guess, but there is something missing from this research question. The outcome is missing from this research question. This is the O in PICO or what the study aims to measure. In this case, the outcome is a specific patient measurement relating to their disease or their health that the intervention aims to change."
+          ]
+        },
+        {
+          Question:
+            "Is 6 months of daily aerobic exercise more effective than stretching for improvement of motor symptoms in sedentary patients with Parkinson's disease aged 30-75 with moderate disease severity?",
+          Answer: "None",
+          Annotation:
+            "Is 6 months of daily aerobic exercise (I) more effective than stretching (C) for improvement of motor symptoms (O) in sedentary patients with Parkinson's disease aged 30-75 with moderate disease severity(P)?",
+          Feedbacks: [
+            "Great guess, but the population is not missing from this research question. The population is sedentary patients with Parkinson's disease aged 30-75 with moderate disease severity. This research question contains the population, intervention, comparison, and outcome! According to the PICO framework, no essential information is missing.",
+            "Good guess, but the intervention is not missing from this research question. Exercise is the intervention. This research question contains the population, intervention, comparison, and outcome! According to the PICO framework, no essential information is missing.",
+            "Nice try, but the comparison is not missing from this research question. The comparison is stretching. This research question contains the population, intervention, comparison, and outcome! According to the PICO framework, no essential information is missing.",
+            "Good try, but the outcome is not missing from this research question. The outcome measured in this study is the improvement of motor symptoms. This research question contains the population, intervention, comparison, and outcome! According to the PICO framework, no essential information is missing.",
+            "Perfect! Yes, this research question contains the population, intervention, comparison, and outcome! According to the PICO framework, no essential information is missing."
+          ]
+        }
+      ];
+
+      submitButton.addEventListener("click", () => {
         const selectedAnswerElement = document.querySelector(
           'input[name="answer"]:checked'
         );
@@ -102,22 +197,44 @@
           alert("Please select an answer before proceeding.");
           return;
         }
-
+        // console.log(selectedAnswerElement);
         const userAnswer = selectedAnswerElement.value;
-        const currentQuestion = questions[currentQuestionIndex];
+        const answerId = selectedAnswerElement.id;
+        const answerIndex = parseInt(answerId.charAt(answerId.length - 1));
+        // console.log("index: ", answerIndex);
+        const currentQuestion =
+          phase === 2
+            ? train_examples[currentQuestionIndex]
+            : test_examples[currentQuestionIndex];
 
-        currentTime = new Date();
+        let currentTime = new Date();
         let elapsedTime = Math.abs(currentTime - initialTime) / 1000;
-        score += ((30 / elapsedTime) * 100) / 3;
 
-        if (userAnswer === currentQuestion.correctAnswer) {
-          // console.log("Correct!");
-          showAnswer(true);
+        if (phase === 1 || phase === 3) {
+          // display next question or results page
+          if (currentQuestionIndex < test_examples.length - 1) {
+            currentQuestionIndex++;
+            showQuestion();
+          } else if (phase === 1) {
+            quizContainer.innerHTML = "<h2>You finished the quiz!</h2>";
+            submitButton.style.display = "none";
+            nextButton.style.display = "none";
+            // restartButton.style.display = "block";
+            nextPhaseButton.style.display = "block";
+          } else if (phase === 3) {
+            showFinalResults();
+          }
         } else {
-          showAnswer(false);
-          // console.log("Incorrect!");
+          if (userAnswer === currentQuestion.Answer) {
+            // console.log("Correct!");
+            score += ((30 / elapsedTime) * 100) / 3;
+            showAnswer(true, answerIndex);
+          } else {
+            // console.log("Incorrect!");
+            showAnswer(false, answerIndex);
+          }
+          currentQuestionIndex++;
         }
-        currentQuestionIndex++;
       });
 
       restartButton.addEventListener("click", () => {
@@ -126,42 +243,71 @@
         location.reload();
       });
 
-      nextQuestionButton.addEventListener("click", () => {
+      // only used during phase 2 - directs user from results screen to next question
+      nextButton.addEventListener("click", () => {
         // display next question or results page
-        if (currentQuestionIndex < questions.length) {
+        if (currentQuestionIndex < test_examples.length) {
           showQuestion();
         } else {
           quizContainer.innerHTML = "<h2>You finished the quiz!</h2>";
+          submitButton.style.display = "none";
           nextButton.style.display = "none";
-          nextQuestionButton.style.display = "none";
-          restartButton.style.display = "block";
+          // restartButton.style.display = "block";
+          nextPhaseButton.style.display = "block";
         }
       });
 
+      nextPhaseButton.addEventListener("click", () => {
+        // TODO: Add logic to submit score to database
+
+        // Proceed to next phase, reset state
+        if (phase < 3) {
+          phase++;
+          currentQuestionIndex = 0;
+          restartButton.style.display = "none";
+          nextPhaseButton.style.display = "none";
+          showQuestion();
+        } else {
+        }
+
+        // location.reload();
+      });
+
       // show whether previous answer was correct or incorrect
-      function showAnswer(isCorrect) {
+      function showAnswer(isCorrect, feedbackIndex) {
         let roundedScore = Math.round(score * 100) / 100;
-        nextButton.style.display = "none";
-        nextQuestionButton.style.display = "block";
-        const message = isCorrect ? "Correct" : "Incorrect";
+        submitButton.style.display = "none";
+        nextButton.style.display = "block";
+        const message = isCorrect ? "Correct" : "Incorrect"; //perhaps remove
         const image = isCorrect ? "correct" : "incorrect";
+        // answerIndex = ;
+        // const feedbackMessage = train_examples[currentQuestion].Feedbacks[answerIndex];
+        const feedbackMessage =
+          train_examples[currentQuestionIndex].Feedbacks[feedbackIndex];
+        // console.log("feedback: ", feedbackMessage);
+        // str.charAt(str.length-1)
+
         quizContainer.innerHTML = `
               <h2>Question #${currentQuestionIndex + 1}</h2>
-              <h3>${message}</h2>
-              <img src="${image}.png" class="center-img" width="150" height="150" />
+              <h3>${feedbackMessage}</h2>
               <h3>Current Score: ${roundedScore}</h2>
           `;
       }
 
       function showQuestion() {
-        nextButton.style.display = "block";
-        nextQuestionButton.style.display = "none";
+        submitButton.style.display = "block";
+        nextButton.style.display = "none";
         initialTime = new Date(); // restart timer on next question
-        const question = questions[currentQuestionIndex];
+        // const question = test_examples[currentQuestionIndex];
+        const question =
+          phase === 2
+            ? train_examples[currentQuestionIndex]
+            : test_examples[currentQuestionIndex];
+
         quizContainer.innerHTML = `
               <h2> Question #${currentQuestionIndex + 1}</h2>
-              <h3>${question.question}</h2>
-              ${question.answers
+              <h3>${question.Question}</h2>
+              ${options
                 .map(
                   (answer, index) => `
                   <div>
@@ -174,6 +320,17 @@
           `;
       }
       showQuestion();
+
+      function showBaseline() {}
+      function showTraining() {}
+      function showFinalTest() {}
+      function showFinalResults() {
+        quizContainer.innerHTML = "<h2>*Compare results here*:</h2>";
+        submitButton.style.display = "none";
+        nextButton.style.display = "none";
+        restartButton.style.display = "block";
+        nextPhaseButton.style.display = "none";
+      }
     </script>
   </body>
 </html>
