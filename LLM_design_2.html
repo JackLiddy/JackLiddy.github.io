@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>LLM App Design</title>
+        <!-- <link rel="stylesheet" href="./style.css" /> -->
+    </head>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            body {
+                color: #383838;
+                background-color: #383838;
+            }
+        }
+        @media (prefers-color-scheme: light) {
+            body {
+                color: #ffffff;
+                background-color: #ffffff;
+            }
+        }
+    </style>
+    <body>
+        <!-- partial:index.partial.html -->
+
+        <div class="header">
+            <!--Content before waves-->
+            <div class="inner-header flex">
+                <div class="shadow">
+                    <h1>Community For Rigor</h1>
+                </div>
+                <!-- display png -->
+                <img
+                    src="raven-head-smallest.png"
+                    alt="llm-logo"
+                    border="0"
+                    width="250"
+                    height="224"
+                />
+                <h2>LLM Activity Prototype V1</h2>
+            </div>
+
+            <!-- <textarea name="response" class="block" id="response" placeholder="Your answer goes here!"></textarea> -->
+            <textarea
+                name="response"
+                id="response"
+                placeholder="Your answer goes here!"
+            ></textarea>
+            <button id="submit-question">Submit</button>
+
+            <article id="result"></article>
+
+            <!--Waves Container-->
+            <div>
+                <svg
+                    class="waves"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink"
+                    viewBox="0 24 150 28"
+                    preserveAspectRatio="none"
+                    shape-rendering="auto"
+                >
+                    <defs>
+                        <path
+                            id="gentle-wave"
+                            d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z"
+                        />
+                    </defs>
+                    <g class="parallax">
+                        <use
+                            xlink:href="#gentle-wave"
+                            x="48"
+                            y="0"
+                            fill="rgba(146,64,203,0.7"
+                        />
+                        <use
+                            xlink:href="#gentle-wave"
+                            x="48"
+                            y="3"
+                            fill="rgba(146,64,203,0.5)"
+                        />
+                        <use
+                            xlink:href="#gentle-wave"
+                            x="48"
+                            y="5"
+                            fill="rgba(146,64,203,0.3)"
+                        />
+                        <use
+                            xlink:href="#gentle-wave"
+                            x="48"
+                            y="7"
+                            fill="#9240cb"
+                        />
+                    </g>
+                </svg>
+            </div>
+            <!--Waves end-->
+        </div>
+        <!--Header ends-->
+
+        <div class="content flex">
+            <p>
+                Welcome to the LLM Activity Prototype V1. This is a prototype
+                for the LLM App.
+            </p>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+        <script>
+            var notyf = new Notyf();
+            const endpoint = "https://llm4edu.experiments.kordinglab.com";
+
+            const submitButton = document.getElementById("submit-question");
+            // Attach the event listener:
+            submitButton.addEventListener("click", () => {
+                const headers = {
+                    "Content-Type": "application/json",
+                };
+
+                const payload = {
+                    assignment_id: "196400b5-b6c3-407f-a65d-8b0e375198c2",
+                    submission_string: document
+                        .getElementById("response")
+                        .value.trim(),
+                };
+                if (payload.submission_string.length < 1) {
+                    notyf.error("Please enter a response.");
+                    return;
+                }
+
+                // Disable the button:
+                submitButton.disabled = true;
+                notyf.success("Please wait while we process your response...");
+
+                fetch(`${endpoint}/feedback`, {
+                    method: "POST",
+                    headers: headers,
+                    body: JSON.stringify(payload),
+                })
+                    .then((response) => response.json())
+                    .then((responseList) => {
+                        const response =
+                            responseList.length > 0
+                                ? responseList[0]
+                                : undefined;
+                        if (!response) {
+                            notyf.error(
+                                "There was an error processing your answer."
+                            );
+                            submitButton.disabled = false;
+                            return;
+                        }
+                        const { feedback_string } = response;
+
+                        document.querySelector("#result").innerHTML = `
+                            <h3>Feedback</h3>
+                            <p>${feedback_string.replaceAll(
+                                "\n- ",
+                                "<br /> &mdash; "
+                            )}</p>
+                        `;
+                        document.querySelector("#result").style.display =
+                            "block";
+                        submitButton.disabled = false;
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                        notyf.error(
+                            "There was an error creating the question."
+                        );
+                        submitButton.disabled = false;
+                    });
+            });
+
+            if (window.matchMedia) {
+                const darkModeMediaQuery = window.matchMedia(
+                    "(prefers-color-scheme: dark)"
+                );
+                darkModeMediaQuery.addListener((e) => {
+                    const darkModeOn = e.matches;
+                    if (darkModeOn) {
+                        console.log("Dark mode is enabled");
+                    } else {
+                        console.log(
+                            "Dark mode is not enabled / or light mode is enabled"
+                        );
+                    }
+                });
+            } else {
+                console.log("Match media false?");
+            }
+
+            // console.log("Hello world");
+        </script>
+    </body>
+</html>
