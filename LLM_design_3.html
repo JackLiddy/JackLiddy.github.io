@@ -18,7 +18,7 @@
         <!-- Custom styles -->
         <style>
             body {
-                padding: 2% 2%;
+                /* padding: 5% 10%; */
                 font-family: Arial, sans-serif;
                 background-color: rgba(234, 234, 234, 0); /* Transparent */
                 /* background-color: #383838; Collab dark mode background */
@@ -81,29 +81,25 @@
                 }
             }
 
-            /* @brand-primary: #7c53a2;
-         */
             .btn-primary {
                 background-color: #7c53a2 !important;
                 border-color: #7c53a2 !important;
             }
-            /* .btn-primary:focus, .btn-primary:hover, .btn-primary:active, .btn-primary:active:focus, .btn-primary:active:hover {
-            background-color: #7c53a2;
-            border-color: #7c53a2;
-         } */
 
             .align-button {
                 text-align: center;
             }
 
+            .align-loader {
+                text-align: center;
+                padding: 10px;
+            }
+
             @media (prefers-color-scheme: dark) {
                 body {
-                    /* color: #ffffff; */
-                    /* background-color: #383838; */
                 }
             }
             @media (prefers-color-scheme: light) {
-                /* color: #000000; */
                 .styled-container {
                     border-radius: 25px; /* Rounded edges */
                     background: linear-gradient(
@@ -133,11 +129,35 @@
                     color: #000000;
                 }
             }
+
+            #loading {
+                display: none;
+                width: 50px;
+                height: 50px;
+                border: 3px solid rgba(255, 255, 255, 0.3);
+                border-radius: 50%;
+                border-top-color: #fff;
+                animation: spin 1s ease-in-out infinite;
+                -webkit-animation: spin 1s ease-in-out infinite;
+            }
+
+            @keyframes spin {
+                to {
+                    -webkit-transform: rotate(360deg);
+                }
+            }
+            @-webkit-keyframes spin {
+                to {
+                    -webkit-transform: rotate(360deg);
+                }
+            }
         </style>
     </head>
 
     <body>
         <div class="container styled-container">
+            <!-- <span class="loader"></span> -->
+
             <h1 class="title">AI Feedback Prototype</h1>
             <h3 class="subtitle">
                 Now it is your turn! Write a research question of your own with
@@ -155,17 +175,17 @@
                 ></textarea>
             </div>
 
-            <!-- <div id="sampleTextContainer"></div> -->
-
             <div class="align-button">
                 <button class="btn btn-primary" id="submit-question">
                     Get Feedback
                 </button>
             </div>
 
-            <!-- <button class="btn btn-primary " id="submit-question">Get Feedback</button> -->
+            <div class="align-loader">
+                <div id="loading"></div>
+            </div>
+            <br />
 
-            <!-- <div id="sampleTextContainer"></div> -->
             <article id="result-area"></article>
 
             <a href="https://c4r.io/" target="_blank">
@@ -208,6 +228,11 @@
 
                 // Disable the button:
                 submitButton.disabled = true;
+
+                // Activate the spinner
+                const spinner = document.getElementById("loading");
+                spinner.style.display = "inline-block";
+
                 notyf.success("Please wait while we process your response...");
 
                 fetch(`${endpoint}/feedback`, {
@@ -240,6 +265,7 @@
                         document.querySelector("#result-area").style.display =
                             "block";
                         submitButton.disabled = false;
+                        spinner.style.display = "none";
                     })
                     .catch((error) => {
                         console.error("Error:", error);
@@ -247,8 +273,13 @@
                             "There was an error creating the question."
                         );
                         submitButton.disabled = false;
+                        // Disable Spinner
+                        spinner.style.display = "none";
                     });
             });
+
+            const queryString = window.location.search;
+            console.log("query string: ", queryString);
         </script>
     </body>
 </html>
