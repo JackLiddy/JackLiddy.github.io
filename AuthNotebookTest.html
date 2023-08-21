@@ -1,48 +1,85 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8" />
-    <title>Cookie Test</title>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Cookie Test</title>
+
         <script>
-        function setCookie(name, value, days) {
-            var expires = "";
-            if (days) {
-                var date = new Date();
-                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-                expires = "; expires=" + date.toUTCString();
+            function setCookie(name, value, days) {
+                var expires = "";
+                if (days) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+                    expires = "; expires=" + date.toUTCString();
+                }
+                document.cookie =
+                    name + "=" + (value || "") + expires + "; path=/";
             }
-            document.cookie = name + "=" + (value || "") + expires + "; path=/";
-        }
 
-        function checkCookie() {
-    var name = 'username=';
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for (var i = 0; i < ca.length; i++) {
-        var c = ca[i];
-        while (c.charAt(0) === ' ') {
-            c = c.substring(1);
-        }
-        if (c.indexOf(name) === 0) {
-            var value = c.substring(name.length, c.length);
-            alert('Cookie "username" exists with value: ' + value);
-            return;
-        }
-    }
-    alert('Cookie "username" does not exist!');
-}
+            function checkCookie() {
+                var name = "username=";
+                var decodedCookie = decodeURIComponent(document.cookie);
+                var ca = decodedCookie.split(";");
+                for (var i = 0; i < ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) === " ") {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) === 0) {
+                        var value = c.substring(name.length, c.length);
+                        alert('Cookie "username" exists with value: ' + value);
+                        return;
+                    }
+                }
+                alert('Cookie "username" does not exist!');
+            }
 
-    </script>
-</head>
-<body>
+            function setLocalToken() {
+                localStorage.setItem("token", "my_token_value");
+            }
+            function removeLocalToken() {
+                localStorage.removeItem("token");
+            }
+            function checkLocalToken() {
+                var token = localStorage.getItem("token");
+                if (token) {
+                    alert("Local token exists with value: " + token);
+                } else {
+                    alert("Local token does not exist!");
+                }
+            }
 
+            function setSessionToken(token) {
+                sessionStorage.setItem("token", token);
+            }
+            function removeSessionToken() {
+                sessionStorage.removeItem("token");
+            }
+            function checkSessionToken() {
+                var token = sessionStorage.getItem("token");
+                if (token) {
+                    alert("Session token exists with value: " + token);
+                } else {
+                    alert("Session token does not exist!");
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <button onclick="setCookie('username', 'John Doe', 30)">
+            Set Cookie
+        </button>
+        <button onclick="checkCookie()">Check Cookie</button>
+        <button onclick="setCookie('username', '', 0)">Delete Cookie</button>
 
+        <button onclick="setLocalToken();">Set Local Token</button>
+        <button onclick="checkLocalToken();">Check Local Token</button>
+        <button onclick="removeLocalToken();">Remove Local Token</button>
 
-    <button onclick="setCookie('username', 'John Doe', 30)">Set Cookie</button>
-    <button onclick="checkCookie()">Check Cookie</button>
-    <button onclick="setCookie('username', '', 0)">Delete Cookie</button>
-
-
-    
-</body>
+        <button onclick="setSessionToken('your-session-token-value');">
+            Set Session Token
+        </button>
+        <button onclick="removeSessionToken();">Remove Session Token</button>
+        <button onclick="checkSessionToken();">Check Session Token</button>
+    </body>
 </html>
