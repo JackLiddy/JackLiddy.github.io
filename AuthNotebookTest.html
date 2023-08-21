@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Cookie Test</title>
+        <script>
+        function setCookie(name, value, days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + (value || "") + expires + "; path=/";
+        }
+
+        function checkCookie() {
+            var name = 'username=';
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for (var i = 0; i < ca.length; i++) {
+                var c = ca[i];
+                while (c.charAt(0) === ' ') {
+                    c = c.substring(1);
+                }
+                if (c.indexOf(name) === 0) {
+                    alert('Cookie "username" exists!');
+                    return;
+                }
+            }
+            alert('Cookie "username" does not exist!');
+        }
+    </script>
+</head>
+<body>
+
+
+
+    <button onclick="setCookie('username', 'John Doe', 30)">Set Cookie</button>
+    <button onclick="checkCookie()">Check Cookie</button>
+    <button onclick="setCookie('username', '', 0)">Delete Cookie</button>
+
+
+    
+</body>
+</html>
