@@ -56,6 +56,9 @@
             .game-container {
                 display: none;
             }
+            .end-container {
+                display: none;
+            }
             .start-button {
                 text-align: center;
                 font-size: 22px;
@@ -72,6 +75,11 @@
             .start-button:hover {
                 background-color: #e0e0e0;
             }
+            .center-img {
+        /* display: block;
+        margin-left: auto;
+        margin-right: auto; */
+      }
         </style>
     </head>
     <body>
@@ -79,9 +87,11 @@
             
             <div class="intro-container">
                 <div class="intro-text">
-                    <h1> Intro </h1>
-                    <h3> Welcome to the C4R Quiz Game! Activity Intro Text Here... </h3>
-                    <div class="start-button" onclick="startGame()" id="start">START</div>
+                    <h1> Intro...(Temp) </h1>
+                    <!-- <h3> Welcome to the C4R Quiz Game! </h3> -->
+                    <h3> You will be presented with a list of research questions and asked to identify which component is missing. Later into the lesson, you can repeat the quiz and see how your score improved.  </h2>
+                    <h4> Click the button below to start the quiz! </h3>
+                        <div class="start-button" onclick="startGame()" id="start">START</div>
                 </div>
                 <img src="raven-head-smallest2.png" width="50" height="50" />
             </div>
@@ -100,6 +110,13 @@
                 <a href="https://c4r.io/" target="_blank">
                     <img src="raven-head-smallest2.png" width="50" height="50" />
                 </a>
+            </div>
+            <div class="end-container">
+                <div class="intro-text">
+                    <h2> Quiz finished! </h2>
+                    <img src="correct.png" class="center-img" width="150" height="150" />
+                    <div class="answer" onclick="restartGame()">Restart</div>
+                </div>
             </div>
         </div>
         <script>
@@ -193,7 +210,11 @@
                 if (currentQuestionIndex < questions.length) {
                     displayQuestion(currentQuestionIndex);
                 } else {
-                    alert("Quiz finished!");
+                    // alert("Quiz finished!");
+                    document.getElementsByClassName("game-container")[0].style.display =
+                    "none";
+                    document.getElementsByClassName("end-container")[0].style.display = 
+                    "block";
                 }
             }
 
@@ -203,6 +224,11 @@
                 document.getElementsByClassName("game-container")[0].style.display =
                     "block";
             }
+
+            function restartGame() {
+                location.reload();
+            }
+
         </script>
     </body>
 </html>
