@@ -1,139 +1,173 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Game</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .app-container {
-            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
-        border-style: solid;
-        border-width: medium;
-        border-color: #854abe;
-        border-radius: 30px;
-        padding: 10px;
-        }
-        .question-container {
-        margin: 0px 50px 0px 50px;
-        }
-        .instructions {
-            text-align: center;
-            font-size: 28px;
-            margin-bottom: 20px;
-        }        
-        .question {
-            text-align: center;
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-        .answer {
-            text-align: center;
-            font-size: 22px;
-            background-color: #f0f0f0;
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin: 5px;
-            cursor: pointer;
-            margin-left: 25vw;
-    margin-right: 25vw;
-    margin-top: 10px;
-    border-radius: 50px;
-        }
-        .answer:hover {
-            background-color: #e0e0e0;
-        }
-
-    </style>
-</head>
-<body>
-    <div class="app-container">
-        <div class="instructions">In the following research question, which component is missing?</div>
-        <div class="question-container">
-            <div class="question" id="question"></div>
-            <div class="answer" onclick="checkAnswer(0)" id="answer0"></div>
-            <div class="answer" onclick="checkAnswer(1)" id="answer1"></div>
-            <div class="answer" onclick="checkAnswer(2)" id="answer2"></div>
-            <div class="answer" onclick="checkAnswer(3)" id="answer3"></div>
-            <div class="answer" onclick="checkAnswer(4)" id="answer4"></div>
-
-          </div>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Quiz Game</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+            }
+            .app-container {
+                box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+                border-style: solid;
+                border-width: medium;
+                border-color: #854abe;
+                border-radius: 30px;
+                padding: 10px;
+                background-color: white;
+            }
+            .question-container {
+                margin: 0px 50px 0px 50px;
+            }
+            .instructions {
+                text-align: center;
+                font-size: 28px;
+                margin-bottom: 20px;
+            }
+            .question {
+                text-align: center;
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+            .answer {
+                text-align: center;
+                font-size: 22px;
+                background-color: #f0f0f0;
+                border: 1px solid #ccc;
+                padding: 10px;
+                margin: 5px;
+                cursor: pointer;
+                margin-left: 25vw;
+                margin-right: 25vw;
+                margin-top: 10px;
+                border-radius: 50px;
+            }
+            .answer:hover {
+                background-color: #e0e0e0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="app-container">
+            <div class="instructions">
+                In the following research question, which component is missing?
+            </div>
+            <div class="question-container">
+                <div class="question" id="question"></div>
+                <div class="answer" onclick="checkAnswer(0)" id="answer0"></div>
+                <div class="answer" onclick="checkAnswer(1)" id="answer1"></div>
+                <div class="answer" onclick="checkAnswer(2)" id="answer2"></div>
+                <div class="answer" onclick="checkAnswer(3)" id="answer3"></div>
+                <div class="answer" onclick="checkAnswer(4)" id="answer4"></div>
+            </div>
             <a href="https://c4r.io/" target="_blank">
-                <img
-                    src=raven-head-smallest2.png
-                    width="50"
-                    height="50"
-                />
-            </a>   
-    </div>
-    <script>
-        var questions = [];
-        var currentQuestionIndex = 0;
+                <img src="raven-head-smallest2.png" width="50" height="50" />
+            </a>
+        </div>
+        <script>
+            var questions = [];
+            var currentQuestionIndex = 0;
 
-questions = [
-    {
-        "question": "Is apixaban superior to aspirin in preventing ischemic lesions?",
-        "answers": ["Population", "Intervention", "Comparison", "Outcome", "None of the above"],
-        "correctAnswer": 1
-    },
-    {
-        "question": "In post-operative pediatric patients, does physical therapy improve mobility recovery?",
-        "answers": ["Population", "Intervention", "Comparison", "Outcome", "None of the above"],
-        "correctAnswer": 2
-    },
-    {
-        "question": "What could reduce seizures in children with medically resistant focal epilepsy receiving standard care?",
-        "answers": ["Population", "Intervention", "Comparison", "Outcome", "None of the above"],
-        "correctAnswer": 2
-    },
-    {
-        "question": "Does cognitive behavioral therapy reduce self-reported anxiety symptoms more effectively than selective serotonin-reuptake inhibitors in adolescents?",
-        "answers": ["Population", "Intervention", "Comparison", "Outcome", "None of the above"],
-        "correctAnswer": 2
-    },
-    {
-        "question": "In adult smokers, how does nicotine replacement therapy compare to behavioral therapy?",
-        "answers": ["Population", "Intervention", "Comparison", "Outcome", "None of the above"],
-        "correctAnswer": 2
-    },
-    // Add more questions here
-];
+            questions = [
+                {
+                    question:
+                        "Is apixaban superior to aspirin in preventing ischemic lesions?",
+                    answers: [
+                        "Population",
+                        "Intervention",
+                        "Comparison",
+                        "Outcome",
+                        "None of the above",
+                    ],
+                    correctAnswer: 1,
+                },
+                {
+                    question:
+                        "In post-operative pediatric patients, does physical therapy improve mobility recovery?",
+                    answers: [
+                        "Population",
+                        "Intervention",
+                        "Comparison",
+                        "Outcome",
+                        "None of the above",
+                    ],
+                    correctAnswer: 2,
+                },
+                {
+                    question:
+                        "What could reduce seizures in children with medically resistant focal epilepsy receiving standard care?",
+                    answers: [
+                        "Population",
+                        "Intervention",
+                        "Comparison",
+                        "Outcome",
+                        "None of the above",
+                    ],
+                    correctAnswer: 2,
+                },
+                {
+                    question:
+                        "Does cognitive behavioral therapy reduce self-reported anxiety symptoms more effectively than selective serotonin-reuptake inhibitors in adolescents?",
+                    answers: [
+                        "Population",
+                        "Intervention",
+                        "Comparison",
+                        "Outcome",
+                        "None of the above",
+                    ],
+                    correctAnswer: 2,
+                },
+                {
+                    question:
+                        "In adult smokers, how does nicotine replacement therapy compare to behavioral therapy?",
+                    answers: [
+                        "Population",
+                        "Intervention",
+                        "Comparison",
+                        "Outcome",
+                        "None of the above",
+                    ],
+                    correctAnswer: 2,
+                },
+                // Add more questions here
+            ];
 
-        // Fetch the questions from the JSON file
-        // fetch('questions.json')
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         questions = data;
-        //         displayQuestion(currentQuestionIndex);
-        //     });
-        displayQuestion(currentQuestionIndex);
+            // Fetch the questions from the JSON file
+            // fetch('questions.json')
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         questions = data;
+            //         displayQuestion(currentQuestionIndex);
+            //     });
+            displayQuestion(currentQuestionIndex);
 
-        function displayQuestion(index) {
-            var question = questions[index];
-            document.getElementById('question').innerText = question.question;
-            for (var i = 0; i < 5; i++) {
-                document.getElementById('answer' + i).innerText = question.answers[i];
+            function displayQuestion(index) {
+                var question = questions[index];
+                document.getElementById("question").innerText =
+                    question.question;
+                for (var i = 0; i < 5; i++) {
+                    document.getElementById("answer" + i).innerText =
+                        question.answers[i];
+                }
             }
-        }
 
-        function checkAnswer(selectedAnswer) {
-            // Check correct answer
-            // var correctAnswer = questions[currentQuestionIndex].correctAnswer;
-            // if (selectedAnswer === correctAnswer) {
-            //     alert('Correct!');
-            // } else {
-            //     alert('Wrong! Try again.');
-            // }
-            // Go to next question - exit if no more questions
-            currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
-                displayQuestion(currentQuestionIndex);
-            } else {
-                alert('Quiz finished!');
+            function checkAnswer(selectedAnswer) {
+                // Check correct answer
+                // var correctAnswer = questions[currentQuestionIndex].correctAnswer;
+                // if (selectedAnswer === correctAnswer) {
+                //     alert('Correct!');
+                // } else {
+                //     alert('Wrong! Try again.');
+                // }
+                // Go to next question - exit if no more questions
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questions.length) {
+                    displayQuestion(currentQuestionIndex);
+                } else {
+                    alert("Quiz finished!");
+                }
             }
-        }
-    </script>
-</body>
+        </script>
+    </body>
 </html>
