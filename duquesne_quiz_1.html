@@ -120,6 +120,7 @@
             </div>
         </div>
         <script>
+            let score = 777;
             var questions = [];
             var currentQuestionIndex = 0;
 
@@ -215,6 +216,9 @@
                     "none";
                     document.getElementsByClassName("end-container")[0].style.display = 
                     "block";
+
+                    // set score value to browsers session storage
+                    sessionStorage.setItem("score1", score);
                 }
             }
 
