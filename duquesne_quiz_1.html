@@ -45,7 +45,8 @@
                 border-radius: 50px;
             }
             .answer:hover {
-                background-color: #e0e0e0;
+                background-color: #854abe;
+                color: #fff;
             }
             .intro-container {
 
@@ -78,6 +79,7 @@
             }
             .start-button:hover {
                 background-color: #e0e0e0;
+                color: #000000;
             }
             .center-img {
         /* display: block;
@@ -118,6 +120,7 @@
             <div class="end-container">
                 <div class="intro-text">
                     <h2> Quiz finished! </h2>
+                    <h3> Your score is: <span id="currentScore"></span> </h3>
                     <img src="correct.png" class="center-img" width="150" height="150" />
                     <div class="start-button" onclick="restartGame()">Restart</div>
                 </div>
@@ -216,7 +219,9 @@
                 if (currentQuestionIndex < questions.length) {
                     displayQuestion(currentQuestionIndex);
                 } else {
-                    // alert("Quiz finished!");
+                    // Set current score element on results page
+                    document.getElementById("currentScore").innerText = score;
+                    // Switch to results page
                     document.getElementsByClassName("game-container")[0].style.display =
                     "none";
                     document.getElementsByClassName("end-container")[0].style.display = 
