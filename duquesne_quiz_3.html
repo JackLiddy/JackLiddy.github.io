@@ -44,7 +44,8 @@
                 border-radius: 50px;
             }
             .answer:hover {
-                background-color: #e0e0e0;
+                background-color: #854abe;
+                color: #fff;
             }
             .intro-container {
                 
@@ -63,7 +64,9 @@
             .start-button {
                 text-align: center;
                 font-size: 22px;
-                background-color: #f0f0f0;
+                background-color: #854abe;
+                color: #fff;
+                /* background-color: #f0f0f0; */
                 border: 1px solid #ccc;
                 padding: 10px;
                 margin: 5px;
@@ -75,6 +78,8 @@
             }
             .start-button:hover {
                 background-color: #e0e0e0;
+                color: #000000;
+
             }
             .center-img {
         /* display: block;
@@ -217,16 +222,7 @@
                     displayQuestion(currentQuestionIndex);
                 } else {
                     // End of quiz 
-
-                    // Fetch previous quiz data
-                    // get code form check session token
-
-
-                    // Set results page data
-                    //modify html to display results
-
-
-                    // Set score id and previous score id
+                    // Set current score element on results page
                     document.getElementById("currentScore").innerText = score;
 
                     // Fetch previous score from session storage
@@ -238,15 +234,11 @@
                         document.getElementById("previousScoreMsg").innerText = "There was an error retrieving your previous score.";
                     }
 
-
+                    // Display results page
                     document.getElementsByClassName("game-container")[0].style.display =
                     "none";
                     document.getElementsByClassName("end-container")[0].style.display = 
                     "block";
-                    // checkSessionToken();
-
-                    // fetch score from previous attempt
-
                 }
             }
 
@@ -260,17 +252,6 @@
             function restartGame() {
                 location.reload();
             }
-
-            // function checkSessionToken() {
-            //     var token = sessionStorage.getItem("score1");
-            //     if (token) {
-            //         // alert("Session token exists with value: " + token);
-            //         alert("Score from previous attempt: " + score + ". Score from second attempt: " + token);
-            //     } else {
-            //         // handle the case where the token from previous session doesnt exist
-            //         alert("Session token does not exist!");
-            //     }
-            // }
 
         </script>
     </body>
