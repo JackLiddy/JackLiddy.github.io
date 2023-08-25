@@ -121,7 +121,7 @@
             </div>
         </div>
         <script>
-            let score = 777;
+            let score = 0;
             var questions = [];
             var currentQuestionIndex = 0;
 
@@ -136,7 +136,7 @@
                         "Outcome",
                         "None of the above",
                     ],
-                    correctAnswer: 1,
+                    correctAnswer: 0,
                 },
                 {
                     question:
@@ -160,7 +160,7 @@
                         "Outcome",
                         "None of the above",
                     ],
-                    correctAnswer: 2,
+                    correctAnswer: 1,
                 },
                 {
                     question:
@@ -172,7 +172,7 @@
                         "Outcome",
                         "None of the above",
                     ],
-                    correctAnswer: 2,
+                    correctAnswer: 4,
                 },
                 {
                     question:
@@ -184,7 +184,7 @@
                         "Outcome",
                         "None of the above",
                     ],
-                    correctAnswer: 2,
+                    correctAnswer: 3,
                 },
             ];
             displayQuestion(currentQuestionIndex);
@@ -201,12 +201,12 @@
 
             function checkAnswer(selectedAnswer) {
                 // Check correct answer
-                // var correctAnswer = questions[currentQuestionIndex].correctAnswer;
-                // if (selectedAnswer === correctAnswer) {
-                //     alert('Correct!');
+                var correctAnswer = questions[currentQuestionIndex].correctAnswer;
+                if (selectedAnswer === correctAnswer) {
+                    score += 25;
                 // } else {
                 //     alert('Wrong! Try again.');
-                // }
+                }
                 // Go to next question - exit if no more questions
                 currentQuestionIndex++;
                 if (currentQuestionIndex < questions.length) {
@@ -238,6 +238,7 @@
                 var token = sessionStorage.getItem("score1");
                 if (token) {
                     alert("Session token exists with value: " + token);
+                    alert("Score from previous attempt: " + score + ". Score from second attempt: " + token);
                 } else {
                     alert("Session token does not exist!");
                 }
