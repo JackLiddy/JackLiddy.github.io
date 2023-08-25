@@ -34,7 +34,8 @@
                 text-align: center;
                 font-size: 22px;
                 background-color: #f0f0f0;
-                border: 1px solid #ccc;
+                /* border: 1px solid #ccc; */
+                border: 1px solid #854abe;
                 padding: 10px;
                 margin: 5px;
                 cursor: pointer;
@@ -47,6 +48,7 @@
                 background-color: #e0e0e0;
             }
             .intro-container {
+
             }
             .intro-text {
                 text-align: center;
@@ -62,7 +64,9 @@
             .start-button {
                 text-align: center;
                 font-size: 22px;
-                background-color: #f0f0f0;
+                background-color: #854abe;
+                color: #fff;
+                /* background-color: #f0f0f0; */
                 border: 1px solid #ccc;
                 padding: 10px;
                 margin: 5px;
@@ -87,10 +91,10 @@
             
             <div class="intro-container">
                 <div class="intro-text">
-                    <h1> Intro...(Temp) </h1>
+                    <h1> (Temp Intro) </h1>
                     <!-- <h3> Welcome to the C4R Quiz Game! </h3> -->
                     <h3> You will be presented with a list of research questions and asked to identify which component is missing. Later into the lesson, you can repeat the quiz and see how your score improved.  </h2>
-                    <h4> Click the button below to start the quiz! </h3>
+                    <h4> Click the button below to start the quiz! </h4>
                         <div class="start-button" onclick="startGame()" id="start">Start</div>
                 </div>
                 <img src="raven-head-smallest2.png" width="50" height="50" />
@@ -120,7 +124,7 @@
             </div>
         </div>
         <script>
-            let score = 777;
+            let score = 0;
             var questions = [];
             var currentQuestionIndex = 0;
 
@@ -135,7 +139,7 @@
                         "Outcome",
                         "None of the above",
                     ],
-                    correctAnswer: 1,
+                    correctAnswer: 0,
                 },
                 {
                     question:
@@ -159,7 +163,7 @@
                         "Outcome",
                         "None of the above",
                     ],
-                    correctAnswer: 2,
+                    correctAnswer: 1,
                 },
                 {
                     question:
@@ -171,7 +175,7 @@
                         "Outcome",
                         "None of the above",
                     ],
-                    correctAnswer: 2,
+                    correctAnswer: 4,
                 },
                 {
                     question:
@@ -183,7 +187,7 @@
                         "Outcome",
                         "None of the above",
                     ],
-                    correctAnswer: 2,
+                    correctAnswer: 3,
                 },
             ];
             displayQuestion(currentQuestionIndex);
@@ -200,12 +204,13 @@
 
             function checkAnswer(selectedAnswer) {
                 // Check correct answer
-                // var correctAnswer = questions[currentQuestionIndex].correctAnswer;
-                // if (selectedAnswer === correctAnswer) {
-                //     alert('Correct!');
+                var correctAnswer = questions[currentQuestionIndex].correctAnswer;
+                if (selectedAnswer === correctAnswer) {
+                    // alert('Correct!');
+                    score += 25;
                 // } else {
                 //     alert('Wrong! Try again.');
-                // }
+                }
                 // Go to next question - exit if no more questions
                 currentQuestionIndex++;
                 if (currentQuestionIndex < questions.length) {
