@@ -115,6 +115,10 @@
             <div class="end-container">
                 <div class="intro-text">
                     <h2> Quiz finished! </h2>
+
+                    <h3> Your score is: <span id="currentScore"></span> </h3>
+                    <h3 id="previousScoreMsg"> Your previous score is: <span id="previousScore"></span> </h3>
+                    <!-- <h4> Click the button below to restart the quiz! </h4> -->
                     <img src="correct.png" class="center-img" width="150" height="150" />
                     <div class="start-button" onclick="restartGame()">Restart</div>
                 </div>
@@ -212,12 +216,35 @@
                 if (currentQuestionIndex < questions.length) {
                     displayQuestion(currentQuestionIndex);
                 } else {
-                    // alert("Quiz finished!");
+                    // End of quiz 
+
+                    // Fetch previous quiz data
+                    // get code form check session token
+
+
+                    // Set results page data
+                    //modify html to display results
+
+
+                    // Set score id and previous score id
+                    document.getElementById("currentScore").innerText = score;
+
+                    // Fetch previous score from session storage
+                    var previousScoreToken = sessionStorage.getItem("score1");
+                    if (previousScoreToken) {
+                        document.getElementById("previousScore").innerText = previousScoreToken;
+                    }
+                    else {
+                        document.getElementById("previousScoreMsg").innerText = "There was an error retrieving your previous score.";
+                    }
+
+
                     document.getElementsByClassName("game-container")[0].style.display =
                     "none";
                     document.getElementsByClassName("end-container")[0].style.display = 
                     "block";
-                    checkSessionToken();
+                    // checkSessionToken();
+
                     // fetch score from previous attempt
 
                 }
@@ -234,15 +261,16 @@
                 location.reload();
             }
 
-            function checkSessionToken() {
-                var token = sessionStorage.getItem("score1");
-                if (token) {
-                    // alert("Session token exists with value: " + token);
-                    alert("Score from previous attempt: " + score + ". Score from second attempt: " + token);
-                } else {
-                    alert("Session token does not exist!");
-                }
-            }
+            // function checkSessionToken() {
+            //     var token = sessionStorage.getItem("score1");
+            //     if (token) {
+            //         // alert("Session token exists with value: " + token);
+            //         alert("Score from previous attempt: " + score + ". Score from second attempt: " + token);
+            //     } else {
+            //         // handle the case where the token from previous session doesnt exist
+            //         alert("Session token does not exist!");
+            //     }
+            // }
 
         </script>
     </body>
