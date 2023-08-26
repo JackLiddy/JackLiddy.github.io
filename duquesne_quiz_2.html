@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Quiz Game</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+            }
+            .app-container {
+                box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+                border-style: solid;
+                border-width: medium;
+                border-color: #854abe;
+                border-radius: 30px;
+                padding: 10px;
+                background-color: white;
+            }
+            .question-container {
+                margin: 0px 50px 0px 50px;
+            }
+            .instructions {
+                text-align: center;
+                font-size: 28px;
+                margin-bottom: 20px;
+            }
+            .question {
+                text-align: center;
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+            .answer {
+                text-align: center;
+                font-size: 22px;
+                background-color: #f0f0f0;
+                border: 1px solid #ccc;
+                padding: 10px;
+                margin: 5px;
+                cursor: pointer;
+                margin-left: 25vw;
+                margin-right: 25vw;
+                margin-top: 10px;
+                border-radius: 50px;
+            }
+            .answer:hover {
+                background-color: #854abe;
+                color: #fff;
+            }
+            .intro-container {
+                
+            }
+            .intro-text {
+                text-align: center;
+                font-size: 28px;
+                margin-bottom: 20px;
+            }
+            .game-container {
+                display: none;
+            }
+            .end-container {
+                display: none;
+            }
+            .start-button {
+                text-align: center;
+                font-size: 22px;
+                background-color: #854abe;
+                color: #fff;
+                /* background-color: #f0f0f0; */
+                border: 1px solid #ccc;
+                padding: 10px;
+                margin: 5px;
+                cursor: pointer;
+                margin-left: 35vw;
+                margin-right: 35vw;
+                margin-top: 10px;
+                border-radius: 50px;
+            }
+            .start-button:hover {
+                background-color: #e0e0e0;
+                color: #000000;
+
+            }
+            .center-img {
+        /* display: block;
+        margin-left: auto;
+        margin-right: auto; */
+      }
+        </style>
+    </head>
+    <body>
+        <div class="app-container">
+            
+            <div class="intro-container">
+                <div class="intro-text">
+                    <!-- <h1> Intro...(Temp) </h1> -->
+                    <!-- <h3> Welcome to the C4R Quiz Game! </h3> -->
+                    <h3> You will be presented with a list of research questions and asked to identify which component is missing. Later into the lesson, you can repeat the quiz and see how your score improved.  </h2>
+                    <h4> Click the button below to start the quiz! </h3>
+                        <div class="start-button" onclick="startGame()" id="start">Start</div>
+                </div>
+            </div>
+            <div class="game-container">
+                <div class="instructions">
+                    In the following research question, which component is missing?
+                </div>
+                <div class="question-container">
+                    <div class="question" id="question"></div>
+                    <div class="answer" onclick="checkAnswer(0)" id="answer0"></div>
+                    <div class="answer" onclick="checkAnswer(1)" id="answer1"></div>
+                    <div class="answer" onclick="checkAnswer(2)" id="answer2"></div>
+                    <div class="answer" onclick="checkAnswer(3)" id="answer3"></div>
+                    <div class="answer" onclick="checkAnswer(4)" id="answer4"></div>
+                </div>
+            </div>
+            <div class="end-container">
+                <div class="intro-text">
+                    <h2> Quiz finished! </h2>
+
+                    <h3> Your score is: <span id="currentScore"></span> </h3>
+                    <h3 id="previousScoreMsg"> Your previous score is: <span id="previousScore"></span> </h3>
+                    <!-- <h4> Click the button below to restart the quiz! </h4> -->
+                    <img src="correct.png" class="center-img" width="150" height="150" />
+                    <div class="start-button" onclick="restartGame()">Restart</div>
+                </div>
+            </div>
+            <a href="https://c4r.io/" target="_blank">
+                <img src="raven-head-smallest2.png" width="50" height="50" />
+            </a>
+        </div>
+        <script>
+            let score = 0;
+            var questions = [];
+            var currentQuestionIndex = 0;
+
+            questions = [
+                {
+                    question:
+                        "Is apixaban superior to aspirin in preventing ischemic lesions?",
+                    answers: [
+                        "Population",
+                        "Intervention",
+                        "Comparison",
+                        "Outcome",
+                        "None of the above",
+                    ],
+                    correctAnswer: 0,
+                },
+                {
+                    question:
+                        "In post-operative pediatric patients, does physical therapy improve mobility recovery?",
+                    answers: [
+                        "Population",
+                        "Intervention",
+                        "Comparison",
+                        "Outcome",
+                        "None of the above",
+                    ],
+                    correctAnswer: 2,
+                },
+                {
+                    question:
+                        "What could reduce seizures in children with medically resistant focal epilepsy receiving standard care?",
+                    answers: [
+                        "Population",
+                        "Intervention",
+                        "Comparison",
+                        "Outcome",
+                        "None of the above",
+                    ],
+                    correctAnswer: 1,
+                },
+                {
+                    question:
+                        "Does cognitive behavioral therapy reduce self-reported anxiety symptoms more effectively than selective serotonin-reuptake inhibitors in adolescents?",
+                    answers: [
+                        "Population",
+                        "Intervention",
+                        "Comparison",
+                        "Outcome",
+                        "None of the above",
+                    ],
+                    correctAnswer: 4,
+                },
+                {
+                    question:
+                        "In adult smokers, how does nicotine replacement therapy compare to behavioral therapy?",
+                    answers: [
+                        "Population",
+                        "Intervention",
+                        "Comparison",
+                        "Outcome",
+                        "None of the above",
+                    ],
+                    correctAnswer: 3,
+                },
+            ];
+            displayQuestion(currentQuestionIndex);
+
+            function displayQuestion(index) {
+                var question = questions[index];
+                document.getElementById("question").innerText =
+                    question.question;
+                for (var i = 0; i < 5; i++) {
+                    document.getElementById("answer" + i).innerText =
+                        question.answers[i];
+                }
+            }
+
+            function checkAnswer(selectedAnswer) {
+                // Check correct answer
+                var correctAnswer = questions[currentQuestionIndex].correctAnswer;
+                if (selectedAnswer === correctAnswer) {
+                    score += 25;
+                // } else {
+                //     alert('Wrong! Try again.');
+                }
+                // Go to next question - exit if no more questions
+                currentQuestionIndex++;
+                if (currentQuestionIndex < questions.length) {
+                    displayQuestion(currentQuestionIndex);
+                } else {
+                    // End of quiz 
+                    // Set current score element on results page
+                    document.getElementById("currentScore").innerText = score;
+
+                    // Fetch previous score from session storage
+                    var previousScoreToken = sessionStorage.getItem("score1");
+                    if (previousScoreToken) {
+                        document.getElementById("previousScore").innerText = previousScoreToken;
+                    }
+                    else {
+                        document.getElementById("previousScoreMsg").innerText = "There was an error retrieving your previous score.";
+                    }
+
+                    // Display results page
+                    document.getElementsByClassName("game-container")[0].style.display =
+                    "none";
+                    document.getElementsByClassName("end-container")[0].style.display = 
+                    "block";
+                }
+            }
+
+            function startGame() {
+                document.getElementsByClassName("intro-container")[0].style.display =
+                    "none";
+                document.getElementsByClassName("game-container")[0].style.display =
+                    "block";
+            }
+
+            function restartGame() {
+                location.reload();
+            }
+
+        </script>
+    </body>
+</html>
