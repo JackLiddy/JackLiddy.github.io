@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+   <meta charset="UTF-8">
+   <title>Navigation Bar With Scroll Every Section</title>
+ <!-- <link rel="stylesheet" href="style.css"> -->
+  <!-- Fontawesome CDN Link -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   </head>
+   <style>
+    /* Google Font CDN Link */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins',sans-serif;
+  scroll-behavior: smooth;
+}
+body{
+
+}
+nav{
+ position: fixed;
+ left: 0;
+ top: 0;
+ width: 100%;
+ height: 75px;
+ background: #2980b9;
+ box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+nav .navbar{
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ height: 100%;
+ max-width: 90%;
+ background: #2980b9;
+ margin: auto;
+}
+nav .navbar .logo a{
+  color: #fff;
+  font-size: 27px;
+  font-weight: 600;
+  text-decoration: none;
+}
+nav .navbar .menu{
+  display: flex;
+}
+.navbar .menu li{
+  list-style: none;
+  margin: 0 15px;
+}
+.navbar .menu li a{
+  color: #fff;
+  font-size: 17px;
+  font-weight: 500;
+  text-decoration: none;
+}
+section{
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  color: #96c7e8;
+  font-size: 70px;
+}
+#use-cases{
+  background: #fff;
+}
+#Case1{
+  background: #f2f2f2;
+}
+#Case2{
+  background: #e6e6e6;
+}
+#Case3{
+  background: #fff;
+}
+#Case4{
+  background: #f2f2f2;
+}
+/* #Feedback{
+  background: #e6e6e6;
+} */
+.button a{
+  position: fixed;
+  top: 80px;
+  left: 20px;
+  /* bottom: 20px; */
+  /* right: 20px; */
+  color: #fff;
+  background: #2980b9;
+  padding: 7px 12px;;
+  font-size: 18px;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.15);
+}
+.use-cases{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin: 100px 0;
+}
+    </style>
+
+
+<body>
+  <!-- <nav>
+    <div class="navbar">
+      <div class="logo"><a href="#">CodingLab</a></div>
+      <ul class="menu">
+        <li><a href="#Use-Cases">Use Cases</a></li>
+        <li><a href="#About">About</a></li>
+        <li><a href="#Category">Category</a></li>
+        <li><a href="#Contact">Contact</a></li>
+        <li><a href="#Feedback">Feedback</a></li>
+      </ul>
+    </div>
+  </nav> -->
+  <section id="Use-Cases">
+    <!-- Text instruction to select a use case and grid of buttons linking to the lower sections -->
+    <div class="use-cases">
+      <h1>Welcome</h1>
+      <p>Click on a use case to see the relevant sections below.</p>
+      <div class="use-cases-grid">
+        <div class="use-case">
+          <a href="#Case1">Case 1</a>
+        </div>
+        <div class="use-case">
+          <a href="#Case2">Case 2</a>
+        </div>
+        <div class="use-case">
+          <a href="#Case3">Case 3</a>
+        </div>
+        <div class="use-case">
+          <a href="#Case4">Case 4</a>
+        </div>
+        <div class="use-case">
+          <a href="#Case4">View All?</a>
+        </div>
+      </div>
+  </section>
+
+  <!-- <section id="Use-Cases">Use Cases</section> -->
+  <!-- <section id="Home">Home Section</section> -->
+  <section id="Case1">Case 1 </section>
+  <section id="Case2">Case 2</section>
+  <section id="Case3">Case 3</section>
+  <section id="Case4">Case 4</section>
+  <div class="button">
+    <a href="#Use-Cases"> Back To Top <i class="fas fa-arrow-up"></i></a> // fade in when scrolled past 
+  </div>
+</body>
+</html>
