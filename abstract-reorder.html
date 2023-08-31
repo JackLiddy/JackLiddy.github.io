@@ -124,10 +124,14 @@
                         the emotional content of natural scenes.
                     </div>
                     <div draggable="true" class="box" id="box12">
-                        Neurons in area MT of macaque monkeys respond to a moving visual stimulus (whether a target moves left or right).
+                        Neurons in area MT of macaque monkeys respond to a
+                        moving visual stimulus (whether a target moves left or
+                        right).
                     </div>
                     <div draggable="true" class="box" id="box13">
-                        It remains open whether this neuronal activity provides the input for behavioral choices in a visual discrimination task.
+                        It remains open whether this neuronal activity provides
+                        the input for behavioral choices in a visual
+                        discrimination task.
                     </div>
                 </div>
 
@@ -188,6 +192,9 @@
 
                     e.dataTransfer.effectAllowed = "move";
                     e.dataTransfer.setData("text/html", this.innerHTML);
+
+                    // Set the border color of the selected box back to purple
+                    this.style.border = "2px solid #854abe";
                 }
 
                 function handleDragOver(e) {
@@ -292,26 +299,67 @@
                 // console.log(output1, output2, output3, output4, output5);
                 console.log(result);
 
+                // if (
+                //     result ===
+                //     "Recent studies have suggested that neurons in area MT of macaque monkeys may provide the signal if a stimulus is moving to the left or the right. Here we study the relationship of the activity of these neurons and behavioral choice to test the causal role of these activities. We found that trial-to-trial variation in activity was correlated with the choices the monkey made: when a directionally selective neuron in area MT fires more, the monkey is more likely to make a decision in favor of the preferred direction of the cell. The magnitude of the relationship was modest, on average, but was highly significant across a sample of 299 cells from four monkeys. These observations are consistent with the idea that neuronal signals in MT are used by the monkey to determine the direction of stimulus motion."
+                // ) {
+                //     alert("Correct!");
+                // } else {
+                //     alert("Incorrect!");
+                // }
+
                 if (
-                    result ===
-                    "Recent studies have suggested that neurons in area MT of macaque monkeys may provide the signal if a stimulus is moving to the left or the right. Here we study the relationship of the activity of these neurons and behavioral choice to test the causal role of these activities. We found that trial-to-trial variation in activity was correlated with the choices the monkey made: when a directionally selective neuron in area MT fires more, the monkey is more likely to make a decision in favor of the preferred direction of the cell. The magnitude of the relationship was modest, on average, but was highly significant across a sample of 299 cells from four monkeys. These observations are consistent with the idea that neuronal signals in MT are used by the monkey to determine the direction of stimulus motion."
+                    output1 ===
+                        "Recent studies have suggested that neurons in area MT of macaque monkeys may provide the signal if a stimulus is moving to the left or the right." &&
+                    output2 ===
+                        "Here we study the relationship of the activity of these neurons and behavioral choice to test the causal role of these activities." &&
+                    output3 ===
+                        "We found that trial-to-trial variation in activity was correlated with the choices the monkey made: when a directionally selective neuron in area MT fires more, the monkey is more likely to make a decision in favor of the preferred direction of the cell." &&
+                    output4 ===
+                        "The magnitude of the relationship was modest, on average, but was highly significant across a sample of 299 cells from four monkeys." &&
+                    output5 ===
+                        "These observations are consistent with the idea that neuronal signals in MT are used by the monkey to determine the direction of stimulus motion."
                 ) {
                     alert("Correct!");
                 } else {
                     alert("Incorrect!");
                 }
 
-                // if(
-                //     output1 === "Recent studies have suggested that neurons in area MT of macaque monkeys may provide the signal if a stimulus is moving to the left or the right."
-                //     && output2 === "Here we study the relationship of the activity of these neurons and behavioral choice to test the causal role of these activities."
-                //     && output3 === "We found that trial-to-trial variation in activity was correlated with the choices the monkey made: when a directionally selective neuron in area MT fires more, the monkey is more likely to make a decision in favor of the preferred direction of the cell."
-                //     && output4 === "The magnitude of the relationship was modest, on average, but was highly significant across a sample of 299 cells from four monkeys."
-                //     && output5 === "These observations are consistent with the idea that neuronal signals in MT are used by the monkey to determine the direction of stimulus motion."
-                // ){
-                //     alert("Correct!");
-                // } else {
-                //     alert("Incorrect!");
-                // }
+                var correctAnswers = [
+                    "Recent studies have suggested that neurons in area MT of macaque monkeys may provide the signal if a stimulus is moving to the left or the right.",
+                    "Here we study the relationship of the activity of these neurons and behavioral choice to test the causal role of these activities.",
+                    "We found that trial-to-trial variation in activity was correlated with the choices the monkey made: when a directionally selective neuron in area MT fires more, the monkey is more likely to make a decision in favor of the preferred direction of the cell.",
+                    "The magnitude of the relationship was modest, on average, but was highly significant across a sample of 299 cells from four monkeys.",
+                    "These observations are consistent with the idea that neuronal signals in MT are used by the monkey to determine the direction of stimulus motion.",
+                ];
+
+                /* 
+                Compare each output box to the correct answer
+                    Any boxes with a correct answer should be colored green.
+                    Any boxes with an incorrect answer should be colored red.
+                    If all output boxes are correct, alert "Correct!"
+                    If any output box is incorrect, alert "Incorrect!"
+                */
+                var outputBoxes = [
+                    document.getElementById("outputBox1"),
+                    document.getElementById("outputBox2"),
+                    document.getElementById("outputBox3"),
+                    document.getElementById("outputBox4"),
+                    document.getElementById("outputBox5"),
+                ];
+                // compare each box
+                // use hex colors
+                for (var i = 0; i < outputBoxes.length; i++) {
+                    // if the box is correct
+                    if (outputBoxes[i].innerText === correctAnswers[i]) {
+                        // color the box green
+                        // outputBoxes[i].style.backgroundColor = "#adddad";
+                        outputBoxes[i].style.border = "2px solid green";
+                    } else {
+                        // color the box red
+                        outputBoxes[i].style.border = "2px solid red";
+                    }
+                }
             }
         </script>
     </body>
