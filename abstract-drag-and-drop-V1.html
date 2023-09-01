@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Drag and Drop Example</title>
+        <style>
+            body {
+                font-family: "Benton Sans", "Helvetica Neue", helvetica, arial,
+                    sans-serif;
+                margin: 0.5em;
+            }
+
+            .dropbox-container {
+                /* display: grid; */
+                /* grid-template-columns: repeat(5, 1fr); */
+                /* gap: 10px; */
+                /* align-content: space-evenly; */
+                /* display: flex;
+                flex-direction: column;
+                gap: 10px; */
+                background: #e1e1e1;
+                border: 2px solid #854abe;
+                padding: 10px;
+                height: 75vh;
+            }
+
+            .box {
+                /* border: 3px solid #666; */
+                border: 2px solid #854abe;
+                background-color: #ddd;
+                border-radius: 0.5em;
+                padding: 10px;
+                cursor: move;
+                /* max-width: 250px; */
+                width: 320px;
+                /* min-height: 85px; */
+                min-height: fit-content;
+                /* min-height: 30px; */
+                /* min-block-size: 40px; */
+                /* min-height: 65px; */
+
+                /* height: fit-content; */
+                /* set text font size */
+                /* font-size: 16px; */
+                /* padding-left: 8px;
+                padding-right: 8px;
+                padding-top: 8px;
+                padding-bottom: 8px; */
+                font-size: 13px;
+            }
+
+            .box.over {
+                border: 3px dotted #666;
+            }
+
+            [draggable] {
+                user-select: none;
+            }
+
+            .app-panels {
+                display: flex;
+                /* justify-content: space-between; */
+                justify-content: space-evenly;
+                /* column-gap: 10px; */
+                /* padding: 10px; */
+            }
+            #left-panel {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                /* height: 700px; */
+                /* width: 430px; */
+                overflow-y: scroll;
+                /* overflow-x: hidden; */
+                /* width: 20hw; */
+                /* height: 80vh; */
+                align-items: center;
+            }
+            #right-panel {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+            }
+            #right-panel .box {
+                min-height: 50px;
+            }
+            .text-output {
+                width: 250px;
+                /* text-align: center; */
+                border-color: rgb(106, 0, 255);
+                border-radius: 5px;
+            }
+            .instructions {
+                /* width: 250px; */
+                text-align: center;
+                /* border-color: rgb(106, 0, 255); */
+                /* border-radius: 5px; */
+                /* display: ; */
+                margin: 5px;
+            }
+            .center-panel {
+                text-align: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                /* justify-content: flex-start; */
+                justify-content: space-between;
+                margin: 5px;
+                /* width: 200px; */
+                min-width: fit-content;
+            }
+            .citation {
+                font-size: 0.6em;
+                bottom: 8px;
+                /* margin-bottom: 10px; */
+                margin: 8px;
+                /* width: min-content; */
+            }
+            .instructions-panel {
+                display: flex;
+                flex-direction: row;
+                max-height: min-content;
+                justify-content: space-evenly;
+                /* margin-top: 10px;
+                margin-bottom: 10px; */
+            }
+            .instructions-panel h2 {
+                font-size: 1.3em;
+            }
+            /* style the text in the instructions class */
+            .instructions p {
+                font-size: 16px;
+                margin: 3px;
+                /* margin-bottom: 10px; */
+            }
+        </style>
+    </head>
+    <body>
+        <body>
+            <div class="instructions-panel">
+                <h2>Drag and Drop Activity</h2>
+                <div class="instructions">
+                    <!-- <h2>Abstract Matching</h2> -->
+                    <p>
+                        We've seperated an abstract based on the 4W and placed
+                        it random order.
+                    </p>
+                    <p>
+                        Drag and drop the boxes on the left into the boxes on
+                        the right to recreate the abstract in it's original
+                        order.
+                    </p>
+                    <p>
+                        Note that there are additional text samples that wont be
+                        used so choose wisely.
+                    </p>
+
+                    <!-- <p>
+                        Click the "Check Answer" button to check if your
+                        answer is correct.
+                    </p> -->
+
+                    <br />
+                </div>
+                <!-- <p class="citation">
+                    Adapted from “A relationship between behavioral choice and the visual responses of neurons in macaque MT” by K.H. BRITTEN, W.T. NEWSOME, M.N. SHADLEN, S. CELEBRINI, AND J.A. MOVSHON
+                    https://doi.org/10.1017/S095252380000715X
+                </p> -->
+            </div>
+            <div class="app-panels">
+                <div class="dropbox-container" id="left-panel">
+                    <div draggable="true" class="box" id="box1">
+                        These observations are consistent with the idea that
+                        neuronal signals in MT are used by the monkey to
+                        determine the direction of stimulus motion.
+                    </div>
+                    <div draggable="true" class="box" id="box2">
+                        We find strong evidence for the underlying theory,
+                        regardless of the magnitude or cross-correlation
+                        spectrum of the stimuli.
+                    </div>
+                    <div draggable="true" class="box" id="box3">
+                        The magnitude of the relationship was modest, on
+                        average, but was highly significant across a sample of
+                        299 cells from four monkeys.
+                    </div>
+                    <div draggable="true" class="box" id="box4">
+                        Here we study the relationship of the activity of these
+                        neurons and behavioral choice to test the causal role of
+                        these activities.
+                    </div>
+                    <div draggable="true" class="box" id="box5">
+                        We find that neuronal activity in area MT is generally
+                        high and even higher for stimuli that move from the left
+                        to the right, casting doubt in the universal isotropy
+                        assumption of monkey visual perception.
+                    </div>
+                    <div draggable="true" class="box" id="box6">
+                        Recent studies have suggested that neurons in area MT of
+                        macaque monkeys may provide the signal if a stimulus is
+                        moving to the left or the right.
+                    </div>
+                    <div draggable="true" class="box" id="box7">
+                        Here we run a set of experiments where neuronal activity
+                        is measured and also behavior is quantified.
+                    </div>
+                    <div draggable="true" class="box" id="box8">
+                        We found that trial-to-trial variation in activity was
+                        correlated with the choices the monkey made: when a
+                        directionally selective neuron in area MT fires more,
+                        the monkey is more likely to make a decision in favor of
+                        the preferred direction of the cell.
+                    </div>
+                    <div draggable="true" class="box" id="box9">
+                        A rich body of research have suggested that neuronal
+                        activity in area MT may be the driver of movement
+                        perception.
+                    </div>
+                    <div draggable="true" class="box" id="box11">
+                        Our observations are in line with a long literature on
+                        the emotional content of natural scenes.
+                    </div>
+                    <div draggable="true" class="box" id="box12">
+                        Neurons in area MT of macaque monkeys respond to a
+                        moving visual stimulus (whether a target moves left or
+                        right).
+                    </div>
+                    <div draggable="true" class="box" id="box13">
+                        It remains open whether this neuronal activity provides
+                        the input for behavioral choices in a visual
+                        discrimination task.
+                    </div>
+                </div>
+
+                <div class="dropbox-container" id="right-panel">
+                    <div draggable="false" class="box" id="outputBox1"></div>
+                    <div draggable="false" class="box" id="outputBox2"></div>
+                    <div draggable="false" class="box" id="outputBox3"></div>
+                    <div draggable="false" class="box" id="outputBox4"></div>
+                    <div draggable="false" class="box" id="outputBox5"></div>
+                </div>
+
+                <div class="center-panel">
+                    <h2>Result:</h2>
+                    <div class="text-output">
+                        <!-- the following html will display the resultant text if combining the contents of the boxes on the right panel  -->
+                        <span id="result"></span>
+                    </div>
+
+                    <br />
+                    <button onclick="checkAnswer()">Check Answer</button>
+
+                    <!-- <p class="citation">
+                        Adapted from “A relationship between behavioral choice and the visual responses of neurons in macaque MT” by K.H. BRITTEN, W.T. NEWSOME, M.N. SHADLEN, S. CELEBRINI, AND J.A. MOVSHON
+                        https://doi.org/10.1017/S095252380000715X
+                    </p> -->
+                </div>
+            </div>
+            <p class="citation">
+                Adapted from “A relationship between behavioral choice and the
+                visual responses of neurons in macaque MT” by K.H. BRITTEN, W.T.
+                NEWSOME, M.N. SHADLEN, S. CELEBRINI, AND J.A. MOVSHON
+                https://doi.org/10.1017/S095252380000715X
+            </p>
+        </body>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", (event) => {
+                var dragSrcEl = null;
+
+                function handleDragStart(e) {
+                    this.style.opacity = "0.4";
+
+                    dragSrcEl = this;
+
+                    e.dataTransfer.effectAllowed = "move";
+                    e.dataTransfer.setData("text/html", this.innerHTML);
+
+                    // Set the border color of the selected box back to purple
+                    this.style.border = "2px solid #854abe";
+                }
+
+                function handleDragOver(e) {
+                    if (e.preventDefault) {
+                        e.preventDefault();
+                    }
+
+                    e.dataTransfer.dropEffect = "move";
+
+                    return false;
+                }
+
+                function handleDragEnter(e) {
+                    this.classList.add("over");
+                }
+
+                function handleDragLeave(e) {
+                    this.classList.remove("over");
+                }
+
+                function handleDrop(e) {
+                    if (e.stopPropagation) {
+                        e.stopPropagation(); // stops the browser from redirecting.
+                    }
+
+                    if (dragSrcEl != this) {
+                        // Swap the text content
+                        var tempHTML = this.innerHTML;
+                        this.innerHTML = e.dataTransfer.getData("text/html");
+                        dragSrcEl.innerHTML = tempHTML;
+
+                        // If the recieving box is empty, swap the drabbable attribute between the two boxes
+                        if (dragSrcEl.innerHTML == "") {
+                            // console.log("this text empty");
+                            this.setAttribute("draggable", "true");
+                            dragSrcEl.setAttribute("draggable", "false");
+                        } else {
+                            console.log("this text not empty");
+                            // dragSrcEl.setAttribute("draggable", "false");
+                            // this.setAttribute("draggable", "true");
+                        }
+                    }
+
+                    return false;
+                }
+
+                function handleDragEnd(e) {
+                    this.style.opacity = "1";
+
+                    // have the style of the box swap as well as its contents
+
+                    items.forEach(function (item) {
+                        item.classList.remove("over");
+                    });
+                    displayResult();
+                }
+
+                let items = document.querySelectorAll(
+                    ".dropbox-container .box"
+                );
+                items.forEach(function (item) {
+                    item.addEventListener("dragstart", handleDragStart, false);
+                    item.addEventListener("dragenter", handleDragEnter, false);
+                    item.addEventListener("dragover", handleDragOver, false);
+                    item.addEventListener("dragleave", handleDragLeave, false);
+                    item.addEventListener("drop", handleDrop, false);
+                    item.addEventListener("dragend", handleDragEnd, false);
+                });
+            });
+
+            // Upon a box being placed within boxes 4, 5, or 6, the following function will be called to display the resultant text if combining the contents of the boxes on the right panel
+            function displayResult() {
+                var output1 = document.getElementById("outputBox1").innerHTML;
+                var output2 = document.getElementById("outputBox2").innerHTML;
+                var output3 = document.getElementById("outputBox3").innerHTML;
+                var output4 = document.getElementById("outputBox4").innerHTML;
+                var output5 = document.getElementById("outputBox5").innerHTML;
+                document.getElementById("result").innerHTML =
+                    output1 + output2 + output3 + output4 + output5;
+            }
+
+            // Upon clicking the "Check Answer" button, the following function will be called to check if the resultant text is correct
+            function checkAnswer() {
+                var output1 = document.getElementById("outputBox1").innerText;
+                var output2 = document.getElementById("outputBox2").innerText;
+                var output3 = document.getElementById("outputBox3").innerText;
+                var output4 = document.getElementById("outputBox4").innerText;
+                var output5 = document.getElementById("outputBox5").innerText;
+                var result =
+                    output1 +
+                    " " +
+                    output2 +
+                    " " +
+                    output3 +
+                    " " +
+                    output4 +
+                    " " +
+                    output5;
+
+                // console.log(output1.innerText);
+                // console.log(output1.textContent);
+                // console.log(output1, output2, output3, output4, output5);
+                console.log(result);
+
+                // if (
+                //     result ===
+                //     "Recent studies have suggested that neurons in area MT of macaque monkeys may provide the signal if a stimulus is moving to the left or the right. Here we study the relationship of the activity of these neurons and behavioral choice to test the causal role of these activities. We found that trial-to-trial variation in activity was correlated with the choices the monkey made: when a directionally selective neuron in area MT fires more, the monkey is more likely to make a decision in favor of the preferred direction of the cell. The magnitude of the relationship was modest, on average, but was highly significant across a sample of 299 cells from four monkeys. These observations are consistent with the idea that neuronal signals in MT are used by the monkey to determine the direction of stimulus motion."
+                // ) {
+                //     alert("Correct!");
+                // } else {
+                //     alert("Incorrect!");
+                // }
+
+                if (
+                    output1 ===
+                        "Recent studies have suggested that neurons in area MT of macaque monkeys may provide the signal if a stimulus is moving to the left or the right." &&
+                    output2 ===
+                        "Here we study the relationship of the activity of these neurons and behavioral choice to test the causal role of these activities." &&
+                    output3 ===
+                        "We found that trial-to-trial variation in activity was correlated with the choices the monkey made: when a directionally selective neuron in area MT fires more, the monkey is more likely to make a decision in favor of the preferred direction of the cell." &&
+                    output4 ===
+                        "The magnitude of the relationship was modest, on average, but was highly significant across a sample of 299 cells from four monkeys." &&
+                    output5 ===
+                        "These observations are consistent with the idea that neuronal signals in MT are used by the monkey to determine the direction of stimulus motion."
+                ) {
+                    alert("Correct!");
+                } else {
+                    alert("Incorrect!");
+                }
+
+                var correctAnswers = [
+                    "Recent studies have suggested that neurons in area MT of macaque monkeys may provide the signal if a stimulus is moving to the left or the right.",
+                    "Here we study the relationship of the activity of these neurons and behavioral choice to test the causal role of these activities.",
+                    "We found that trial-to-trial variation in activity was correlated with the choices the monkey made: when a directionally selective neuron in area MT fires more, the monkey is more likely to make a decision in favor of the preferred direction of the cell.",
+                    "The magnitude of the relationship was modest, on average, but was highly significant across a sample of 299 cells from four monkeys.",
+                    "These observations are consistent with the idea that neuronal signals in MT are used by the monkey to determine the direction of stimulus motion.",
+                ];
+
+                /* 
+                Compare each output box to the correct answer
+                    Any boxes with a correct answer should be colored green.
+                    Any boxes with an incorrect answer should be colored red.
+                    If all output boxes are correct, alert "Correct!"
+                    If any output box is incorrect, alert "Incorrect!"
+                */
+                var outputBoxes = [
+                    document.getElementById("outputBox1"),
+                    document.getElementById("outputBox2"),
+                    document.getElementById("outputBox3"),
+                    document.getElementById("outputBox4"),
+                    document.getElementById("outputBox5"),
+                ];
+                // compare each box
+                // use hex colors
+                for (var i = 0; i < outputBoxes.length; i++) {
+                    // if the box is correct
+                    if (outputBoxes[i].innerText === correctAnswers[i]) {
+                        // color the box green
+                        // outputBoxes[i].style.backgroundColor = "#adddad";
+                        outputBoxes[i].style.border = "2px solid green";
+                    } else {
+                        // color the box red
+                        outputBoxes[i].style.border = "2px solid red";
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>
