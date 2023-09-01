@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Abstract Matching</title>
+
+        <!-- Bootstrap CSS CDN -->
+        <link
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+        />
+
+        <!-- Custom styles -->
+        <style>
+            body {
+                /* padding: 5% 10%; */
+                font-family: Arial, sans-serif;
+                background-color: rgba(234, 234, 234, 0); /* Transparent */
+                /* background-color: #383838; Collab dark mode background */
+                /* background-color: #fefefe; Collab dark mode background */
+            }
+
+            .title {
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
+
+            .subtitle {
+                font-weight: 300;
+                color: #bababa;
+                margin-bottom: 40px;
+            }
+
+            textarea.custom-textarea {
+                resize: vertical; /* Allow only vertical resize */
+                border-radius: 15px; /* Rounded edges */
+                border: 3px solid #7c53a2; /* Blue border */
+                padding: 15px;
+                font-size: 1.1rem;
+                background-color: #282828; /* Light grey background */
+                transition: all 0.3s;
+                color: #ffffff;
+            }
+
+            textarea.custom-textarea:focus {
+                border-color: #9f6bcf; /* Darker blue border on focus */
+                background-color: #1a1a1a; /* Lighter grey background on focus */
+                outline: none;
+                box-shadow: none;
+                color: #ffffff;
+            }
+
+            .styled-container {
+                border-radius: 25px; /* Rounded edges */
+                background: linear-gradient(
+                    45deg,
+                    #242424,
+                    #5c5c5c
+                ); /* Gradient background */
+                padding: 40px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Shadow effect */
+                color: #ffffff; /* Text color */
+            }
+
+            /* CSS animation to fade in the appended paragraph */
+            .fade-in {
+                animation: fadeIn 1s;
+            }
+
+            @keyframes fadeIn {
+                0% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+
+            .btn-primary {
+                background-color: #7c53a2 !important;
+                border-color: #7c53a2 !important;
+            }
+
+            .align-button {
+                text-align: center;
+            }
+
+            .align-loader {
+                text-align: center;
+                padding: 10px;
+            }
+
+            @media (prefers-color-scheme: dark) {
+                body {
+                }
+            }
+
+            #loading {
+                display: none;
+                width: 50px;
+                height: 50px;
+                border: 3px solid rgba(255, 255, 255, 0.3);
+                border-radius: 50%;
+                border-top-color: #fff;
+                animation: spin 1s ease-in-out infinite;
+                -webkit-animation: spin 1s ease-in-out infinite;
+            }
+
+            @keyframes spin {
+                to {
+                    -webkit-transform: rotate(360deg);
+                }
+            }
+            @-webkit-keyframes spin {
+                to {
+                    -webkit-transform: rotate(360deg);
+                }
+            }
+            /* notify js popover should be centered on the screen */
+            /* .notyf__toast--success {
+    background-color: #7c53a2;
+    color: #ffffff;
+    border-radius: 15px;
+    padding: 10px;
+    font-size: 1.1rem;
+    text-align: center;
+} */
+        </style>
+    </head>
+
+    <body>
+        <div class="container styled-container">
+            <!-- <span class="loader"></span> -->
+
+            <h1 class="title">Abstract Matching</h1>
+            <h3 class="subtitle">
+                Here is an abstract. Let's fit the 4W (Who/Why/What/How)
+                framework to it: "With the extreme dimensionality of functional
+                neuroimaging data comes extreme risk for false positives. Across
+                the 130,000 voxels in a typical fMRI volume the probability of a
+                false positive is almost certain. Correction for multiple
+                comparisons should be completed with these datasets, but is
+                often ignored by investigators. To illustrate the magnitude of
+                the problem we carried out a real experiment that demonstrates
+                the danger of not correcting for chance properly."
+            </h3>
+
+            <div class="form-group">
+                <!-- <label for="textArea">Your Text:</label> -->
+                <textarea
+                    class="form-control custom-textarea"
+                    id="response"
+                    rows="3"
+                    placeholder="Type your answer here"
+                ></textarea>
+            </div>
+
+            <div class="align-button">
+                <button class="btn btn-primary" id="submit-question">
+                    Get Feedback
+                </button>
+            </div>
+
+            <div class="align-loader">
+                <div id="loading"></div>
+            </div>
+            <br />
+
+            <article id="result-area"></article>
+
+            <a href="https://c4r.io/" target="_blank">
+                <img
+                    src="raven-head-smallest2.png"
+                    alt="llm-logo"
+                    width="100"
+                    height="89"
+                />
+            </a>
+        </div>
+
+        <!-- Bootstrap JS, Popper.js, and jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+        <script>
+            var notyf = new Notyf();
+            const endpoint = "https://llm4edu.experiments.kordinglab.com";
+
+            const submitButton = document.getElementById("submit-question");
+            // Attach the event listener:
+            submitButton.addEventListener("click", () => {
+                const headers = {
+                    "Content-Type": "application/json",
+                };
+
+                const payload = {
+                    assignment_id: "130dae82-37c1-4efc-bf8b-9291fe130b5d",
+                    submission_string: document
+                        .getElementById("response")
+                        .value.trim(),
+                };
+
+                if (payload.submission_string.length < 1) {
+                    notyf.error("Please enter a response.");
+                    return;
+                }
+
+                // Disable the button:
+                submitButton.disabled = true;
+
+                // Activate the spinner
+                const spinner = document.getElementById("loading");
+                spinner.style.display = "inline-block";
+
+                notyf.success("Please wait while we process your response...");
+
+                fetch(`${endpoint}/feedback`, {
+                    method: "POST",
+                    headers: headers,
+                    body: JSON.stringify(payload),
+                })
+                    .then((response) => response.json())
+                    .then((responseList) => {
+                        const response =
+                            responseList.length > 0
+                                ? responseList[0]
+                                : undefined;
+                        if (!response) {
+                            notyf.error(
+                                "There was an error processing your answer."
+                            );
+                            submitButton.disabled = false;
+                            return;
+                        }
+                        const { feedback_string } = response;
+
+                        document.querySelector("#result-area").innerHTML = `
+                    <h3 class="fade-in">Feedback</h3>
+                    <p class="fade-in">${feedback_string.replaceAll(
+                        "\n- ",
+                        "<br /> &Tab;&Tab;&Tab;&Tab; &mdash; "
+                    )}</p>
+                `;
+                        document.querySelector("#result-area").style.display =
+                            "block";
+                        submitButton.disabled = false;
+                        spinner.style.display = "none";
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                        notyf.error(
+                            "There was an error creating the question."
+                        );
+                        submitButton.disabled = false;
+                        // Disable Spinner
+                        spinner.style.display = "none";
+                    });
+            });
+
+            const queryString = window.location.search;
+            console.log("query string: ", queryString);
+        </script>
+    </body>
+</html>
