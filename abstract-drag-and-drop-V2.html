@@ -166,6 +166,7 @@
                 padding: 20px;
                 border-radius: 10px;
                 text-align: center;
+                width: 80%;
             }
             #correct-feedback {
                 /* background-color: white;
@@ -218,23 +219,44 @@
             <div id="loading-screen">
                 <div id="instructions">
                     <h2>Drag and Drop Activity</h2>
+                    <img
+                        src="magnifying-glass-small.png"
+                        width="auto"
+                        height="150"
+                    />
+
                     <p>
-                        We've seperated an abstract based on the 4W and placed
-                        it random order.
+                        We've seperated an abstract into blocks based on the 4W
+                        and placed them random order.
                     </p>
                     <p>
-                        Drag and drop the boxes on the left into the boxes on
-                        the right to recreate the abstract in it's original
-                        order.
+                        Your goal is recreate the original abstract in its
+                        correct order.
                     </p>
                     <p>
-                        Note that there are additional text samples that wont be
-                        used so choose wisely.
+                        Use your mouse to move the text blocks into the Correct
+                        Order panel as well as re-arrange their order.
+                    </p>
+
+                    <p>
+                        Click Check Answer to see if you are correct or to get
+                        feedback on what you missed.
                     </p>
                     <p>
-                    At the moment it is suggested to complete the activity from this site due to a bug 
-                    unique to running embedded apps within python notebooks: 
-                    <a target="_blank" href="https://jackliddy.github.io/abstract-drag-and-drop-V2.html"> https://jackliddy.github.io/abstract-drag-and-drop-V2.html</a>
+                        Hint: The final abstract is made of only 5 blocks, but
+                        additional decoy blocks have been included, so choose
+                        wisely!
+                    </p>
+                    <p>
+                        At the moment it is suggested to complete the activity
+                        from this site due to a bug unique to running embedded
+                        apps within python notebooks:
+                        <a
+                            target="_blank"
+                            href="https://jackliddy.github.io/abstract-drag-and-drop-V2.html"
+                        >
+                            https://jackliddy.github.io/abstract-drag-and-drop-V2.html</a
+                        >
                     </p>
                     <button id="continue-button" class="btn btn-primary">
                         Continue
@@ -261,6 +283,9 @@
             </div>
 
             <div class="header">
+                <a href="https://c4r.io/" target="_blank">
+                    <img src="raven-head-icon.png" width="65" height="auto" />
+                </a>
                 <h1 class="display-4">Drag and Drop Activity</h1>
                 <div class="header-buttons">
                     <button
@@ -305,7 +330,6 @@
         </div>
 
         <script>
-
             // Add event listeners
             document.addEventListener("DOMContentLoaded", () => {
                 const continueButton =
@@ -404,11 +428,18 @@
                         element.classList.remove("correct", "incorrect"); // Remove any existing classes
                         if (element.textContent === correctAnswers[index]) {
                             element.classList.add("correct");
+                            console.log("index: ", index, "correct");
                         } else {
                             element.classList.add("incorrect");
                             allCorrect = false;
+                            console.log("index: ", index, "incorrect");
                         }
                     });
+
+                    // Handle edge case of using only correct boxes yet missing some
+                    if (userAnswerElements.length < correctAnswers.length) {
+                        allCorrect = false;
+                    }
 
                     // Summary feedback based on `allCorrect` variable
                     if (allCorrect) {
