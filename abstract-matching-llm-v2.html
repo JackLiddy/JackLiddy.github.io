@@ -33,7 +33,7 @@
             .subtitle {
                 font-weight: 300;
                 color: #bababa;
-                margin-bottom: 40px;
+                margin-bottom: 20px;
             }
 
             textarea.custom-textarea {
@@ -65,6 +65,12 @@
                 padding: 40px;
                 box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Shadow effect */
                 color: #ffffff; /* Text color */
+
+                display: flex;
+                flex-direction: column;
+                /* align-content: stretch; */
+                align-items: stretch;
+
             }
 
             /* CSS animation to fade in the appended paragraph */
@@ -132,7 +138,8 @@
                 /* align-items: center; */
             }
             .custom-textarea {
-                margin: 20px;
+                margin: 8px;
+                width: 95%;
             }
 
             /* notify js popover should be centered on the screen */
@@ -165,7 +172,7 @@
             </h3>
 
             <div class="form-group">
-                <div>
+                <div class="input-form">
                     <label for="who-response">Who:</label>
                     <textarea
                         class="form-control custom-textarea"
@@ -175,7 +182,7 @@
                     ></textarea>
                 </div>
                 <div>
-                    <label for="who-response">Who:</label>
+                    <label for="who-response">Why:</label>
                     <textarea
                         class="form-control custom-textarea"
                         id="why-response"
@@ -184,16 +191,16 @@
                     ></textarea>
                 </div>
                 <div>
-                    <label for="who-response">Who:</label>
+                    <label for="who-response">What:</label>
                     <textarea
                         class="form-control custom-textarea"
                         id="what-response"
                         rows="2"
-                        placeholder="Identify the Whaat"
+                        placeholder="Identify the What"
                     ></textarea>
                 </div>
                 <div>
-                    <label for="who-response">Who:</label>
+                    <label for="who-response">How:</label>
                     <textarea
                         class="form-control custom-textarea"
                         id="how-response"
