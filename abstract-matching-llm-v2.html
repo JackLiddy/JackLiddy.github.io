@@ -35,6 +35,14 @@
                 color: #bababa;
                 margin-bottom: 20px;
             }
+            .subtitle-abstract {
+                font-weight: 300;
+                color: #bababa;
+                margin-bottom: 20px;
+                background: #0000004d;
+                border-radius: 33px;
+                padding: 13px;
+            }
 
             textarea.custom-textarea {
                 resize: vertical; /* Allow only vertical resize */
@@ -51,8 +59,12 @@
                 border-color: #9f6bcf; /* Darker blue border on focus */
                 background-color: #1a1a1a; /* Lighter grey background on focus */
                 outline: none;
-                box-shadow: none;
+                /* box-shadow: none; */
                 color: #ffffff;
+
+                margin: 8px;
+                width: 95%;
+                box-shadow: 3px 4px 3px 0px #00000045;
             }
 
             .styled-container {
@@ -70,7 +82,6 @@
                 flex-direction: column;
                 /* align-content: stretch; */
                 align-items: stretch;
-
             }
 
             /* CSS animation to fade in the appended paragraph */
@@ -112,7 +123,8 @@
                 height: 50px;
                 border: 3px solid rgba(255, 255, 255, 0.3);
                 border-radius: 50%;
-                border-top-color: #fff;
+                /* border-top-color: #fff; */
+                border-top-color: #b76aff;
                 animation: spin 1s ease-in-out infinite;
                 -webkit-animation: spin 1s ease-in-out infinite;
             }
@@ -140,6 +152,7 @@
             .custom-textarea {
                 margin: 8px;
                 width: 95%;
+                box-shadow: 3px 4px 3px 0px #000000b8;
             }
 
             /* notify js popover should be centered on the screen */
@@ -161,14 +174,17 @@
             <h1 class="title">Abstract Matching</h1>
             <h3 class="subtitle">
                 Here is an abstract. Let's fit the 4W (Who/Why/What/How)
-                framework to it: "With the extreme dimensionality of functional
-                neuroimaging data comes extreme risk for false positives. Across
-                the 130,000 voxels in a typical fMRI volume the probability of a
-                false positive is almost certain. Correction for multiple
-                comparisons should be completed with these datasets, but is
-                often ignored by investigators. To illustrate the magnitude of
-                the problem we carried out a real experiment that demonstrates
-                the danger of not correcting for chance properly."
+                framework to it:
+            </h3>
+            <h3 class="subtitle-abstract">
+                "With the extreme dimensionality of functional neuroimaging data
+                comes extreme risk for false positives. Across the 130,000
+                voxels in a typical fMRI volume the probability of a false
+                positive is almost certain. Correction for multiple comparisons
+                should be completed with these datasets, but is often ignored by
+                investigators. To illustrate the magnitude of the problem we
+                carried out a real experiment that demonstrates the danger of
+                not correcting for chance properly."
             </h3>
 
             <div class="form-group">
@@ -353,7 +369,7 @@
                         let formattedResponse = response.replace(/\n/g, "<br>");
                         // document.getElementById("#result-area").innerHTML = formattedResponse;
                         document.getElementById("result-area").innerHTML = `
-                     <h3 class="fade-in">Feedback</h3>
+                     <h3 class="fade-in">AI Feedback</h3>
                      <p class="fade-in">${formattedResponse}</p>`;
 
                         document.querySelector("#result-area").style.display =
