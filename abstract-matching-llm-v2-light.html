@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Abstract Matching</title>
+
+        <!-- Bootstrap CSS CDN -->
+        <link
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+        />
+
+        <!-- Custom styles -->
+        <style>
+            body {
+                /* padding: 5% 10%; */
+                font-family: Arial, sans-serif;
+                background-color: rgba(234, 234, 234, 0); /* Transparent */
+                /* background-color: #383838; Collab dark mode background */
+                /* background-color: #fefefe; Collab dark mode background */
+            }
+
+            h3 {
+                /* font-weight: 300;
+                color: #bababa;
+                margin-bottom: 20px; */
+                font-size: 1.50rem;
+                padding: 5px;
+            }
+
+            .title {
+                font-weight: bold;
+                margin-bottom: 20px;
+            }
+
+            .subtitle {
+                font-weight: 300;
+                color: #bababa;
+                margin-bottom: 20px;
+
+                color: #000000;
+
+            }
+            .subtitle-abstract {
+                font-weight: 300;
+                color: #bababa;
+                margin-bottom: 20px;
+                background: #0000004d;
+                border-radius: 33px;
+                padding: 13px;
+
+                color: #000000;
+
+
+
+                font-weight: 300;
+    color: #bababa;
+    margin-bottom: 20px;
+    background: #ffffffde;
+    border-radius: 20px;
+    padding: 13px;
+    color: #000000;
+            }
+
+            textarea.custom-textarea {
+                resize: vertical; /* Allow only vertical resize */
+                border-radius: 15px; /* Rounded edges */
+                border: 3px solid #7c53a2; /* Blue border */
+                padding: 15px;
+                font-size: 1.1rem;
+                background-color: #282828; /* Light grey background */
+                transition: all 0.3s;
+                color: #ffffff;
+
+                background-color: #ddeffb;
+                color: #000000;
+            }
+
+            textarea.custom-textarea:focus {
+                border-color: #9f6bcf; /* Darker blue border on focus */
+                background-color: #1a1a1a; /* Lighter grey background on focus */
+                outline: none;
+                /* box-shadow: none; */
+                /* color: #ffffff; */
+
+                margin: 8px;
+                width: 95%;
+                box-shadow: 3px 4px 3px 0px #00000045;
+
+
+                background-color: #ffffff;
+            }
+
+            .styled-container {
+                border-radius: 25px; /* Rounded edges */
+                /* background: linear-gradient(
+                    45deg,
+                    #ffffff,
+                    #5c5c5c
+                ); Gradient background */
+                padding: 40px;
+                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Shadow effect */
+                color: #000000; /* Text color */
+
+                display: flex;
+                flex-direction: column;
+                /* align-content: stretch; */
+                align-items: stretch;
+                /* background: linear-gradient( 147deg, #dee7ff, #ffffff); */
+
+                background: linear-gradient(177deg, #dbe8ff, white);
+            }
+
+            /* CSS animation to fade in the appended paragraph */
+            .fade-in {
+                animation: fadeIn 1s;
+            }
+
+            @keyframes fadeIn {
+                0% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+
+            .btn-primary {
+                background-color: #7c53a2 !important;
+                border-color: #7c53a2 !important;
+            }
+
+            .align-button {
+                text-align: center;
+            }
+
+            .align-loader {
+                text-align: center;
+                padding: 10px;
+            }
+
+            @media (prefers-color-scheme: dark) {
+                body {
+                }
+            }
+
+            #loading {
+                display: none;
+                width: 50px;
+                height: 50px;
+                border: 3px solid rgba(255, 255, 255, 0.3);
+                border-radius: 50%;
+                /* border-top-color: #fff; */
+                border-top-color: #b76aff;
+                animation: spin 1s ease-in-out infinite;
+                -webkit-animation: spin 1s ease-in-out infinite;
+            }
+
+            @keyframes spin {
+                to {
+                    -webkit-transform: rotate(360deg);
+                }
+            }
+            @-webkit-keyframes spin {
+                to {
+                    -webkit-transform: rotate(360deg);
+                }
+            }
+            /* id selector for result area */
+            #result-area {
+                /* display: none; */
+                /* white-space: pre-wrap; */
+                background: white;
+                border-radius: 35px;
+                padding: 20px;
+            }
+            .form-group {
+                display: flex;
+                flex-direction: column;
+                /* align-items: center; */
+            }
+            .custom-textarea {
+                margin: 8px;
+                width: 95%;
+                box-shadow: 3px 4px 3px 0px #000000b8;
+            }
+
+            /* notify js popover should be centered on the screen */
+            /* .notyf__toast--success {
+    background-color: #7c53a2;
+    color: #ffffff;
+    border-radius: 15px;
+    padding: 10px;
+    font-size: 1.1rem;
+    text-align: center;
+} */
+        </style>
+    </head>
+
+    <body>
+        <div class="container styled-container">
+            <!-- <span class="loader"></span> -->
+
+            <h1 class="title">Abstract Matching</h1>
+            <h3 class="subtitle">
+                Here is an abstract. Let's fit the 4W (Who/Why/What/How)
+                framework to it:
+            </h3>
+            <h3 class="subtitle-abstract">
+                "With the extreme dimensionality of functional neuroimaging data
+                comes extreme risk for false positives. Across the 130,000
+                voxels in a typical fMRI volume the probability of a false
+                positive is almost certain. Correction for multiple comparisons
+                should be completed with these datasets, but is often ignored by
+                investigators. To illustrate the magnitude of the problem we
+                carried out a real experiment that demonstrates the danger of
+                not correcting for chance properly."
+            </h3>
+
+            <div class="form-group">
+                <div class="input-form">
+                    <h3>Who:</h3>
+                    <textarea
+                        class="form-control custom-textarea"
+                        id="who-response"
+                        rows="2"
+                        placeholder="Identify the Who"
+                    ></textarea>
+                </div>
+                <div>
+                    <h3>Why:</h3>
+                    <textarea
+                        class="form-control custom-textarea"
+                        id="why-response"
+                        rows="2"
+                        placeholder="Identify the Why"
+                    ></textarea>
+                </div>
+                <div>
+                    <h3>What:</h3>
+                    <textarea
+                        class="form-control custom-textarea"
+                        id="what-response"
+                        rows="2"
+                        placeholder="Identify the What"
+                    ></textarea>
+                </div>
+                <div>
+                    <h3>How:</h3>
+                    <textarea
+                        class="form-control custom-textarea"
+                        id="how-response"
+                        rows="2"
+                        placeholder="Identify the How"
+                    ></textarea>
+                </div>
+            </div>
+
+            <div class="align-button">
+                <button class="btn btn-primary" id="submit-question">
+                    Get Feedback
+                </button>
+            </div>
+
+            <div class="align-loader">
+                <div id="loading"></div>
+            </div>
+            <br />
+
+            <article id="result-area"></article>
+
+            <!-- means of displaying text that preserves newlines -->
+            <!-- <pre id="result-area"></pre> -->
+
+            <a href="https://c4r.io/" target="_blank">
+                <img
+                    src="raven-head-smallest2.png"
+                    alt="llm-logo"
+                    width="100"
+                    height="89"
+                />
+            </a>
+        </div>
+
+        <!-- Bootstrap JS, Popper.js, and jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js"></script>
+        <script>
+            var notyf = new Notyf();
+
+            // Start of new implementation
+
+            // Fetcj the auth token from the URL:
+            const urlParams = new URLSearchParams(window.location.search);
+            const auth = urlParams.get("auth");
+            console.log("my auth: ", auth);
+
+            const submitButton = document.getElementById("submit-question");
+            // Attach the event listener:
+            submitButton.addEventListener("click", () => {
+                // const userInput = document
+                //     .getElementById("response")
+                //     .value.trim();
+
+                // Get each of the four responses:
+                const whoResponse = document
+                    .getElementById("who-response")
+                    .value.trim();
+                const whyResponse = document
+                    .getElementById("why-response")
+                    .value.trim();
+                const whatResponse = document
+                    .getElementById("what-response")
+                    .value.trim();
+                const howResponse = document
+                    .getElementById("how-response")
+                    .value.trim();
+
+                const totalPrompt = `You are grading answers that students give to a given question. 
+                Please provide feedback on the quality of their answer and what is missing. 
+                Here is the question: In the following abstract, please utilize the 4W framework (Who/Why/What/How) to identify what each of the 4W are in the text: 
+                "With the extreme dimensionality of functional neuroimaging data comes extreme risk for false positives. Across the 130,000 voxels in a typical fMRI volume the probability of a false positive is almost certain. Correction for multiple comparisons should be completed with these datasets, but is often ignored by investigators. 
+                To illustrate the magnitude of the problem we carried out a real experiment that demonstrates the danger of not correcting for chance properly."
+
+
+                Here is their answer for idenfidying the Who: ${whoResponse}.
+                Here is their answer for idenfidying the Why: ${whyResponse}.
+                Here is their answer for idenfidying the What: ${whatResponse}.
+                Here is their answer for idenfidying the How: ${howResponse}.
+
+                Now please provide feedback on the quality of their answers and what is missing and what can be improved.
+                Also it is important that you respond with a formatted responce pertaining to each of the 4W (Who/Why/What/How) in the student's answer.
+                `;
+
+                // Handle empty imput for each of the four responses:
+                if (whoResponse.length < 1) {
+                    notyf.error("Please enter a response for the Who.");
+                    return;
+                }
+                if (whyResponse.length < 1) {
+                    notyf.error("Please enter a response for the Why.");
+                    return;
+                }
+                if (whatResponse.length < 1) {
+                    notyf.error("Please enter a response for the What.");
+                    return;
+                }
+                if (howResponse.length < 1) {
+                    notyf.error("Please enter a response for the How.");
+                    return;
+                }
+
+                const payload = {
+                    model: "gpt-3.5-turbo",
+                    messages: [
+                        {
+                            role: "user",
+                            content: totalPrompt,
+                        },
+                    ],
+                    temperature: 1,
+                    max_tokens: 2048,
+                    top_p: 1,
+                    frequency_penalty: 0,
+                    presence_penalty: 0,
+                };
+
+                const params = {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Authorization: `Bearer ${auth}`,
+                    },
+                    body: JSON.stringify(payload),
+                };
+
+                // Disable the button:
+                submitButton.disabled = true;
+
+                // Activate the spinner
+                const spinner = document.getElementById("loading");
+                spinner.style.display = "inline-block";
+
+                notyf.success("Please wait while we process your response...");
+
+                loadEdit(params)
+                    .then((response) => {
+                        console.log("response: ", response);
+
+                        //         document.querySelector("#result-area").innerHTML = `
+                        //     <h3 class="fade-in">Feedback</h3>
+                        //     <p class="fade-in">${response}</p>
+                        // `;
+
+                        // let response = "Hello,\nThis is a formatted message from the API."; // Sample response
+                        let formattedResponse = response.replace(/\n/g, "<br>");
+                        // document.getElementById("#result-area").innerHTML = formattedResponse;
+                        document.getElementById("result-area").innerHTML = `
+                     <h3 class="fade-in">AI Feedback</h3>
+                     <p class="fade-in">${formattedResponse}</p>`;
+
+                        document.querySelector("#result-area").style.display =
+                            "block";
+                        submitButton.disabled = false;
+                        spinner.style.display = "none";
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                        notyf.error(
+                            "There was an error creating the question. There was an error creating the question. There was an error creating the question."
+                        );
+                        submitButton.disabled = false;
+                        // Disable Spinner
+                        spinner.style.display = "none";
+                    });
+            });
+
+            async function loadEdit(params) {
+                const res = await fetch(
+                    "https://api.openai.com/v1/chat/completions",
+                    params
+                );
+
+                const data = await res.json();
+                const response = data.choices[0].message.content;
+                return response;
+            }
+        </script>
+    </body>
+</html>
