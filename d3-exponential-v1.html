@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exponential Function with D3</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 2rem;
+    text-align: center;
+}
+
+div {
+    margin-bottom: 20px;
+}
+
+#equation {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+svg {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    margin: 0 auto;
+    display: block;
+}
+
+.slider-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input[type="range"] {
+    margin: 0 15px;
+}
+    </style>
+</head>
+<body>
+    <div id="equation">y = 2^x</div>
+    <div>
+        <label for="base-slider">Base (b): </label>
+        <input type="range" id="base-slider" min="0.1" max="10" value="2" step="0.1">
+        <span id="base-value">2</span>
+    </div>
+    <div>
+        <label for="exp-slider">Exponent (x): </label>
+        <input type="range" id="exp-slider" min="-10" max="10" value="1" step="0.1">
+        <span id="exp-value">1</span>
+    </div>
+    <svg id="chart" width="500" height="500"></svg>
+
+    <script>
+const width = 500;
+const height = 500;
+const margin = 50;
+
+const xScale = d3.scaleLinear().domain([-10, 10]).range([margin, width - margin]);
+const yScale = d3.scaleLinear().domain([-10, 10]).range([height - margin, margin]);
+
+const svg = d3.select("#chart");
+
+function drawGraph(b, x) {
+    svg.selectAll("*").remove();
+
+    const lineData = d3.range(-10, 10, 0.1).map(i => ({ x: i, y: Math.pow(b, i * x) }));
+
+    // Update y-scale's domain based on max and min of lineData's y values
+    const maxY = d3.max(lineData, d => d.y);
+    const minY = d3.min(lineData, d => d.y);
+    
+    yScale.domain([minY, maxY]).nice();
+
+    const line = d3.line()
+        .x(d => xScale(d.x))
+        .y(d => yScale(d.y));
+
+    svg.append("path")
+        .datum(lineData)
+        .attr("fill", "none")
+        .attr("stroke", "blue")
+        .attr("d", line);
+
+    svg.append("g")
+        .attr("transform", "translate(0," + (height - margin) + ")")
+        .call(d3.axisBottom(xScale));
+
+    svg.append("g")
+        .attr("transform", "translate(" + margin + ",0)")
+        .call(d3.axisLeft(yScale));
+}
+
+
+function updateEquation(base, exponent) {
+    document.getElementById("equation").innerText = `y = ${base}^(${exponent}x)`;
+}
+
+document.getElementById("base-slider").addEventListener("input", function() {
+    const base = +this.value;
+    document.getElementById("base-value").innerText = base.toFixed(2); // 2 decimal places for readability
+
+    const exponent = +document.getElementById("exp-slider").value;
+    drawGraph(base, exponent);
+    updateEquation(base, exponent);
+});
+
+document.getElementById("exp-slider").addEventListener("input", function() {
+    const exponent = +this.value;
+    document.getElementById("exp-value").innerText = exponent.toFixed(2); // 2 decimal places for readability
+
+    const base = +document.getElementById("base-slider").value;
+    drawGraph(base, exponent);
+    updateEquation(base, exponent);
+});
+
+// Initial draw and equation display
+drawGraph(2, 1);
+updateEquation(2, 1);
+    </script>
+</body>
+</html>
