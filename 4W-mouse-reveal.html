@@ -7,7 +7,7 @@
         <style>
             body {
                 font-family: Arial, sans-serif;
-                padding: 20px;
+                /* padding: 20px; */
             }
 
             .word-container {
@@ -93,7 +93,12 @@
                 border-radius: 10px;
                 width: 1100px;
                 background: linear-gradient(181deg, #ccccff, #c2c2f6);
+                box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
             }
+            /* .outer-container{
+                box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+            } */
             .button-container {
                 display: flex;
                 justify-content: center;
@@ -101,6 +106,7 @@
         </style>
     </head>
     <body>
+        <div class="outer-container">
         <div class="visual-container">
             <div class="instructions">
                 Hover your mouse over each word to reveal its meaning
@@ -142,6 +148,7 @@
                 <button class="button-34" id="revealAll">Reveal All</button>
             </div>
         </div>
+    </div>
 
         <script>
             document.addEventListener("DOMContentLoaded", function () {
@@ -149,7 +156,7 @@
                 words.forEach((word) => {
                     word.addEventListener("mouseover", function () {
                         const definition = this.nextElementSibling;
-                        definition.style.maxWidth = "1200px";
+                        definition.style.maxWidth = "1050px";
                         definition.style.opacity = "1";
                     });
                 });
@@ -160,7 +167,7 @@
                         const definitions =
                             document.querySelectorAll(".definition");
                         definitions.forEach((def) => {
-                            def.style.maxWidth = "1200px";
+                            def.style.maxWidth = "1050px";
                             def.style.opacity = "1";
                         });
                     });
