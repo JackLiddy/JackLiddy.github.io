@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word Definitions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+
+        .word-container {
+            position: relative;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .word {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .definition {
+            position: absolute;
+            top: 0;
+            left: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            transform-origin: 0% 0%;
+            max-width: 0;
+            opacity: 0;
+            transition: max-width 1s, opacity 1s;
+
+            width: 1200px;
+            top: 10px;
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <div class="word-container">
+        <div class="word">Who</div>
+        <div class="definition">The subject of the study (e.g., patient population, molecular compound, rows of observation in a dataset)</div>
+    </div>
+    <br>
+    <div class="word-container">
+        <div class="word">What</div>
+        <div class="definition">The mechanism or intervention of the study (e.g., drug treatment, application of CRISPR, statistical model)</div>
+    </div>
+    <br>
+    <div class="word-container">
+        <div class="word">Why</div>
+        <div class="definition">The outcome of the study (e.g., subject health and recovery, chemical reaction, model accuracy)</div>
+    </div>
+    <br>
+    <div class="word-container">
+        <div class="word">How</div>
+        <div class="definition">The methodological framework of the study (e.g., clinical trial, basic experimental research, exploratory data analysis, statistical model comparison)</div>
+    </div>
+    <br>
+    <button id="revealAll">Reveal All</button>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const words = document.querySelectorAll('.word');
+        words.forEach(word => {
+            word.addEventListener('mouseover', function() {
+                const definition = this.nextElementSibling;
+                definition.style.maxWidth = '1200px';
+                definition.style.opacity = '1';
+            });
+        });
+
+        document.getElementById('revealAll').addEventListener('click', function() {
+            const definitions = document.querySelectorAll('.definition');
+            definitions.forEach(def => {
+                def.style.maxWidth = '1200px';
+                def.style.opacity = '1';
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
