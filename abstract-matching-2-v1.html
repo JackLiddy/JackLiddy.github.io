@@ -29,7 +29,7 @@
                 /* font-weight: 300;
                 color: #bababa;
                 margin-bottom: 20px; */
-                font-size: 1.50rem;
+                font-size: 1.5rem;
                 padding: 5px;
             }
 
@@ -182,13 +182,17 @@
 
             <h1 class="title">Abstract Matching 2 Prototype</h1>
             <h3 class="subtitle">
-                For the following research question, identify what the WHO and the WHAT. 
+                For the following research question, identify both the Who and
+                the What.
             </h3>
             <h3 class="subtitle">
-                The Why and How are not explicitly stated, but please present reasonable answers for what they could be within the context of the question. 
+                The Why and How are not explicitly stated, but please present
+                reasonable answers for what they could be within the context of
+                the question.
             </h3>
             <h3 class="subtitle-abstract">
-                "Is daily aerobic exercise better than stretching for Parkinson's disease?"
+                "Is daily aerobic exercise better than stretching for
+                Parkinson's disease?"
             </h3>
 
             <div class="form-group">
@@ -294,13 +298,12 @@
                     .getElementById("how-response")
                     .value.trim();
 
-                // const totalPrompt0 = 
-                // `You are grading answers that students give to a given question. 
-                // Please provide feedback on the quality of their answer and what is missing. 
-                // Here is the question: In the following abstract, please utilize the 4W framework (Who/Why/What/How) to identify what each of the 4W are in the text: 
-                // "With the extreme dimensionality of functional neuroimaging data comes extreme risk for false positives. Across the 130,000 voxels in a typical fMRI volume the probability of a false positive is almost certain. Correction for multiple comparisons should be completed with these datasets, but is often ignored by investigators. 
+                // const totalPrompt0 =
+                // `You are grading answers that students give to a given question.
+                // Please provide feedback on the quality of their answer and what is missing.
+                // Here is the question: In the following abstract, please utilize the 4W framework (Who/Why/What/How) to identify what each of the 4W are in the text:
+                // "With the extreme dimensionality of functional neuroimaging data comes extreme risk for false positives. Across the 130,000 voxels in a typical fMRI volume the probability of a false positive is almost certain. Correction for multiple comparisons should be completed with these datasets, but is often ignored by investigators.
                 // To illustrate the magnitude of the problem we carried out a real experiment that demonstrates the danger of not correcting for chance properly."
-
 
                 // Here is their answer for idenfidying the Who: ${whoResponse}.
                 // Here is their answer for idenfidying the Why: ${whyResponse}.
@@ -311,8 +314,7 @@
                 // Also it is important that you respond with a formatted responce pertaining to each of the 4W (Who/Why/What/How) in the student's answer.
                 // `;
 
-                const totalPrompt = 
-`A student will be presented with a given research question and asked to identify the WHO and WHAT referenced in the research question. 
+                const totalPrompt = `A student will be presented with a given research question and asked to identify the WHO and WHAT referenced in the research question. 
 The question won’t explicitly state a WHY and a HOW, but the student will also be asked to present reasonable answers for what they could possibly be.
 Here is the question: “Is daily aerobic exercise better than stretching for Parkinson's disease?”
 
@@ -328,9 +330,6 @@ Their answer for HOW is: ${howResponse}.
 
 Please provide feedback on the quality of their answers. Their answers don’t have to be exact but along the lines of the suggested answers.
 `;
-
-
-                
 
                 // Handle empty imput for each of the four responses:
                 if (whoResponse.length < 1) {
