@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Word Definitions</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                /* padding: 20px; */
+            }
+
+            .word-container {
+                position: relative;
+                display: inline-block;
+                margin-right: 10px;
+
+                /* background-color: aqua;
+            width: 50px; */
+                /* gap: 60px; */
+            }
+
+            .word {
+                /* padding: 10px;
+                cursor: pointer;
+                width: 400px;
+                font-weight: bold;
+                font-size: 18px;
+
+                background-color: #f2f2f2; */
+                /* width: 100px; */
+                width: 48px;
+                background-color: #21b2aa;
+                padding: 5px;
+                text-align: center;
+            }
+            .word-listener {
+                padding: 5px;
+                cursor: pointer;
+                width: 400px;
+                font-weight: bold;
+                font-size: 18px;
+
+                /* background-color: #f2f2f2; */
+            }
+
+            .definition {
+                position: absolute;
+                top: 0;
+                left: 100%;
+                white-space: nowrap;
+                overflow: hidden;
+                transform-origin: 0% 0%;
+                max-width: 0;
+                opacity: 0;
+                transition: max-width 0.8s, opacity 0.8s;
+
+                width: 1200px;
+                top: 5px;
+                left: 68px;
+
+                background-color: #609ea0;
+                color: aliceblue;
+
+                padding: 6px;
+            }
+
+            .example {
+                position: absolute;
+                top: 0;
+                /* left: calc(100% + 1220px); Adjusted to position next to definition */
+                /* left: calc(1220px); */
+                left: 397px;
+                white-space: nowrap;
+                overflow: hidden;
+                transform-origin: 0% 0%;
+                max-width: 0;
+                opacity: 0;
+                transition: max-width 1.5s, opacity 1.5s;
+                transition-delay: 0.3s;
+                background-color: #d9d9f2; /* Example background color */
+                width: 685px; /* Set your preferred width for example */
+                top: 5px;
+
+                background-color: floralwhite;
+                color: #770000;
+                padding: 6px;
+            }
+
+            button {
+                margin-top: 10px;
+                padding: 10px 15px;
+                cursor: pointer;
+            }
+            .instructions {
+                font-size: 18px;
+                font-weight: bold;
+                margin-top: 0px;
+                margin-bottom: 10px;
+                display: flex;
+                justify-content: center;
+            }
+            .button-34 {
+                background: #5e5df0;
+                border-radius: 999px;
+                box-shadow: #5e5df0 0 10px 20px -10px;
+                box-sizing: border-box;
+                color: #ffffff;
+                cursor: pointer;
+                font-family: Inter, Helvetica, "Apple Color Emoji",
+                    "Segoe UI Emoji", NotoColorEmoji, "Noto Color Emoji",
+                    "Segoe UI Symbol", "Android Emoji", EmojiSymbols,
+                    -apple-system, system-ui, "Segoe UI", Roboto,
+                    "Helvetica Neue", "Noto Sans", sans-serif;
+                font-size: 16px;
+                font-weight: 700;
+                line-height: 24px;
+                opacity: 1;
+                outline: 0 solid transparent;
+                padding: 8px 18px;
+                user-select: none;
+                -webkit-user-select: none;
+                touch-action: manipulation;
+                width: fit-content;
+                word-break: break-word;
+                border: 0;
+            }
+            /* button-34 when pressed */
+            .button-34:active {
+                background: #373796;
+                box-shadow: #2f2f8d 0 10px 20px -10px;
+            }
+            .visual-container {
+                /* background: #c2c2f6; */
+                padding: 15px;
+                border-radius: 10px;
+                width: 1100px;
+                /* background: linear-gradient(181deg, #ccccff, #c2c2f6); */
+                box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+                    rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
+                    rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+
+                background-color: #a6ebd4;
+            }
+            /* .outer-container{
+                box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
+            } */
+            .button-container {
+                display: flex;
+                justify-content: center;
+            }
+
+            .headers {
+                /* position: absolute; */
+
+                /* display: flex;
+                justify-content: space-between;
+                font-weight: bold; */
+                /* font-size: 18px; */
+                /* margin-bottom: 10px; */
+
+                display: block;
+                position: relative;
+                width: 100%;
+            }
+            .def-header {
+                /* left: 200px; */
+                /* right: 100px; */
+                position: absolute;
+                left: 74px;
+                top: 15px;
+                font-size: 18px;
+                font-weight: bold;
+            }
+            .example-header {
+                /* right: 200px; */
+                position: absolute;
+                right: 611px;
+                top: 15px;
+                font-size: 18px;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="outer-container">
+            <div class="visual-container">
+                <div class="instructions">
+                    Hover over each term to reveal its definition
+                </div>
+                <div class="headers">
+                    <div class="def-header">Definition</div>
+                    <div class="example-header">Examples</div>
+                </div>
+                <br />
+                <br />
+                <div class="word-container">
+                    <div class="word-listener">
+                        <div class="word">Who</div>
+                    </div>
+                    <div class="definition">The subject of the study</div>
+                    <div class="example">
+                        patient population, molecular compound, rows of
+                        observation in a dataset
+                    </div>
+                </div>
+                <br />
+                <div class="word-container">
+                    <div class="word-listener">
+                        <div class="word">What</div>
+                    </div>
+                    <div class="definition">
+                        The mechanism or intervention of the study
+                    </div>
+                    <div class="example">
+                        drug treatment, application of CRISPR, statistical model
+                    </div>
+                </div>
+                <br />
+                <div class="word-container">
+                    <div class="word-listener">
+                        <div class="word">Why</div>
+                    </div>
+                    <div class="definition">The outcome of the study</div>
+                    <div class="example">
+                        subject health and recovery, chemical reaction, model
+                        accuracy
+                    </div>
+                </div>
+                <br />
+                <div class="word-container">
+                    <div class="word-listener">
+                        <div class="word">How</div>
+                    </div>
+                    <div class="definition">
+                        The methodological framework of the study
+                    </div>
+                    <div class="example">
+                        clinical trial, basic experimental research, exploratory
+                        data analysis, statistical model comparison
+                    </div>
+                </div>
+                <br />
+                <div class="button-container">
+                    <button class="button-34" id="revealAll">Reveal All</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const words = document.querySelectorAll(".word");
+                words.forEach((word) => {
+                    word.addEventListener("mouseover", function () {
+                        const definition = this.nextElementSibling;
+                        definition.style.maxWidth = "1050px";
+                        definition.style.opacity = "1";
+                    });
+                });
+
+                document
+                    .getElementById("revealAll")
+                    .addEventListener("click", function () {
+                        const definitions =
+                            document.querySelectorAll(".definition");
+                        definitions.forEach((def) => {
+                            def.style.maxWidth = "1050px";
+                            def.style.opacity = "1";
+                        });
+                    });
+            });
+        </script> -->
+
+        <script>
+            // document.addEventListener("DOMContentLoaded", function () {
+            //     const words = document.querySelectorAll(".word");
+            //     words.forEach((word) => {
+            //         word.addEventListener("mouseover", function () {
+            //             const definition = this.nextElementSibling;
+            //             const example = definition.nextElementSibling;
+            //             definition.style.maxWidth = "320px";
+            //             definition.style.opacity = "1";
+            //             example.style.maxWidth = "600px";
+            //             example.style.opacity = "1";
+            //         });
+            //     });
+            document.addEventListener("DOMContentLoaded", function () {
+                const words = document.querySelectorAll(".word-listener");
+                words.forEach((word) => {
+                    word.addEventListener("mouseover", function () {
+                        const definition = this.nextElementSibling;
+                        const example = definition.nextElementSibling;
+                        definition.style.maxWidth = "310px";
+                        definition.style.opacity = "1";
+                        example.style.maxWidth = "685px";
+                        example.style.opacity = "1";
+                    });
+                });
+
+                document
+                    .getElementById("revealAll")
+                    .addEventListener("click", function () {
+                        const definitions =
+                            document.querySelectorAll(".definition");
+                        const examples = document.querySelectorAll(".example");
+                        definitions.forEach((def) => {
+                            def.style.maxWidth = "310px";
+                            def.style.opacity = "1";
+                        });
+                        examples.forEach((ex) => {
+                            ex.style.maxWidth = "685px";
+                            ex.style.opacity = "1";
+                        });
+                    });
+            });
+        </script>
+    </body>
+</html>
