@@ -7,28 +7,15 @@
         <style>
             body {
                 font-family: Arial, sans-serif;
-                /* padding: 20px; */
             }
 
             .word-container {
                 position: relative;
                 display: inline-block;
                 margin-right: 10px;
-
-                /* background-color: aqua;
-            width: 50px; */
-                /* gap: 60px; */
             }
 
             .word {
-                /* padding: 10px;
-                cursor: pointer;
-                width: 400px;
-                font-weight: bold;
-                font-size: 18px;
-
-                background-color: #f2f2f2; */
-                /* width: 100px; */
                 width: 48px;
                 background-color: #21b2aa;
                 padding: 5px;
@@ -68,8 +55,6 @@
             .example {
                 position: absolute;
                 top: 0;
-                /* left: calc(100% + 1220px); Adjusted to position next to definition */
-                /* left: calc(1220px); */
                 left: 397px;
                 white-space: nowrap;
                 overflow: hidden;
@@ -79,7 +64,7 @@
                 transition: max-width 1.5s, opacity 1.5s;
                 transition-delay: 0.3s;
                 background-color: #d9d9f2; /* Example background color */
-                width: 685px; /* Set your preferred width for example */
+                width: 519px; /* Set your preferred width for example */
                 top: 5px;
 
                 background-color: floralwhite;
@@ -131,11 +116,9 @@
                 box-shadow: #000000 0 10px 20px -10px;
             }
             .visual-container {
-                /* background: #c2c2f6; */
                 padding: 15px;
                 border-radius: 10px;
-                width: 1100px;
-                /* background: linear-gradient(181deg, #ccccff, #c2c2f6); */
+                width: 933px;
                 box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
                     rgba(0, 0, 0, 0.3) 0px 30px 60px -30px,
                     rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset;
@@ -151,21 +134,11 @@
             }
 
             .headers {
-                /* position: absolute; */
-
-                /* display: flex;
-                justify-content: space-between;
-                font-weight: bold; */
-                /* font-size: 18px; */
-                /* margin-bottom: 10px; */
-
                 display: block;
                 position: relative;
                 width: 100%;
             }
             .def-header {
-                /* left: 200px; */
-                /* right: 100px; */
                 position: absolute;
                 left: 74px;
                 top: 15px;
@@ -173,9 +146,8 @@
                 font-weight: bold;
             }
             .example-header {
-                /* right: 200px; */
                 position: absolute;
-                right: 611px;
+                right: 447px;
                 top: 15px;
                 font-size: 18px;
                 font-weight: bold;
@@ -237,7 +209,7 @@
                     </div>
                     <div class="example">
                         clinical trial, basic experimental research, exploratory
-                        data analysis, statistical model comparison
+                        data analysis
                     </div>
                 </div>
                 <br />
@@ -247,43 +219,8 @@
             </div>
         </div>
 
-        <!-- <script>
-            document.addEventListener("DOMContentLoaded", function () {
-                const words = document.querySelectorAll(".word");
-                words.forEach((word) => {
-                    word.addEventListener("mouseover", function () {
-                        const definition = this.nextElementSibling;
-                        definition.style.maxWidth = "1050px";
-                        definition.style.opacity = "1";
-                    });
-                });
-
-                document
-                    .getElementById("revealAll")
-                    .addEventListener("click", function () {
-                        const definitions =
-                            document.querySelectorAll(".definition");
-                        definitions.forEach((def) => {
-                            def.style.maxWidth = "1050px";
-                            def.style.opacity = "1";
-                        });
-                    });
-            });
-        </script> -->
-
         <script>
-            // document.addEventListener("DOMContentLoaded", function () {
-            //     const words = document.querySelectorAll(".word");
-            //     words.forEach((word) => {
-            //         word.addEventListener("mouseover", function () {
-            //             const definition = this.nextElementSibling;
-            //             const example = definition.nextElementSibling;
-            //             definition.style.maxWidth = "320px";
-            //             definition.style.opacity = "1";
-            //             example.style.maxWidth = "600px";
-            //             example.style.opacity = "1";
-            //         });
-            //     });
+
             document.addEventListener("DOMContentLoaded", function () {
                 const words = document.querySelectorAll(".word-listener");
                 words.forEach((word) => {
@@ -292,7 +229,7 @@
                         const example = definition.nextElementSibling;
                         definition.style.maxWidth = "310px";
                         definition.style.opacity = "1";
-                        example.style.maxWidth = "685px";
+                        example.style.maxWidth = "519px";
                         example.style.opacity = "1";
                     });
                 });
@@ -308,7 +245,7 @@
                             def.style.opacity = "1";
                         });
                         examples.forEach((ex) => {
-                            ex.style.maxWidth = "685px";
+                            ex.style.maxWidth = "519px";
                             ex.style.opacity = "1";
                         });
                     });
