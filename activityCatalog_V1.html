@@ -1,75 +1,576 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webpage Links</title>
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Portfolio</title>
+        <!-- <link rel="stylesheet" href="styles.css"> -->
+        <style>
+            * {
+                scroll-behavior: smooth;
+            }
+            body,
+            html {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+                height: 100%;
+                /* overflow: hidden; */
+            }
 
-<h1> Activity Catalog</h1>
+            .navbar {
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 250px;
+                background-color: #333;
+                padding: 20px;
+                color: white;
+                box-shadow: 3px 0 5px rgba(0, 0, 0, 0.2);
+            }
 
+            .navbar ul {
+                list-style-type: none;
+                padding: 0;
+            }
 
-<h2>Drag and Drop Activity</h2>
-<ul>
-    <li><a href="https://jackliddy.github.io/abstract-drag-and-drop-V2.html">Abstract Drag and Drop V2</a></li>
-</ul>
+            .navbar li {
+                margin: 20px 0;
+            }
 
-<h2>LLM Feedback Tool</h2>
-<ul>
-    <li><a href="https://jackliddy.github.io/abstract-matching-llm-v2.html">Abstract Matching LLM V2</a> (Public link for visual demo purposes only. For full functionality, ask Jack for a private link or see the version on the MVP)</li>
-    <li><a href="https://JackLiddy.github.io/abstract-matching-llm-v2-light.html">Abstract Matching LLM V2 (Light Theme)</a> (Public link for visual demo purposes only. For full functionality, ask Jack for a private link or see the version on the MVP)</li>
-</ul>
-<h3>Continous AI Chatbot</h3>
-<ul>
-    <li><a href="https://nextjs-chat-tau-orpin.vercel.app/">RigorChat</a></li>
-</ul>
-<h2>Quizzes</h2>
-<h3>Quizzes (New UI) - Identify Missing Component</h3>
-<ul>
-    <li><a href="https://jackliddy.github.io/duquesne_quiz_1.html">Duquesne Quiz 1</a></li>
-    <li><a href="https://jackliddy.github.io/duquesne_quiz_2.html">Duquesne Quiz 2</a></li>
-    <li><a href="https://jackliddy.github.io/duquesne_quiz_3.html">Duquesne Quiz 3</a></li>
-</ul>
+            .navbar a {
+                text-decoration: none;
+                color: white;
+                transition: 0.3s;
+            }
 
-<h3>Quizzes (Old UI)</h3>
-<ul>
-    <li><a href="https://jackliddy.github.io/activity1_1.html">Choose Good/Great - Dark theme</a></li>
-    <li><a href="https://jackliddy.github.io/activity1_2.html">Identify the missing component - 3 phases - dark theme </a></li>
-    </li>
-</ul>
+            .navbar a:hover {
+                padding-left: 10px;
+            }
 
-<h2>P5.js Simulation</h2>
-<ul>
-    <li><a href="https://editor.p5js.org/jackliddy3/full/igX7utq99">Red Squares fighting green</a> (Test inspired by conversation around an activity demonstrating animal agression - shows red squared chasing green squares in their vacinity and green squares running away) </li>
-</ul>
+            .content {
+                margin-left: 270px;
+                padding: 40px;
+                /* display: flex; */
+                /* flex-direction: column; */
+            }
 
-<h2>Visual Elements</h2>
-<h3>AutoScroll Test</h3>
-<ul>
-    <li><a href="https://jackliddy.github.io/framework-table-scroll.html#Use-Cases">With Framework Examples</a></li>
-    <li><a href="https://jackliddy.github.io/autoscroll-test.html">Empty</a></li>
-</ul>
+            section {
+                margin-bottom: 50px;
+                /* display: flex;
+    flex-direction: row;
+    flex-wrap: wrap; */
+            }
 
-<h3>Purple Wave Theme</h3>
-<ul>
-    <li><a href="https://jackliddy.github.io/designTest1.html">With AI Feedback</a></li>
-    <li><a href="https://jackliddy.github.io/designTest2.html">Without AI Feedback</a></li>
-</ul>
-<h3>Zoom Meeting Visual</h3>
-<ul>
-    <li><a href="https://blueneuron.net/engage-elements/career-stages/mvp-vis-1.html">Zoom Meeting Visual</a></li>
-</ul>
-<h3>Reveal Acronym with Mouse Hover</h3>
-<ul>
-    <li><a href="https://blueneuron.net/engage-elements/framework-table/index.html">Frameworks</a></li>
-</ul>
+            .section-entries {
+                /* margin-bottom: 50px; */
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+            /* blue shadow behind text */
+            /* h2 {
+    text-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
+} */
+            /* drop shadow behind image */
+            img {
+                /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); */
+            }
+            .navbar-header {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
 
+            /* @media screen and (max-width: 768px) {
+                .navbar {
+                    width: 100%;
+                    height: auto;
+                    position: relative;
+                }
 
+                .content {
+                    margin-left: 0;
+                }
+            } */
 
-</body>
+            .iframe-wrapper {
+                position: relative;
+                width: 200px; /* Adjust as per your needs */
+                height: 200px; /* Adjust as per your needs */
+                border: 1px solid #ccc; /* Optional, just for visualization */
+                overflow: hidden; /* To ensure no scrolling */
+            }
+
+            iframe {
+                width: 100%;
+                height: 100%;
+                border: none;
+
+                /* Set the width of the iframe the size you want to transform it FROM */
+                /* width: 1108px; */
+                /* height: 710px; */
+                height: 800px;
+                width: 800px;
+                /* apply the transform */
+                -webkit-transform: scale(0.5);
+                -moz-transform: scale(0.5);
+                -o-transform: scale(0.5);
+                transform: scale(0.5);
+                /* position it, as if it was the original size */
+                position: absolute;
+                left: -300px;
+                top: -300px;
+            }
+
+            .iframe-overlay {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(
+                    255,
+                    255,
+                    255,
+                    0.1
+                ); /* Slightly white to see the overlay. Set to rgba(255, 255, 255, 0) for full transparency */
+                z-index: 1;
+                display: block;
+                cursor: pointer;
+            }
+            .entry {
+                /* aspect-ratio: 1 / 1; */
+                display: flex;
+                flex-wrap: nowrap;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 250px;
+                height: auto;
+            }
+
+            /* center all h1s inside section tags */
+            .entry h3 {
+                text-align: center;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="navbar">
+            <div class="navbar-header">
+                <h2>Community for Rigor</h2>
+                <img src="magnifying-glass-small.png" style="width: 100px" />
+                <h2>Activity Catalog</h2>
+            </div>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#activities">Activities / Games</a></li>
+                <li><a href="#visual-elements">Visual Elements</a></li>
+                <li><a href="#other">Other</a></li>
+            </ul>
+        </div>
+
+        <div class="content">
+            <section id="about">
+                <!-- <h1>Welcome to my Portfolio</h1> -->
+                <h1>About The Activity Catalog</h1>
+                <!-- <p>This page will primarily serve as a resource for inspiration while designing new activities.</p>
+                <p>This page will primarily serve as a resource for inspiration while designing new activities.</p> -->
+                <p>
+                    Welcome to the first iteration of the Community for Rigor
+                    Activity Catalog. Here we’ll be sharing content developed by
+                    the CENTER team such as activities, interactive visuals, and
+                    any sort of digital element that may come in handy during
+                    unit production. The goal is that the content here may
+                    provide inspiration for activity design, as well as provide
+                    starting points from which future activities may be built
+                    off of.
+                </p>
+                <p>
+                    Keep in mind that most of the current content here is a
+                    prototype or proof-of-concept we’ve built in the last few
+                    weeks. We will gradually be adding new content and updating
+                    this page over the course of the project.
+                </p>
+            </section>
+
+            <section id="activities">
+                <h1>Activities / Games</h1>
+                <div class="section-entries">
+                    <div class="entry">
+                        <h3>Title</h3>
+                        <div class="iframe-wrapper">
+                            <a
+                                href="https://jackliddy.github.io/designTest1.html"
+                                target="_blank"
+                                class="iframe-overlay"
+                            ></a>
+                            <iframe
+                                src="https://jackliddy.github.io/designTest1.html"
+                                frameborder="0"
+                                scrolling="no"
+                            ></iframe>
+                        </div>
+                        <p>Subtitle</p>
+                    </div>
+
+                    <div class="entry">
+                        <h3>Drag and Drop Activity</h3>
+                        <div class="iframe-wrapper">
+                            <a
+                                href="https://jackliddy.github.io/abstract-drag-and-drop-V2.html"
+                                target="_blank"
+                                class="iframe-overlay"
+                            ></a>
+                            <iframe
+                                src="https://jackliddy.github.io/abstract-drag-and-drop-V2.html"
+                                frameborder="0"
+                                scrolling="no"
+                            ></iframe>
+                        </div>
+                        <p>Subtitle</p>
+                    </div>
+
+                    <div class="entry">
+                        <h3>LLM Feedback Tool</h3>
+                        <div class="iframe-wrapper">
+                            <a
+                                href="https://jackliddy.github.io/abstract-matching-llm-v2.html"
+                                target="_blank"
+                                class="iframe-overlay"
+                            ></a>
+                            <iframe
+                                src="https://jackliddy.github.io/abstract-matching-llm-v2.html"
+                                frameborder="0"
+                                scrolling="no"
+                            ></iframe>
+                        </div>
+                        <p>Subtitle</p>
+                    </div>
+
+                    <div class="entry">
+                        <h3>LLM Feedback Tool (Light Theme)</h3>
+                        <div class="iframe-wrapper">
+                            <a
+                                href="https://JackLiddy.github.io/abstract-matching-llm-v2-light.html"
+                                target="_blank"
+                                class="iframe-overlay"
+                            ></a>
+                            <iframe
+                                src="https://JackLiddy.github.io/abstract-matching-llm-v2-light.html"
+                                frameborder="0"
+                                scrolling="no"
+                            ></iframe>
+                        </div>
+                        <p>Subtitle</p>
+                    </div>
+
+                    <div class="entry">
+                        <h3>Continous AI Chatbot</h3>
+                        <div class="iframe-wrapper">
+                            <a
+                                href="https://nextjs-chat-tau-orpin.vercel.app/"
+                                target="_blank"
+                                class="iframe-overlay"
+                            ></a>
+                            <iframe
+                                src="https://nextjs-chat-tau-orpin.vercel.app/"
+                                frameborder="0"
+                                scrolling="no"
+                            ></iframe>
+                        </div>
+                        <p>Subtitle</p>
+                    </div>
+
+                    <div class="entry">
+                        <h3>Quiz - Identify Missing Component - Initial</h3>
+                        <div class="iframe-wrapper">
+                            <a
+                                href="https://jackliddy.github.io/duquesne_quiz_1.html"
+                                target="_blank"
+                                class="iframe-overlay"
+                            ></a>
+                            <iframe
+                                src="https://jackliddy.github.io/duquesne_quiz_1.html"
+                                frameborder="0"
+                                scrolling="no"
+                            ></iframe>
+                        </div>
+                        <p>(UI V2)</p>
+                    </div>
+
+                    <div class="entry">
+                        <h3>Quiz - Identify Missing Component - Training</h3>
+                        <div class="iframe-wrapper">
+                            <a
+                                href="https://jackliddy.github.io/duquesne_quiz_2.html"
+                                target="_blank"
+                                class="iframe-overlay"
+                            ></a>
+                            <iframe
+                                src="https://jackliddy.github.io/duquesne_quiz_2.html"
+                                frameborder="0"
+                                scrolling="no"
+                            ></iframe>
+                        </div>
+                        <p>(UI V2)</p>
+                    </div>
+
+                    <div class="entry">
+                        <h3>Quiz - Identify Missing Component - Evaluation</h3>
+                        <div class="iframe-wrapper">
+                            <a
+                                href="https://jackliddy.github.io/duquesne_quiz_3.html"
+                                target="_blank"
+                                class="iframe-overlay"
+                            ></a>
+                            <iframe
+                                src="https://jackliddy.github.io/duquesne_quiz_3.html"
+                                frameborder="0"
+                                scrolling="no"
+                            ></iframe>
+                        </div>
+                        <p>(UI V2)</p>
+                    </div>
+
+                    <div class="entry">
+                        <h3>Example Quiz - Evaluate Research Question</h3>
+                        <div class="iframe-wrapper">
+                            <a
+                                href="https://jackliddy.github.io/activity1_1.html"
+                                target="_blank"
+                                class="iframe-overlay"
+                            ></a>
+                            <iframe
+                                src="https://jackliddy.github.io/activity1_1.html"
+                                frameborder="0"
+                                scrolling="no"
+                            ></iframe>
+                        </div>
+                        <p>(UI V1)</p>
+                    </div>
+
+                    <div class="entry">
+                        <h3>
+                            Example Quiz (Old UI) - Identify Missing Component
+                        </h3>
+                        <div class="iframe-wrapper">
+                            <a
+                                href="https://jackliddy.github.io/activity1_2.html"
+                                target="_blank"
+                                class="iframe-overlay"
+                            ></a>
+                            <iframe
+                                src="https://jackliddy.github.io/activity1_2.html"
+                                frameborder="0"
+                                scrolling="no"
+                            ></iframe>
+                        </div>
+                        <p>(UI V1)</p>
+                    </div>
+
+                    <div class="entry">
+                        <h3>P5.js Simulation</h3>
+                        <div class="iframe-wrapper">
+                            <a
+                                href="https://editor.p5js.org/jackliddy3/full/igX7utq99"
+                                target="_blank"
+                                class="iframe-overlay"
+                            ></a>
+                            <iframe
+                                src="https://editor.p5js.org/jackliddy3/full/igX7utq99"
+                                frameborder="0"
+                                scrolling="no"
+                            ></iframe>
+                        </div>
+                        <p>
+                            (Test inspired by conversation around an activity
+                            demonstrating animal agression - shows red squared
+                            chasing green squares in their vacinity and green
+                            squares running away)
+                        </p>
+                    </div>
+
+                    <div class="entry">
+                        <h3>Page With AutoScroll</h3>
+                        <div class="iframe-wrapper">
+                            <a
+                                href="https://jackliddy.github.io/autoscroll-test.html"
+                                target="_blank"
+                                class="iframe-overlay"
+                            ></a>
+                            <iframe
+                                src="https://jackliddy.github.io/autoscroll-test.html"
+                                frameborder="0"
+                                scrolling="no"
+                            ></iframe>
+                        </div>
+                        <p>Empty</p>
+                    </div>
+
+                    <div class="entry">
+                        <h3>Page With AutoScroll</h3>
+                        <div class="iframe-wrapper">
+                            <a
+                                href="https://jackliddy.github.io/framework-table-scroll.html#Use-Cases"
+                                target="_blank"
+                                class="iframe-overlay"
+                            ></a>
+                            <iframe
+                                src="https://jackliddy.github.io/framework-table-scroll.html#Use-Cases"
+                                frameborder="0"
+                                scrolling="no"
+                            ></iframe>
+                        </div>
+                        <p>With Framework Visual Embedded</p>
+                    </div>
+
+                    <div class="entry">
+                        <h3>Purple Wave Theme</h3>
+                        <div class="iframe-wrapper">
+                            <a
+                                href="https://jackliddy.github.io/designTest1.html"
+                                target="_blank"
+                                class="iframe-overlay"
+                            ></a>
+                            <iframe
+                                src="https://jackliddy.github.io/designTest1.html"
+                                frameborder="0"
+                                scrolling="no"
+                            ></iframe>
+                        </div>
+                        <p>With AI Feedback</p>
+                    </div>
+
+                    <div class="entry">
+                        <h3>Purple Wave Theme</h3>
+                        <div class="iframe-wrapper">
+                            <a
+                                href="https://jackliddy.github.io/designTest2.html"
+                                target="_blank"
+                                class="iframe-overlay"
+                            ></a>
+                            <iframe
+                                src="https://jackliddy.github.io/designTest2.html"
+                                frameborder="0"
+                                scrolling="no"
+                            ></iframe>
+                        </div>
+                        <p>Empty</p>
+                    </div>
+
+                    <div class="entry">
+                        <h3>Zoom Meeting Visual (Career Stages)</h3>
+                        <div class="iframe-wrapper">
+                            <a
+                                href="https://blueneuron.net/engage-elements/career-stages/mvp-vis-1.html"
+                                target="_blank"
+                                class="iframe-overlay"
+                            ></a>
+                            <iframe
+                                src="https://blueneuron.net/engage-elements/career-stages/mvp-vis-1.html"
+                                frameborder="0"
+                                scrolling="no"
+                            ></iframe>
+                        </div>
+                        <p></p>
+                    </div>
+
+                    <div class="entry">
+                        <h3>Framework Table</h3>
+                        <div class="iframe-wrapper">
+                            <a
+                                href="https://blueneuron.net/engage-elements/framework-table/index.html"
+                                target="_blank"
+                                class="iframe-overlay"
+                            ></a>
+                            <iframe
+                                src="https://blueneuron.net/engage-elements/framework-table/index.html"
+                                frameborder="0"
+                                scrolling="no"
+                            ></iframe>
+                        </div>
+                        <p>Reveal Acronym with mouse hover</p>
+                    </div>
+
+                    <div class="entry">
+                        <h3>Exponential Graph with Sliders</h3>
+                        <div class="iframe-wrapper">
+                            <a
+                                href="https://jackliddy.github.io/d3-exponential-v1.html"
+                                target="_blank"
+                                class="iframe-overlay"
+                            ></a>
+                            <iframe
+                                src="https://jackliddy.github.io/d3-exponential-v1.html"
+                                frameborder="0"
+                                scrolling="no"
+                            ></iframe>
+                        </div>
+                        <p></p>
+                    </div>
+
+                    <!-- <h2>Drag and Drop Activity</h2>
+                <iframe src="https://jackliddy.github.io/abstract-drag-and-drop-V2.html" width="100%" height="500"></iframe>
+                
+                <h2>LLM Feedback Tool</h2>
+                <iframe src="https://jackliddy.github.io/abstract-matching-llm-v2.html" width="100%" height="500"></iframe>
+                <iframe src="https://JackLiddy.github.io/abstract-matching-llm-v2-light.html" width="100%" height="500"></iframe>
+                
+                <h3>Continous AI Chatbot</h3>
+                <iframe src="https://nextjs-chat-tau-orpin.vercel.app/" width="100%" height="500"></iframe>
+                
+                <h2>Quizzes</h2>
+                <h3>Quizzes (New UI) - Identify Missing Component</h3>
+                <iframe src="https://jackliddy.github.io/duquesne_quiz_1.html" width="100%" height="500"></iframe>
+                <iframe src="https://jackliddy.github.io/duquesne_quiz_2.html" width="100%" height="500"></iframe>
+                <iframe src="https://jackliddy.github.io/duquesne_quiz_3.html" width="100%" height="500"></iframe>
+                
+                <h3>Quizzes (Old UI)</h3>
+                <iframe src="https://jackliddy.github.io/activity1_1.html" width="100%" height="500"></iframe>
+                <iframe src="https://jackliddy.github.io/activity1_2.html" width="100%" height="500"></iframe>
+                
+                <h2>P5.js Simulation</h2>
+                <iframe src="https://editor.p5js.org/jackliddy3/full/igX7utq99" width="100%" height="500"></iframe>
+                
+                <h2>Visual Elements</h2>
+                <h3>AutoScroll Test</h3>
+                <iframe src="https://jackliddy.github.io/framework-table-scroll.html#Use-Cases" width="100%" height="500"></iframe>
+                <iframe src="https://jackliddy.github.io/autoscroll-test.html" width="100%" height="500"></iframe>
+                
+                <h3>Purple Wave Theme</h3>
+                <iframe src="https://jackliddy.github.io/designTest1.html" width="100%" height="500"></iframe>
+                <iframe src="https://jackliddy.github.io/designTest2.html" width="100%" height="500"></iframe>
+                
+                <h3>Zoom Meeting Visual</h3>
+                <iframe src="https://blueneuron.net/engage-elements/career-stages/mvp-vis-1.html" width="100%" height="500"></iframe>
+                
+                <h3>Reveal Acronym with Mouse Hover</h3>
+                <iframe src="https://blueneuron.net/engage-elements/framework-table/index.html" width="100%" height="500"></iframe>
+                
+                <h3>Data Visualizations</h3>
+                <iframe src="https://jackliddy.github.io/d3-exponential-v1.html" width="100%" height="500"></iframe> -->
+                </div>
+            </section>
+
+            <section id="visual-elements">
+                <h1>Visual Elements</h1>
+                <p>Details of my projects.</p>
+
+                <div class="section-entries"></div>
+            </section>
+
+            <section id="other">
+                <h1>Other</h1>
+                <p>About other.</p>
+                <div class="section-entries"></div>
+            </section>
+        </div>
+
+        <script src="scripts.js"></script>
+    </body>
 </html>
-
-
-
-https://nextjs-chat-tau-orpin.vercel.app/
