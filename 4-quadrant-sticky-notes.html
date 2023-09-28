@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>4 Quadrant Sticky Note</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f5f5f5;
+        }
+        .matrix {
+            width: 600px;
+            height: 600px;
+            display: grid;
+            grid-template-rows: repeat(2, 1fr);
+            grid-template-columns: repeat(2, 1fr);
+            border: 2px solid black;
+            position: relative;
+        }
+        .quadrant {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid black;
+            flex-wrap: wrap;
+            overflow: auto;
+        }
+        .low-interest-high-impact {
+            background-color: #ffe4b5;
+        }
+        .high-interest-high-impact {
+            background-color: #ffb6c1;
+        }
+        .low-interest-low-impact {
+            background-color: #dcdcdc;
+        }
+        .high-interest-low-impact {
+            background-color: #ffe4b5;
+        }
+        .hovered-quadrant {
+            /* background-color: rgb(0, 128, 128); */
+            /* set edge color */
+            /* border: 1px solid #008080; */
+            /* border width and stroke */
+            /* border-radius: 5px; */
+            /* max z index */
+            /* z-index: 100; */
+        }
+        .sticky-note {
+            width: 100px;
+            height: 50px;
+            background-color: #ffeb3b;
+            position: absolute;
+            top: -60px;
+            cursor: pointer;
+            padding: 5px;
+            margin: 5px;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.2);
+        }
+        #note1 { left: -10%; }
+        #note2 { left: 10%; }
+        #note3 { left: 30%; }
+        #note4 { left: 50%; }
+        #note5 { left: 65%; }
+        #note6 { left: 80%; }
+        #note7 { left: 90%; }
+    </style>
+</head>
+<body>
+    <div class="matrix">
+        <div id="note1" class="sticky-note" draggable="true">Note 1</div>
+        <div id="note2" class="sticky-note" draggable="true">Note 2</div>
+        <div id="note3" class="sticky-note" draggable="true">Note 3</div>
+        <div id="note4" class="sticky-note" draggable="true">Note 4</div>
+        <div id="note5" class="sticky-note" draggable="true">Note 5</div>
+        <div id="note6" class="sticky-note" draggable="true">Note 6</div>
+        <div id="note7" class="sticky-note" draggable="true">Note 7</div>
+        <div class="quadrant high-interest-low-impact" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="quadrant high-interest-high-impact" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="quadrant low-interest-low-impact" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+        <div class="quadrant low-interest-high-impact" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    </div>
+
+    <script>
+function allowDrop(ev) {
+    ev.preventDefault();
+    let quadrantElement;
+    if (ev.target.className.includes('sticky-note')) {
+        quadrantElement = ev.target.closest('.quadrant');
+    } else if (ev.target.className.includes('quadrant')) {
+        quadrantElement = ev.target;
+    }
+    
+    if (quadrantElement && ev.dataTransfer.types[0] === "text") {
+        quadrantElement.classList.add('hovered-quadrant');
+    }
+}
+
+        function drop(ev) {
+            ev.preventDefault();
+            // Reset the hover background color after dropping
+            if (ev.target.className.includes('quadrant')) {
+    ev.target.classList.remove('hovered-quadrant');
+} else if (ev.target.className.includes('sticky-note')) {
+    ev.target.closest('.quadrant').classList.remove('hovered-quadrant');
+}
+            
+            if (ev.target.className.includes('quadrant') || ev.target.className.includes('sticky-note')) { 
+                var data = ev.dataTransfer.getData("text");
+                var note = document.getElementById(data);
+                note.style.position = 'relative';
+                note.style.top = 'initial';
+                note.style.left = 'initial';
+
+                if (ev.target.className.includes('sticky-note')) {
+                    ev.target.closest('.quadrant').appendChild(note);
+                } else {
+                    ev.target.appendChild(note);
+                }
+            }
+        }
+
+        function dragLeave(ev) {
+    // Reset the hover effect after leaving the quadrant
+    if (ev.target.className.includes('quadrant')) {
+        ev.target.classList.remove('hovered-quadrant');
+    }
+}
+
+        var notes = document.querySelectorAll('.sticky-note');
+        notes.forEach(function(note) {
+            note.addEventListener("dragstart", function(event) {
+                event.dataTransfer.setData("text", event.target.id);
+            });
+        });
+
+        // Handle the dragleave event to reset the quadrant background color
+        var quadrants = document.querySelectorAll('.quadrant');
+        quadrants.forEach(function(quadrant) {
+            quadrant.addEventListener("dragleave", dragLeave);
+        });
+    </script>
+</body>
+</html>
