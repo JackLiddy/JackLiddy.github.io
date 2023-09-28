@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  width: 960px;
+  height: 500px;
+  position: relative;
+}
+
+svg {
+	width: 100%;
+	height: 100%;
+}
+
+path.slice{
+	stroke-width:2px;
+}
+
+polyline{
+	opacity: .3;
+	stroke: black;
+	stroke-width: 2px;
+	fill: none;
+}
+
+</style>
+<body>
+
+<div>
+  Slice 1: <input type="range" min="1" max="100" value="25" class="slider" id="slider1">
+  <label id="slider1-value">25</label>
+  <br>
+  Slice 2: <input type="range" min="1" max="100" value="25" class="slider" id="slider2">
+  <label id="slider2-value">25</label>
+  <br>
+  Slice 3: <input type="range" min="1" max="100" value="25" class="slider" id="slider3">
+  <label id="slider3-value">25</label>
+  <br>
+  Slice 4 (With Limits): <input type="range" min="1" max="100" value="25" class="slider" id="slider4">
+    <label id="slider4-value">25</label>
+  <br>
+  <br>
+  Remaining Value: <label id="remaining-value">0</label>
+  <br>
+  <br>
+  <br>
+</div>
+<!-- TODO: Have label display the current value -->
+<div>
+    Transition Speed: <input type="range" min="10" max="1500" value="1000" class="slider" id="slider-animation">
+    <!-- current transition speed displayed here -->
+    <label id="transition-speed">1000</label>
+    <br>
+</div>
+
+
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script>
+
+let animationSpeed = 1000;
+
+
+// Handle animation speed slider
+document.getElementById('slider-animation').addEventListener('input', function() {
+    animationSpeed = +document.getElementById('slider-animation').value;
+    console.log(animationSpeed);
+    // Update label
+    document.getElementById('transition-speed').innerHTML = animationSpeed;
+});
+// Handle slider 1
+document.getElementById('slider1').addEventListener('input', function() {
+    let remainingValue = getRemainingValue();
+    let currentValue = +document.getElementById('slider1').value;
+    let maxValue = currentValue + remainingValue;    
+
+    if (+document.getElementById('slider1').value > maxValue) {
+        document.getElementById('slider1').value = maxValue;
+    }
+
+    document.getElementById('slider1-value').innerHTML = document.getElementById('slider1').value;
+    getRemainingValue();
+});
+// Handle slider 2
+document.getElementById('slider2').addEventListener('input', function() {
+    let remainingValue = getRemainingValue();
+    let currentValue = +document.getElementById('slider2').value;
+    let maxValue = currentValue + remainingValue;    
+
+    if (+document.getElementById('slider2').value > maxValue) {
+        document.getElementById('slider2').value = maxValue;
+    }
+
+    document.getElementById('slider2-value').innerHTML = document.getElementById('slider2').value;
+    getRemainingValue();
+});
+// Handle slider 3
+document.getElementById('slider3').addEventListener('input', function() {
+    let remainingValue = getRemainingValue();
+    let currentValue = +document.getElementById('slider3').value;
+    let maxValue = currentValue + remainingValue;    
+
+    if (+document.getElementById('slider3').value > maxValue) {
+        document.getElementById('slider3').value = maxValue;
+    }
+
+    document.getElementById('slider3-value').innerHTML = document.getElementById('slider3').value;
+    getRemainingValue();
+});
+// Handle slider 4
+document.getElementById('slider4').addEventListener('input', function() {
+    let remainingValue = getRemainingValue();
+    let currentValue = +document.getElementById('slider4').value;
+    let maxValue = currentValue + remainingValue;
+
+    if (+document.getElementById('slider4').value > maxValue) {
+        document.getElementById('slider4').value = maxValue;
+    }
+    document.getElementById('slider4-value').innerHTML = document.getElementById('slider4').value;
+    getRemainingValue();
+});
+
+
+function getRemainingValue() {
+    let remainingValue  = 100 - (+document.getElementById('slider1').value + +document.getElementById('slider2').value + +document.getElementById('slider3').value + +document.getElementById('slider4').value);
+    document.getElementById('remaining-value').innerHTML = remainingValue;
+    return remainingValue;
+}
+
+// Set limit of slider 4 to never go beyond 50
+// document.getElementById('slider4').addEventListener('input', function() {
+//     if (+document.getElementById('slider4').value > 50) {
+//         document.getElementById('slider4').value = 50;
+//     }
+// });
+
+
+
+
+var svg = d3.select("body")
+    .append("svg")
+    .append("g")
+
+svg.append("g")
+    .attr("class", "slices");
+svg.append("g")
+    .attr("class", "labels");
+svg.append("g")
+    .attr("class", "lines");
+
+var width = 960,
+    height = 450,
+    radius = Math.min(width, height) / 2;
+
+var pie = d3.layout.pie()
+    .sort(null)
+    .value(function(d) {
+        return d.value;
+    });
+
+var arc = d3.svg.arc()
+    .outerRadius(radius * 0.8)
+    .innerRadius(radius * 0.4);
+
+var outerArc = d3.svg.arc()
+    .innerRadius(radius * 0.9)
+    .outerRadius(radius * 0.9);
+
+svg.attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+var key = function(d) { return d.data.label; };
+
+var color = d3.scale.ordinal()
+    .domain(["Slice 1", "Slice 2", "Slice 3", "Slice 4"])
+    .range(["#6c98c7", "#cac7c8", "#de4c4e", "#ef9699"]);
+
+function getData() {
+    return [
+        { label: "Slice 1", value: +document.getElementById('slider1').value },
+        { label: "Slice 2", value: +document.getElementById('slider2').value },
+        { label: "Slice 3", value: +document.getElementById('slider3').value },
+        { label: "Slice 4", value: +document.getElementById('slider4').value }
+    ];
+}
+
+change(getData());
+
+d3.selectAll(".slider").on("input", function() {
+    change(getData());
+});
+
+function change(data) {
+    var total = data.reduce((acc, slice) => acc + slice.value, 0);
+    
+    /* ------- PIE SLICES ------- */
+    var slice = svg.select(".slices").selectAll("path.slice")
+        .data(pie(data), key);
+
+    slice.enter()
+        .insert("path")
+        .style("fill", function(d) { return color(d.data.label); })
+        .attr("class", "slice");
+
+    slice.transition().duration(animationSpeed)
+        .attrTween("d", function(d) {
+            this._current = this._current || d;
+            var interpolate = d3.interpolate(this._current, d);
+            this._current = interpolate(0);
+            return function(t) {
+                return arc(interpolate(t));
+            };
+        });
+
+    slice.exit().remove();
+
+    /* ------- TEXT LABELS ------- */
+    var text = svg.select(".labels").selectAll("text")
+        .data(pie(data), key);
+
+    text.enter()
+        .append("text")
+        .attr("dy", ".35em");
+
+    text.text(function(d) {
+        var percentage = (d.data.value / total * 100).toFixed(2);
+        return d.data.label + ": " + percentage + "%";
+    });
+
+    function midAngle(d) {
+        return d.startAngle + (d.endAngle - d.startAngle) / 2;
+    }
+
+    /* ------- TEXT LABELS TRANSITIONS ------- */
+    text.transition().duration(animationSpeed)
+        .attrTween("transform", function(d) {
+            this._current = this._current || d;
+            var interpolate = d3.interpolate(this._current, d);
+            this._current = interpolate(0);
+            return function(t) {
+                var d2 = interpolate(t);
+                var pos = outerArc.centroid(d2);
+                pos[0] = radius * (midAngle(d2) < Math.PI ? 1 : -1);
+                return "translate(" + pos + ")";
+            };
+        })
+        .styleTween("text-anchor", function(d) {
+            this._current = this._current || d;
+            var interpolate = d3.interpolate(this._current, d);
+            this._current = interpolate(0);
+            return function(t) {
+                var d2 = interpolate(t);
+                return midAngle(d2) < Math.PI ? "start" : "end";
+            };
+        });
+
+    text.exit().remove();
+
+    /* ------- SLICE TO TEXT POLYLINES ------- */
+    var polyline = svg.select(".lines").selectAll("polyline")
+        .data(pie(data), key);
+
+    polyline.enter().append("polyline");
+
+    polyline.transition().duration(animationSpeed)
+        .attrTween("points", function(d) {
+            this._current = this._current || d;
+            var interpolate = d3.interpolate(this._current, d);
+            this._current = interpolate(0);
+            return function(t) {
+                var d2 = interpolate(t);
+                var pos = outerArc.centroid(d2);
+                pos[0] = radius * 0.95 * (midAngle(d2) < Math.PI ? 1 : -1);
+                return [arc.centroid(d2), outerArc.centroid(d2), pos];
+            };
+        });
+
+    polyline.exit().remove();
+}
+
+
+
+</script>
+</body>
