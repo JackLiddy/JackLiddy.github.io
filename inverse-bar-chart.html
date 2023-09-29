@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>D3.js Bar Chart</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        /* Default Bar Colors */
+        .bar.A {
+            fill: red;
+        }
+
+        .bar.B {
+            fill: blue;
+        }
+
+        /* Hover Effects */
+        .bar.A.active {
+            fill: darkred;
+        }
+
+        .bar.B.active {
+            fill: darkblue;
+        }
+
+        /* Drag Colors */
+        .bar.A.dragging {
+            fill: #FF6347; /* Tomato for A's drag */
+        }
+
+        .bar.B.dragging {
+            fill: #4169E1; /* RoyalBlue for B's drag */
+        }
+    </style>
+</head>
+
+<body>
+    <br />
+    <br />
+    <svg width="600" height="400"></svg>
+
+    <script>
+        const dataset = [
+            { label: "A", value: 25 },
+            { label: "B", value: 75 },
+        ];
+
+        const svgWidth = 600;
+        const svgHeight = 400;
+        const barPadding = 10;
+        const barHeight = svgHeight / dataset.length - barPadding;
+
+        const padding = 20;
+        const xScale = d3
+            .scaleLinear()
+            .domain([0, 100])
+            .range([0, svgWidth - padding]);
+
+        const svg = d3.select("svg");
+
+        const dragHandler = d3
+            .drag()
+            .on("start", function(event, d) {
+                const barElement = svg.select(
+                    `rect.bar[data-id='${d.label}']`
+                );
+                barElement.classed("dragging", true);
+            })
+            .on("drag", function(event, d) {
+                const delta = xScale.invert(xScale(d.value) + event.dx) - d.value;
+                const proposedValue = d.value + delta;
+
+                if (proposedValue >= 0 && proposedValue <= 100) {
+                    d.value = proposedValue;
+                    const otherBar = dataset.find(bar => bar.label !== d.label);
+                    otherBar.value = 100 - d.value;
+                }
+
+                // Update bars
+                svg.selectAll("rect.bar")
+                    .data(dataset)
+                    .attr("x", d => xScale(0))
+                    .attr("width", d => xScale(d.value));
+
+                // Update labels
+                svg.selectAll("text")
+                    .data(dataset)
+                    .attr("x", d => xScale(d.value) + 5)
+                    .text(d => d.label + ": " + Math.round(d.value));
+            })
+            .on("end", function(event, d) {
+                const barElement = svg.select(
+                    `rect.bar[data-id='${d.label}']`
+                );
+                barElement.classed("dragging", false);
+            });
+
+        svg.selectAll(".bar")
+            .data(dataset)
+            .enter()
+            .append("rect")
+            .attr("class", d => "bar " + d.label)
+            .attr("y", (d, i) => i * (barHeight + barPadding))
+            .attr("x", d => xScale(0))
+            .attr("height", barHeight)
+            .attr("width", d => xScale(d.value))
+            .attr("data-id", d => d.label);
+
+        svg.selectAll(".overlay")
+            .data(dataset)
+            .enter()
+            .append("rect")
+            .attr("class", "overlay")
+            .attr("y", (d, i) => i * (barHeight + barPadding))
+            .attr("x", 0)
+            .attr("height", barHeight)
+            .attr("width", svgWidth)
+            .style("opacity", 0)
+            .call(dragHandler)
+            .on("mouseover", function(event, d) {
+                const barElement = svg.select(
+                    `rect.bar[data-id='${d.label}']`
+                );
+                barElement.classed("active", true);
+            })
+            .on("mouseout", function(event, d) {
+                const barElement = svg.select(
+                    `rect.bar[data-id='${d.label}']`
+                );
+                barElement.classed("active", false);
+            });
+
+        svg.selectAll("text")
+            .data(dataset)
+            .enter()
+            .append("text")
+            .attr("y", (d, i) => i * (barHeight + barPadding) + barHeight / 2)
+            .attr("x", d => xScale(d.value) + 5)
+            .attr("alignment-baseline", "middle")
+            .attr("font-family", "sans-serif")
+            .attr("font-size", "12px")
+            .text(d => d.label + ": " + Math.round(d.value));
+    </script>
+</body>
+
+</html>
