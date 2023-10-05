@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Activity 1.3</title>
+        <style>
+            .main-activity-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                margin: 35px;
+            }
+            #sticky-header {
+                display: flex;
+                justify-content: space-evenly;
+                padding: 20px 0;
+                background-color: #f4f4f4;
+                width: 70vw;
+                height: 100px;
+                margin-bottom: 25px;
+            }
+
+            .sticky-note {
+                width: 100px;
+                height: 100px;
+                background-color: #ffeb3b;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+            }
+
+            #whiteboard {
+                width: 70vw;
+                height: 70vh;
+                /* background-color: white; */
+                background-color: rgb(255, 246, 209);
+                position: relative;
+                /* overflow: hidden; to ensure notes don't spill out */
+            }
+
+            /* whiteboard styling */
+            .container {
+                display: flex;
+                flex-wrap: wrap;
+                position: relative;
+                /* width: 400px; */
+                /* height: 400px; */
+                /* width: 100vw; */
+                /* height: 100vh; */
+                width: 100%;
+                height: 100%;
+            }
+
+            .quadrant {
+                display: flex;
+                flex: 1 1 50%; /* grow, shrink, base size  */
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+            }
+
+            .green {
+                background-color: #c2e597;
+            }
+
+            .blue {
+                background-color: #a5d5ff;
+            }
+
+            .grey {
+                background-color: #d1d1d1;
+            }
+
+            .tan {
+                background-color: #ffdaa5;
+            }
+
+            .line {
+                position: absolute;
+                background-color: black;
+            }
+
+            .horizontal {
+                width: 100%;
+                height: 2px;
+                top: 50%;
+                transform: translateY(-50%);
+            }
+
+            .vertical {
+                width: 2px;
+                height: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .arrow {
+                position: absolute;
+                width: 0;
+                height: 0;
+                border-style: solid;
+            }
+
+            .horizontal-arrow {
+                left: 50%;
+                bottom: -10px;
+                border-width: 10px 10px 0;
+                border-color: black transparent transparent transparent;
+                transform: translateX(-50%);
+            }
+
+            .vertical-arrow {
+                top: 50%;
+                right: -10px;
+                border-width: 10px 0 10px 10px;
+                border-color: transparent transparent transparent black;
+                transform: translateY(-50%);
+            }
+
+            /* New arrow classes for the top and left sides */
+            .arrow.horizontal-arrow-top {
+                left: 50%;
+                top: -10px;
+                border-width: 0 10px 10px;
+                border-color: transparent transparent black transparent;
+                transform: translateX(-50%);
+            }
+
+            .arrow.vertical-arrow-left {
+                top: 50%;
+                left: -10px;
+                border-width: 10px 10px 10px 0;
+                border-color: transparent black transparent transparent;
+                transform: translateY(-50%);
+            }
+
+            .label {
+                position: absolute;
+                font-weight: bold;
+                z-index: 10; /* Ensure labels are on top */
+            }
+
+            .horizontal-left {
+                /* left: 10px; */
+                left: -120px;
+                top: 50%;
+                transform: translateY(-60%); /* Adjust the alignment */
+            }
+
+            .horizontal-right {
+                /* right: 10px; */
+                right: -125px;
+                top: 50%;
+                transform: translateY(-60%); /* Adjust the alignment */
+            }
+
+            .vertical-top {
+                /* top: 10px; */
+                top: -25px;
+                left: 50%;
+                transform: translateX(-50%) translateY(-10%); /* Adjust the alignment */
+            }
+
+            .vertical-bottom {
+                /* bottom: 10px; */
+                bottom: -25px;
+                left: 50%;
+                transform: translateX(-50%) translateY(10%); /* Adjust the alignment */
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="main-activity-container">
+            <div id="instruction-container">
+                <h1>R2R Activity 1.3 (Prototype)</h1>
+                <!-- <p>
+                    Drag the notes from the header onto the whiteboard. They
+                    should stick to the whiteboard and not be draggable off of
+                    it.
+                </p> -->
+            </div>
+            <div id="sticky-header">
+                <div class="sticky-note" draggable="true">Note 1</div>
+                <div class="sticky-note" draggable="true">Note 2</div>
+                <div class="sticky-note" draggable="true">Note 3</div>
+                <!-- Add as many notes as required -->
+            </div>
+            <div id="whiteboard">
+                <div class="label horizontal-left">LOW IMPACT</div>
+                <div class="label horizontal-right">HIGH IMPACT</div>
+                <div class="label vertical-top">HIGH INTEREST</div>
+                <div class="label vertical-bottom">LOW INTEREST</div>
+                <div class="container">
+                    <div class="quadrant green">WE CARE BUT LOW IMPACT</div>
+                    <div class="quadrant blue">WE CARE AND BIG IMPACT</div>
+                    <div class="quadrant grey">DON'T DO IT</div>
+                    <div class="quadrant tan">BIG IMPACT BUT DON'T CARE</div>
+                    <div class="line horizontal"></div>
+                    <div class="line vertical"></div>
+                    <div class="arrow horizontal-arrow"></div>
+                    <div class="arrow vertical-arrow"></div>
+                    <div class="arrow horizontal-arrow-top"></div>
+                    <div class="arrow vertical-arrow-left"></div>
+                </div>
+            </div>
+            <button
+                id="continue-button"
+                style="
+                    position: absolute;
+                    bottom: 2%;
+                    right: 2%;
+                    padding: 10px 20px;
+                "
+            >
+                Continue
+            </button>
+        </div>
+
+        <script>
+            // Get the current session ID from the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentSessionID = urlParams.get("sessionId");
+
+            // error handling for missing sessionId
+            if (currentSessionID == null) {
+                alert(
+                    "No session ID found. Please return to the previous page and try again."
+                );
+            }
+
+            let noteScores = {
+                "Note 1": { impact: 0, interest: 0 },
+                "Note 2": { impact: 0, interest: 0 },
+                "Note 3": { impact: 0, interest: 0 },
+                // Add more notes as needed
+            };
+
+            const whiteboard = document.getElementById("whiteboard");
+            let draggedNote = null;
+
+            // Function to update drag & drop events for a note
+            function addDragDropEvents(note) {
+                note.addEventListener("dragstart", (e) => {
+                    draggedNote = e.target;
+                });
+
+                note.addEventListener("dragend", (e) => {
+                    draggedNote = null;
+                });
+            }
+
+            // Add drag & drop events to initial notes
+            document
+                .querySelectorAll(".sticky-note")
+                .forEach(addDragDropEvents);
+
+            whiteboard.addEventListener("dragover", (e) => {
+                e.preventDefault(); // Allow dropping
+            });
+
+            whiteboard.addEventListener("drop", (e) => {
+                e.preventDefault();
+
+                if (!draggedNote) return;
+
+                // Correcting for any potential border or padding on the whiteboard
+                const boardRect = whiteboard.getBoundingClientRect();
+
+                draggedNote.style.left =
+                    e.clientX -
+                    boardRect.left -
+                    draggedNote.offsetWidth / 2 +
+                    "px";
+                draggedNote.style.top =
+                    e.clientY -
+                    boardRect.top -
+                    draggedNote.offsetHeight / 2 +
+                    "px";
+
+                // Add the note to the whiteboard if it's not already there
+                if (draggedNote.parentNode !== whiteboard) {
+                    whiteboard.appendChild(draggedNote);
+                }
+
+                // Ensure it has absolute positioning
+                draggedNote.style.position = "absolute";
+
+                // Re-add drag & drop events in case this is a new note
+                addDragDropEvents(draggedNote);
+
+                // Once the note is placed, calculate its score
+                updateNoteScore(draggedNote);
+            });
+
+            function updateNoteScore(note) {
+                const noteRect = note.getBoundingClientRect();
+                const boardRect = whiteboard.getBoundingClientRect();
+
+                const noteCenterX = noteRect.left + noteRect.width / 2;
+                const noteCenterY = noteRect.top + noteRect.height / 2;
+
+                const boardCenterX = boardRect.left + boardRect.width / 2;
+                const boardCenterY = boardRect.top + boardRect.height / 2;
+
+                const relativeX = noteCenterX - boardCenterX;
+                const relativeY = noteCenterY - boardCenterY;
+
+                // Normalize the values to the range of -10 to 10
+                const impactScore = (relativeX / (boardRect.width / 2)) * 10;
+                const interestScore =
+                    -(relativeY / (boardRect.height / 2)) * 10; // Y-axis is inverted in screen coordinates
+
+                // Update the scores in our data structure
+                noteScores[note.textContent] = {
+                    impact: Math.round(impactScore),
+                    interest: Math.round(interestScore),
+                };
+
+                console.log(noteScores); // For debugging purposes
+            }
+
+            // Select the continue button
+            const continueButton = document.getElementById("continue-button");
+
+            // Attach the click handler
+            continueButton.addEventListener("click", handleContinueClick);
+
+            function handleContinueClick() {
+                // Placeholder for now, you can add your logic here later
+                console.log("Continue button clicked!"); // For debugging purposes
+
+                // Alert user if they haven't placed all notes
+                if (
+                    document.querySelectorAll(".sticky-note").length !=
+                    document.querySelectorAll("#whiteboard > .sticky-note")
+                        .length
+                ) {
+                    alert("Please place all notes before continuing");
+                } else {
+                    // TODO: confirm that session exists
+
+                    // Post a record to userSubmissions table with currentSessionID and noteScores and an entryID
+                    let entryID = Math.floor(Math.random() * 1000000) + 1;
+                    const jsonScores = JSON.stringify(noteScores);
+
+                    let url =
+                        "https://api.sheety.co/f86a219e4c66ae9bacf55c87219398c1/activeSessions1/userSubmissions";
+                    let body = {
+                        usersubmission: {
+                            sessionId: currentSessionID,
+                            entryId: entryID,
+                            noteScores: jsonScores,
+                        },
+                    };
+                    fetch(url, {
+                        method: "POST",
+                        body: JSON.stringify(body),
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    })
+                        .then((response) => response.json())
+                        .then((json) => {
+                            // Update the div with the new sessionId
+                            // document.getElementById("newSessionIdDisplay").textContent = "New Session ID: " + json.session.sessionId;
+                            console.log("response: ", json);
+                            console.log("Continue to results");
+                            // Redirect to results page
+                            window.location.href = `https://jackliddy.github.io/R2R-activity-1-3/results.html?sessionId=${currentSessionID}`;
+                        })
+                        .catch((error) => {
+                            console.log(error);
+                            alert("There was an error submitting your answer.");
+                        });
+                }
+            }
+        </script>
+    </body>
+</html>
