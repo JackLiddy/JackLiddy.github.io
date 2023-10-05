@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Activity 1.3</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 20px;
+                background-color: #f4f4f4;
+            }
+            .container {
+                display: flex;
+                justify-content: space-between;
+                max-width: 800px;
+                margin: 20px auto;
+                padding: 20px;
+                background-color: #fff;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            .box {
+                flex: 1;
+                padding: 20px;
+                margin: 10px;
+                border: 1px solid #ddd;
+                text-align: center;
+            }
+            button,
+            input {
+                padding: 10px 20px;
+                margin-top: 20px;
+            }
+            .header {
+                text-align: center;
+                padding: 20px;
+            }
+            #join-new-session-btn {
+                /* display: none; */
+                visibility: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <h2>Welcome!</h2>
+            <p>Instructions here</p>
+        </div>
+        <div class="container">
+            <div class="box">
+                <h3>Create a new session</h3>
+                <button id="new-session-btn">Get code</button>
+                <div id="new-session-id-display"></div>
+                <button id="join-new-session-btn">Join this Session</button>
+            </div>
+            <div class="box">
+                <h3>Join an existing session</h3>
+                <label>Enter code here</label>
+                <input id="session-id-input" type="text" />
+                <button id="join-existing-session-btn">Join</button>
+            </div>
+        </div>
+
+        <script>
+
+            let newSessionId = null;
+
+            // Click handler for starting a new session
+            document
+                .getElementById("new-session-btn")
+                .addEventListener("click", function () {
+                    let randomInteger = Math.floor(Math.random() * 1000000) + 1;
+
+                    let url =
+                        "https://api.sheety.co/f86a219e4c66ae9bacf55c87219398c1/activeSessions1/sessions";
+                    let body = {
+                        session: {
+                            sessionId: randomInteger,
+                        },
+                    };
+                    fetch(url, {
+                        method: "POST",
+                        body: JSON.stringify(body),
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    })
+                        .then((response) => response.json())
+                        .then((json) => {
+                            // Update the div with the new sessionId
+                            document.getElementById(
+                                "new-session-id-display"
+                            ).textContent =
+                                "New Session ID: " + json.session.sessionId;
+                            console.log(json.session);
+
+                            // show the join session button
+                            document.getElementById(
+                                "join-new-session-btn"
+                            ).style.visibility = "visible";
+                            
+                            // disable the new session button
+                            document.getElementById(
+                                "new-session-btn"
+                            ).disabled = true;
+
+                            newSessionId = randomInteger;
+                        });
+                });
+
+                // Click handler for the Join new Session button - redirects user to the main activity page with newly created sessionId in the URL
+                document
+                .getElementById("join-new-session-btn")
+                .addEventListener("click", function () {
+                    // Redirect to the main page
+                    // Redirect to a spefified link
+                    window.location.href = `https://jackliddy.github.io/R2R-activity-1-3/activity.html?sessionId=${newSessionId}`;
+                });
+
+
+                // Click handler for the Join existing Session button
+                    document
+                .getElementById("join-existing-session-btn")
+                .addEventListener("click", function () {
+                    let enteredSessionId = parseInt(
+                        document.getElementById("session-id-input").value
+                    );
+                    console.log(enteredSessionId);
+
+                    let url =
+                        "https://api.sheety.co/f86a219e4c66ae9bacf55c87219398c1/activeSessions1/sessions";
+                    fetch(url)
+                        .then((response) => response.json())
+                        .then((json) => {
+                            let sessionExists = json.sessions.some(
+                                (session) =>
+                                    session.sessionId === enteredSessionId
+                            );
+                            if (sessionExists) {
+                                console.log("Session exists!");
+                                // Redirect to the main page
+                                // Redirect to a spefified link
+                                window.location.href = `https://jackliddy.github.io/R2R-activity-1-3/activity.html?sessionId=${enteredSessionId}`;
+                            } else {
+                                console.log("Session does not exist.");
+                                // Display an error message
+                            }
+                            console.log(json.sessions);
+                        })
+                        .catch((error) => {
+                            console.error(
+                                "There was an error fetching the data:",
+                                error
+                            );
+                        });
+                });
+
+        </script>
+    </body>
+</html>
