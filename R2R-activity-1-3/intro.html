@@ -40,6 +40,10 @@
                 text-align: center;
                 border-radius: 8px;
                 background-color: #f9fafb;
+                display: flex;
+                flex-direction: column;
+                align-content: center;
+                align-items: center;
             }
 
             .header {
@@ -156,6 +160,97 @@
 }
 
 
+/* spinner CSS */
+
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+.lds-spinner {
+  color: official;
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.lds-spinner div {
+  transform-origin: 40px 40px;
+  animation: lds-spinner 1.2s linear infinite;
+}
+.lds-spinner div:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 3px;
+  left: 37px;
+  width: 6px;
+  height: 18px;
+  border-radius: 20%;
+  background: #25d583;
+}
+.lds-spinner div:nth-child(1) {
+  transform: rotate(0deg);
+  animation-delay: -1.1s;
+}
+.lds-spinner div:nth-child(2) {
+  transform: rotate(30deg);
+  animation-delay: -1s;
+}
+.lds-spinner div:nth-child(3) {
+  transform: rotate(60deg);
+  animation-delay: -0.9s;
+}
+.lds-spinner div:nth-child(4) {
+  transform: rotate(90deg);
+  animation-delay: -0.8s;
+}
+.lds-spinner div:nth-child(5) {
+  transform: rotate(120deg);
+  animation-delay: -0.7s;
+}
+.lds-spinner div:nth-child(6) {
+  transform: rotate(150deg);
+  animation-delay: -0.6s;
+}
+.lds-spinner div:nth-child(7) {
+  transform: rotate(180deg);
+  animation-delay: -0.5s;
+}
+.lds-spinner div:nth-child(8) {
+  transform: rotate(210deg);
+  animation-delay: -0.4s;
+}
+.lds-spinner div:nth-child(9) {
+  transform: rotate(240deg);
+  animation-delay: -0.3s;
+}
+.lds-spinner div:nth-child(10) {
+  transform: rotate(270deg);
+  animation-delay: -0.2s;
+}
+.lds-spinner div:nth-child(11) {
+  transform: rotate(300deg);
+  animation-delay: -0.1s;
+}
+.lds-spinner div:nth-child(12) {
+  transform: rotate(330deg);
+  animation-delay: 0s;
+}
+@keyframes lds-spinner {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+
     </style>
 </head>
 <body>
@@ -168,7 +263,25 @@
             <h3>Create a new session</h3>
             <button id="new-session-btn">Generate code</button>
             <br>
-            <br>
+
+            <div class="spinner-container">
+            <!-- spinner -->
+                <div class="lds-spinner" id="loading-spinner" style="display: none;">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
+
             <div id="new-session-id-display"></div>
             <div class="tooltip">
                 <button id="copy-to-clipboard-btn" onmouseout="handleMouseOut()">
@@ -184,9 +297,6 @@
             <button id="join-existing-session-btn">Join</button>
         </div>
     </div>
-
-    <!-- I've kept your JavaScript as it is. Make sure to review it if there's any additional functionality or changes you'd like to make. -->
-
     <script>
 
 function handleMouseOut() {
@@ -200,6 +310,10 @@ function handleMouseOut() {
 document
     .getElementById("new-session-btn")
     .addEventListener("click", function () {
+
+        // Show the loading spinner
+        document.getElementById("loading-spinner").style.display = "block";
+
         let randomInteger = Math.floor(Math.random() * 1000000) + 1;
 
         let url =
@@ -240,6 +354,14 @@ document
                 ).disabled = true;
 
                 newSessionId = randomInteger;
+
+                // Hide the loading spinner
+                document.getElementById("loading-spinner").style.display = "none";
+            })
+            .catch((error) => {
+                // Hide the loading spinner in case of an error too
+                document.getElementById("loading-spinner").style.display = "none";
+                console.error("There was an error fetching the data:", error);
             });
     });
 
