@@ -34,6 +34,7 @@
                 justify-content: center;
                 align-items: center;
                 cursor: pointer;
+                text-align: center;
             }
             .sticky-note:hover {
                 background-color: #ffe100; /* Darker shade of yellow to indicate it's selected */
@@ -368,12 +369,7 @@
                         });
                         console.log("Note scores array", noteScoresArray);
 
-                        // Build a data structure in which note is paired with a median linear score
-                        // The linear score is calculated by taking the average of the impact score and interest score, ie: (impactScore + interestScore) / 2
-                        // The median linear score is calculated by taking the median of the linear scores for each note
-                        // Also, we are finding the median linear score of each note, not of all of the notes in a given user submission
-                        // For instance, if each user submits scors for notes A, B, and C, then we want the median linear score for all of the A's, the median linear score for all of the B's, and the median linear score for all of the C's
-                        // Implement the functionality I described here:
+
 
                         // Create an object to store linear scores for each note
                         let linearScores = {};
@@ -492,106 +488,13 @@
             const continueButton = document.getElementById("continue-button");
             continueButton.addEventListener("click", handleContinueClick);
             function handleContinueClick() {
-                // Placeholder for now, you can add your logic here later
+                // Navigate to resources page
+                const currentSessionID = urlParams.get("sessionId");
+                window.location.href = `https://jackliddy.github.io/R2R-activity-1-3/resources.html?sessionId=${currentSessionID}`;
+                // window.location.href = `http://127.0.0.1:5501/R2R-activity-1-3%20V2/resources.html?sessionId=${currentSessionID}`;
+
             }
 
-            // !!! Start of depricated drag and drop logic
-
-            /*
-            let noteScores = {
-                "Note 1": { impact: 0, interest: 0 },
-                "Note 2": { impact: 0, interest: 0 },
-                "Note 3": { impact: 0, interest: 0 },
-                // Add more notes as needed
-            };
-
-            const whiteboard = document.getElementById("whiteboard");
-            let draggedNote = null;
-
-            // Function to update drag & drop events for a note
-            function addDragDropEvents(note) {
-                note.addEventListener("dragstart", (e) => {
-                    draggedNote = e.target;
-                });
-
-                note.addEventListener("dragend", (e) => {
-                    draggedNote = null;
-                });
-            }
-
-            // Add drag & drop events to initial notes
-            document
-                .querySelectorAll(".sticky-note")
-                .forEach(addDragDropEvents);
-
-            whiteboard.addEventListener("dragover", (e) => {
-                e.preventDefault(); // Allow dropping
-            });
-
-            whiteboard.addEventListener("drop", (e) => {
-                e.preventDefault();
-
-                if (!draggedNote) return;
-
-                // Correcting for any potential border or padding on the whiteboard
-                const boardRect = whiteboard.getBoundingClientRect();
-
-                draggedNote.style.left =
-                    e.clientX -
-                    boardRect.left -
-                    draggedNote.offsetWidth / 2 +
-                    "px";
-                draggedNote.style.top =
-                    e.clientY -
-                    boardRect.top -
-                    draggedNote.offsetHeight / 2 +
-                    "px";
-
-                // Add the note to the whiteboard if it's not already there
-                if (draggedNote.parentNode !== whiteboard) {
-                    whiteboard.appendChild(draggedNote);
-                }
-
-                // Ensure it has absolute positioning
-                draggedNote.style.position = "absolute";
-
-                // Re-add drag & drop events in case this is a new note
-                addDragDropEvents(draggedNote);
-
-                // Once the note is placed, calculate its score
-                updateNoteScore(draggedNote);
-            });
-
-            // Function to calculate the impact and interest scores of a note based on its position - not to be used in this phase
-            function updateNoteScore(note) {
-                const noteRect = note.getBoundingClientRect();
-                const boardRect = whiteboard.getBoundingClientRect();
-
-                const noteCenterX = noteRect.left + noteRect.width / 2;
-                const noteCenterY = noteRect.top + noteRect.height / 2;
-
-                const boardCenterX = boardRect.left + boardRect.width / 2;
-                const boardCenterY = boardRect.top + boardRect.height / 2;
-
-                const relativeX = noteCenterX - boardCenterX;
-                const relativeY = noteCenterY - boardCenterY;
-
-                // Normalize the values to the range of -10 to 10
-                const impactScore = (relativeX / (boardRect.width / 2)) * 10;
-                const interestScore =
-                    -(relativeY / (boardRect.height / 2)) * 10; // Y-axis is inverted in screen coordinates
-
-                // Update the scores in our data structure
-                noteScores[note.textContent] = {
-                    impact: Math.round(impactScore),
-                    interest: Math.round(interestScore),
-                };
-
-                console.log(noteScores); // For debugging purposes
-            }
-
-            */
-            // !!! End of depricated drag and drop logic
 
             // Function to convert impact and interest values to X and Y coordinates on the whiteboard
             function getCoordinatesFromScores(impact, interest) {
@@ -604,32 +507,6 @@
                 return { x, y };
             }
 
-            // document.querySelectorAll(".sticky-note").forEach(note => {
-            //     note.addEventListener('mouseenter', function() {
-            //         // Clear the previous rendered notes
-
-            //         console.log("this.textContent", this.textContent);
-
-            //         document.querySelectorAll(".whiteboard-note").forEach(el => el.remove());
-
-            //         // Get the entries related to this note from noteScoresArray
-            //         const entries = noteScoresArray.map(entry => entry[this.textContent]);
-
-            //         entries.forEach(entry => {
-            //             const { impact, interest } = entry;
-            //             const coords = getCoordinatesFromScores(impact, interest);
-
-            //             // Create a copy of the hovered note
-            //             const noteCopy = note.cloneNode(true);
-            //             noteCopy.style.position = 'absolute';
-            //             noteCopy.style.left = coords.x + 'px';
-            //             noteCopy.style.top = coords.y + 'px';
-            //             noteCopy.classList.add('whiteboard-note'); // Add a class to differentiate these from original sticky-notes
-
-            //             whiteboard.appendChild(noteCopy);
-            //         });
-            //     });
-            // });
         </script>
     </body>
 </html>
