@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Activity 1.3</title>
+        <title>Whiteboard Test</title>
         <style>
             .main-activity-container {
                 display: flex;
@@ -13,6 +13,34 @@
                 margin: 35px;
             }
             #sticky-header {
+    display: grid; /* Use CSS Grid layout */
+    grid-template-columns: repeat(5, 1fr); /* Define 5 equally spaced columns */
+    grid-template-rows: repeat(2, 1fr); /* Define 2 equally spaced rows */
+    gap: 15px; /* Gap between grid items */
+    padding: 20px 0;
+    background-color: #f4f4f4;
+    width: 70vw;
+    height: 250px; /* Updated height to accommodate two rows */
+    margin-bottom: 25px;
+    justify-items: center;
+}
+
+.sticky-note {
+    /* width: 100%; Make the notes stretch to the grid item size */
+    /* height: 100%; */
+    width: 100px;
+    height: 100px;
+    background-color: #ffeb3b;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    text-align: center;
+    box-sizing: border-box; /* To include any potential padding or border */
+    padding: 5px; /* Add some padding for text spacing */
+}
+
+            /* #sticky-header {
                 display: flex;
                 justify-content: space-evenly;
                 padding: 20px 0;
@@ -30,7 +58,8 @@
                 justify-content: center;
                 align-items: center;
                 cursor: pointer;
-            }
+                text-align: center;
+            } */
 
             #whiteboard {
                 width: 70vw;
@@ -184,9 +213,9 @@
                 </p> -->
             </div>
             <div id="sticky-header">
-                <div class="sticky-note" draggable="true">Note 1</div>
+                <!-- <div class="sticky-note" draggable="true">Note 1</div>
                 <div class="sticky-note" draggable="true">Note 2</div>
-                <div class="sticky-note" draggable="true">Note 3</div>
+                <div class="sticky-note" draggable="true">Note 3</div> -->
                 <!-- Add as many notes as required -->
             </div>
             <div id="whiteboard">
@@ -221,24 +250,35 @@
         </div>
 
         <script>
+
+            // Data structure to store note scores and text
+            let noteScores = {
+                "Hard to reproduce analyses": { impact: 0, interest: 0 },
+                "Hard to find files": { impact: 0, interest: 0 },
+                "Data loss or corruption": { impact: 0, interest: 0 },
+                "Difficult onboarding and offboarding": { impact: 0, interest: 0 },
+                "Forgetting what you did and/or why": { impact: 0, interest: 0 },
+                "Poor file naming": { impact: 0, interest: 0 },
+                "Poor record keeping": { impact: 0, interest: 0 },
+                "Missed mistakes": { impact: 0, interest: 0 },
+                "Poor coordination": { impact: 0, interest: 0 },
+                "Hard to reproduce lab protocols": { impact: 0, interest: 0 },
+            };
+
+
+            // use for hardcoded session ID testing
+            // const currentSessionID = 886254;
+
             // Get the current session ID from the URL
             const urlParams = new URLSearchParams(window.location.search);
             const currentSessionID = urlParams.get("sessionId");
 
             // error handling for missing sessionId
             if (currentSessionID == null) {
-                alert(
-                    "No session ID found. Please return to the previous page and try again."
-                );
+                alert("No session ID found. Please return to the previous page and try again.");
             }
 
-            let noteScores = {
-                "Note 1": { impact: 0, interest: 0 },
-                "Note 2": { impact: 0, interest: 0 },
-                "Note 3": { impact: 0, interest: 0 },
-                // Add more notes as needed
-            };
-
+    
             const whiteboard = document.getElementById("whiteboard");
             let draggedNote = null;
 
@@ -254,9 +294,26 @@
             }
 
             // Add drag & drop events to initial notes
-            document
-                .querySelectorAll(".sticky-note")
-                .forEach(addDragDropEvents);
+            // document
+            //     .querySelectorAll(".sticky-note")
+            //     .forEach(addDragDropEvents);
+
+            // Add additional notes to the whiteboard for each note in the data structure
+            for (const noteText in noteScores) {
+                const note = document.createElement("div");
+                note.classList.add("sticky-note");
+                note.textContent = noteText;
+                note.draggable = true;
+
+                // Add drag & drop events to the new note
+                addDragDropEvents(note);
+
+                // Add the note to the sticky header
+                document.getElementById("sticky-header").appendChild(note);
+            }
+
+            // document.querySelectorAll(".sticky-note").forEach((note) => {
+
 
             whiteboard.addEventListener("dragover", (e) => {
                 e.preventDefault(); // Allow dropping
@@ -334,16 +391,13 @@
                 console.log("Continue button clicked!"); // For debugging purposes
 
                 // Alert user if they haven't placed all notes
-                if (
-                    document.querySelectorAll(".sticky-note").length !=
-                    document.querySelectorAll("#whiteboard > .sticky-note")
-                        .length
-                ) {
+                if (document.querySelectorAll(".sticky-note").length != document.querySelectorAll("#whiteboard > .sticky-note").length) {
                     alert("Please place all notes before continuing");
-                } else {
-                    // TODO: confirm that session exists
+                }
+                else {
+                    // alert("All notes placed!");
+                    // Post a record to userSubmissions table woth currentSessionID and noteScores and an entryID
 
-                    // Post a record to userSubmissions table with currentSessionID and noteScores and an entryID
                     let entryID = Math.floor(Math.random() * 1000000) + 1;
                     const jsonScores = JSON.stringify(noteScores);
 
@@ -371,6 +425,7 @@
                             console.log("Continue to results");
                             // Redirect to results page
                             window.location.href = `https://jackliddy.github.io/R2R-activity-1-3/results.html?sessionId=${currentSessionID}`;
+                            // window.location.href = `http://127.0.0.1:5501/R2R-activity-1-3%20V2/results.html?sessionId=${currentSessionID}`;
                         })
                         .catch((error) => {
                             console.log(error);
