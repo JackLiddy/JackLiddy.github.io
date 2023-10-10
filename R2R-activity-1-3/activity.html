@@ -13,32 +13,38 @@
                 margin: 35px;
             }
             #sticky-header {
-    display: grid; /* Use CSS Grid layout */
-    grid-template-columns: repeat(5, 1fr); /* Define 5 equally spaced columns */
-    grid-template-rows: repeat(2, 1fr); /* Define 2 equally spaced rows */
-    gap: 15px; /* Gap between grid items */
-    padding: 20px 0;
-    background-color: #f4f4f4;
-    width: 70vw;
-    height: 250px; /* Updated height to accommodate two rows */
-    margin-bottom: 25px;
-    justify-items: center;
-}
+                display: grid; /* Use CSS Grid layout */
+                grid-template-columns: repeat(
+                    5,
+                    1fr
+                ); /* Define 5 equally spaced columns */
+                grid-template-rows: repeat(
+                    2,
+                    1fr
+                ); /* Define 2 equally spaced rows */
+                gap: 15px; /* Gap between grid items */
+                padding: 20px 0;
+                background-color: #f4f4f4;
+                width: 70vw;
+                height: 250px; /* Updated height to accommodate two rows */
+                margin-bottom: 25px;
+                justify-items: center;
+            }
 
-.sticky-note {
-    /* width: 100%; Make the notes stretch to the grid item size */
-    /* height: 100%; */
-    width: 100px;
-    height: 100px;
-    background-color: #ffeb3b;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    text-align: center;
-    box-sizing: border-box; /* To include any potential padding or border */
-    padding: 5px; /* Add some padding for text spacing */
-}
+            .sticky-note {
+                /* width: 100%; Make the notes stretch to the grid item size */
+                /* height: 100%; */
+                width: 100px;
+                height: 100px;
+                background-color: #ffeb3b;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                text-align: center;
+                box-sizing: border-box; /* To include any potential padding or border */
+                padding: 5px; /* Add some padding for text spacing */
+            }
 
             /* #sticky-header {
                 display: flex;
@@ -65,7 +71,7 @@
                 width: 70vw;
                 height: 70vh;
                 /* background-color: white; */
-                background-color: rgb(255, 246, 209);
+                /* background-color: rgb(255, 246, 209); */
                 position: relative;
                 /* overflow: hidden; to ensure notes don't spill out */
             }
@@ -204,8 +210,25 @@
 
     <body>
         <div class="main-activity-container">
+            <h1>R2R Activity 1.3 (Prototype)</h1>
+
             <div id="instruction-container">
-                <h1>R2R Activity 1.3 (Prototype)</h1>
+                <!-- <h2>Think about rigor issues in your lab:</h2> -->
+                <p>Think about rigor issues in your lab:</p>
+
+                <ul>
+                    <li>
+                        Which issues have the biggest impact on yourself and
+                        your research?
+                    </li>
+                    <li>Which issues are you most interested in solving?</li>
+                </ul>
+                <p>
+                    Drag the sticky notes below to different quadrants on the
+                    board to reflect your thoughts on which issues are most
+                    interesting and most impactful in your lab.
+                </p>
+
                 <!-- <p>
                     Drag the notes from the header onto the whiteboard. They
                     should stick to the whiteboard and not be draggable off of
@@ -250,14 +273,19 @@
         </div>
 
         <script>
-
             // Data structure to store note scores and text
             let noteScores = {
                 "Hard to reproduce analyses": { impact: 0, interest: 0 },
                 "Hard to find files": { impact: 0, interest: 0 },
                 "Data loss or corruption": { impact: 0, interest: 0 },
-                "Difficult onboarding and offboarding": { impact: 0, interest: 0 },
-                "Forgetting what you did and/or why": { impact: 0, interest: 0 },
+                "Difficult onboarding and offboarding": {
+                    impact: 0,
+                    interest: 0,
+                },
+                "Forgetting what you did and/or why": {
+                    impact: 0,
+                    interest: 0,
+                },
                 "Poor file naming": { impact: 0, interest: 0 },
                 "Poor record keeping": { impact: 0, interest: 0 },
                 "Missed mistakes": { impact: 0, interest: 0 },
@@ -265,20 +293,28 @@
                 "Hard to reproduce lab protocols": { impact: 0, interest: 0 },
             };
 
-
             // use for hardcoded session ID testing
             // const currentSessionID = 886254;
 
             // Get the current session ID from the URL
             const urlParams = new URLSearchParams(window.location.search);
-            const currentSessionID = urlParams.get("sessionId");
+            let currentSessionID = urlParams.get("sessionId");
 
-            // error handling for missing sessionId
-            if (currentSessionID == null) {
-                alert("No session ID found. Please return to the previous page and try again.");
+            // dev mode
+            const dev = false;
+            if (dev === true) {
+                console.log("dev mode");
+                // console.log("currentSessionID: ", currentSessionID);
+                currentSessionID = "999999";
             }
 
-    
+            // error handling for missing sessionId
+            if (currentSessionID == null && dev === false) {
+                alert(
+                    "No session ID found. Please return to the previous page and try again."
+                );
+            }
+
             const whiteboard = document.getElementById("whiteboard");
             let draggedNote = null;
 
@@ -313,7 +349,6 @@
             }
 
             // document.querySelectorAll(".sticky-note").forEach((note) => {
-
 
             whiteboard.addEventListener("dragover", (e) => {
                 e.preventDefault(); // Allow dropping
@@ -391,10 +426,13 @@
                 console.log("Continue button clicked!"); // For debugging purposes
 
                 // Alert user if they haven't placed all notes
-                if (document.querySelectorAll(".sticky-note").length != document.querySelectorAll("#whiteboard > .sticky-note").length) {
+                if (
+                    document.querySelectorAll(".sticky-note").length !=
+                    document.querySelectorAll("#whiteboard > .sticky-note")
+                        .length
+                ) {
                     alert("Please place all notes before continuing");
-                }
-                else {
+                } else {
                     // alert("All notes placed!");
                     // Post a record to userSubmissions table woth currentSessionID and noteScores and an entryID
 
