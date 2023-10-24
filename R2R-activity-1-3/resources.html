@@ -12,45 +12,72 @@
             body {
                 font-family: "Poppins", sans-serif;
                 background-color: #e6ecf0;
-                padding: 40px 0;
+                /* padding: 40px 0; */
             }
-            .main-activity-container {
+            /* .main-activity-container {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
                 margin: 35px;
+            } */
+
+            .main-activity-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                margin: 15px;
+                background-color: #ffffff;
+                border-radius: 10px;
+                padding: 5px;
+                padding-bottom: 50px;
             }
+
             #sticky-header {
                 display: flex;
                 justify-content: space-evenly;
-                padding: 20px 0;
+                /* padding: 20px 0; */
                 /* background-color: #f4f4f4; */
-                width: 70vw;
+                width: 85vw;
                 height: 100px;
-                margin-bottom: 25px;
+                /* margin-bottom: 25px; */
 
                 z-index: 2;
                 position: relative;
-                top: 45px; /* Move it up so it overlaps the line */
+                /* top: 45px; Move it up so it overlaps the line */
+                /* overflow: none; */
+                /* font-size: ; */
             }
 
             .sticky-note {
-                width: 100px;
-                height: 100px;
+                width: 80px;
+                height: 80px;
                 background-color: #ffeb3b;
+                /* background-color: #ffeb3b5e; */
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 cursor: pointer;
                 text-align: center;
+                box-sizing: border-box;
+                padding: 5px;
+                font-size: 12px;
             }
             .sticky-note:hover {
                 background-color: #ffe100; /* Darker shade of yellow to indicate it's selected */
             }
+            .sorted-notes-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin: 10px;
+                margin-bottom: -70px;
+            }
 
             #whiteboard {
-                width: 70vw;
+                width: 90vw;
+
                 height: 70vh;
                 /* background-color: white; */
                 /* background-color: rgb(255, 246, 209); */
@@ -137,6 +164,7 @@
                 transform: translateY(-50%);
             }
 
+
             /* New arrow classes for the top and left sides */
             .arrow.horizontal-arrow-top {
                 left: 50%;
@@ -161,17 +189,15 @@
             }
 
             .horizontal-left {
-                /* left: 10px; */
-                left: -120px;
+                left: -82px;
                 top: 50%;
-                transform: translateY(-60%); /* Adjust the alignment */
+                transform: translateY(-60%);
             }
 
             .horizontal-right {
-                /* right: 10px; */
-                right: -125px;
+                right: -82px;
                 top: 50%;
-                transform: translateY(-60%); /* Adjust the alignment */
+                transform: translateY(-60%);
             }
 
             .vertical-top {
@@ -192,12 +218,12 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                width: 70vw;
+                width: 90vw;
                 height: 20px;
                 margin: 15px 0;
                 position: relative;
                 z-index: 1; /* Ensure this is below the sticky header */
-                top: -50px;
+                top: -83px;
             }
 
             #arrow-line {
@@ -226,15 +252,9 @@
             }
 
             #resource-pane {
-                /* position: absolute;
-                top: 0;
-                right: 0;
-                width: 30vw;
-                height: 100%; */
-                /* background-color: #2ed15c; */
                 width: 100%;
-                height: 100%;
-                border-radius: 40px;
+                height: 80%;
+                border-radius: 35px;
                 /* z-index: 1; */
                 /* background-color value of rgb 181,249,156 */
                 /* background-color: rgb(181, 249, 156); */
@@ -243,6 +263,7 @@
                 flex-direction: column;
                 /* justify-content: space-evenly; */
                 align-items: center;
+                padding-top: 25px;
             }
 
             /* style as a header */
@@ -263,10 +284,12 @@
 .word-list {
             display: flex;
             justify-content: space-between;
+            /* font-size: 12px; */
+            font-size: 1.5vw;
         }
         .word-list span:not(:last-child)::after {
             content: "|";
-            margin: 0 10px;
+            margin: 0 5px;
         }
         .bold {
             font-weight: bold;
@@ -313,28 +336,30 @@
                     <div class="arrow vertical-arrow-left"></div>
                     <div class="line horizontal"></div>
                 </div>
-            </div>
 
-            <div
-                style="
-                    display: flex;
-                    justify-content: space-between;
-                    width: 70vw;
-                "
-            >
-                <div class="label-end">
-                    <div class="right-label">LOW INTEREST</div>
-                    <div class="right-label">LOW IMPACT</div>
-                </div>
-                <div class="label-end">
-                    <div class="left-label">HIGH INTEREST</div>
-                    <div class="left-label">HIGH IMPACT</div>
+                <div
+                    style="
+                        display: flex;
+                        justify-content: space-between;
+                        width: 92vw;
+                        position: relative;
+                        top: -53px;
+                    "
+                >
+                    <div class="label-end">
+                        <div class="right-label">LOW INTEREST</div>
+                        <div class="right-label">LOW IMPACT</div>
+                    </div>
+                    <div class="label-end">
+                        <div class="left-label">HIGH INTEREST</div>
+                        <div class="left-label">HIGH IMPACT</div>
+                    </div>
                 </div>
             </div>
 
             <div id="whiteboard">
                 <div id="resource-pane">
-                    <div id="resource-topic"></div>
+                    <!-- <div id="resource-topic"></div> -->
                     <div class="word-list">
         
                         
@@ -552,17 +577,17 @@
                                         const note =
                                             noteResources[this.textContent];
 
-                                        const resourceTopic =
-                                            document.getElementById(
-                                                "resource-topic"
-                                            );
+                                        // const resourceTopic =
+                                        //     document.getElementById(
+                                        //         "resource-topic"
+                                        //     );
                                         // const resourceText =
                                         //     document.getElementById(
                                         //         "resource-text"
                                         //     );
                                         // Set header
-                                        resourceTopic.textContent =
-                                            this.textContent;
+                                        // resourceTopic.textContent =
+                                        //     this.textContent;
                                         // Set text
                                         // resourceText.textContent =
                                         //     note.resources;
