@@ -20,7 +20,7 @@
             body {
                 font-family: "Poppins", sans-serif;
                 background-color: #e6ecf0;
-                padding: 40px 0;
+                /* padding: 40px 0; */
             }
 
             .main-activity-container {
@@ -31,71 +31,47 @@
                 margin: 15px;
                 background-color: #ffffff;
                 border-radius: 10px;
-                padding: 45px;
+                padding: 5px;
+                padding-bottom: 50px;
             }
-
-            /* before refactorings */
-            /* #sticky-header {
-                display: flex;
-                justify-content: space-evenly;
-                padding: 20px 0;
-                /* background-color: #f4f4f4; */
-            /* width: 70vw;
-                height: 100px;
-                margin-bottom: 25px; */
-
-            /* z-index: 2; */
-            /* position: relative; */
-            /* top: 45px; Move it up so it overlaps the line */
-            /* } */
 
             #sticky-header {
                 display: flex;
                 justify-content: space-evenly;
-                padding: 20px 0;
+                /* padding: 20px 0; */
                 /* background-color: #f4f4f4; */
-                /* width: 70vw; */
+                width: 85vw;
                 height: 100px;
-                margin-bottom: 25px;
+                /* margin-bottom: 25px; */
 
                 z-index: 2;
                 position: relative;
-                top: 45px; /* Move it up so it overlaps the line */
-                overflow: none;
+                /* top: 45px; Move it up so it overlaps the line */
+                /* overflow: none; */
                 /* font-size: ; */
             }
 
-            /* before refactorings */
-            /* .sticky-note {
-                width: 100px;
-                height: 100px;
-                background-color: #ffeb3b;
+            .sorted-notes-container {
                 display: flex;
-                justify-content: center;
+                flex-direction: column;
                 align-items: center;
-                cursor: pointer;
-                text-align: center;
+                margin: 10px;
+                margin-bottom: -70px;
             }
-            .sticky-note:hover {
-                background-color: #ffe100; /* Darker shade of yellow to indicate it's selected */
-            /* } */
 
             .sticky-note {
-                /* width: 100px; */
-                /* height: 100px; */
-                /* min-width: none; */
-                /* min-height: none; */
+                width: 80px;
+                height: 80px;
                 background-color: #ffeb3b;
+                /* background-color: #ffeb3b5e; */
                 display: flex;
                 justify-content: center;
                 align-items: center;
                 cursor: pointer;
                 text-align: center;
-                aspect-ratio: 1 / 1;
-                max-width: 100px;
-                max-height: 100px;
-                /* width: 50px; */
-                /* height: 50px;                */
+                box-sizing: border-box;
+                padding: 5px;
+                font-size: 12px;
             }
 
             #whiteboard {
@@ -112,10 +88,6 @@
                 display: flex;
                 flex-wrap: wrap;
                 position: relative;
-                /* width: 400px; */
-                /* height: 400px; */
-                /* width: 100vw; */
-                /* height: 100vh; */
                 width: 100%;
                 height: 100%;
             }
@@ -210,17 +182,15 @@
             }
 
             .horizontal-left {
-                /* left: 10px; */
-                left: -120px;
+                left: -82px;
                 top: 50%;
-                transform: translateY(-60%); /* Adjust the alignment */
+                transform: translateY(-60%);
             }
 
             .horizontal-right {
-                /* right: 10px; */
-                right: -125px;
+                right: -82px;
                 top: 50%;
-                transform: translateY(-60%); /* Adjust the alignment */
+                transform: translateY(-60%);
             }
 
             .vertical-top {
@@ -241,12 +211,12 @@
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                width: 70vw;
+                width: 90vw;
                 height: 20px;
                 margin: 15px 0;
                 position: relative;
                 z-index: 1; /* Ensure this is below the sticky header */
-                top: -50px;
+                top: -83px;
             }
 
             #arrow-line {
@@ -351,28 +321,30 @@
                     <div class="arrow vertical-arrow-left"></div>
                     <div class="line horizontal"></div>
                 </div>
-            </div>
 
-            <div
-                style="
-                    display: flex;
-                    justify-content: space-between;
-                    width: 70vw;
-                "
-            >
-                <div class="label-end">
-                    <div class="right-label">LOW INTEREST</div>
-                    <div class="right-label">LOW IMPACT</div>
-                </div>
-                <div class="label-end">
-                    <div class="left-label">HIGH INTEREST</div>
-                    <div class="left-label">HIGH IMPACT</div>
+                <div
+                    style="
+                        display: flex;
+                        justify-content: space-between;
+                        width: 92vw;
+                        position: relative;
+                        top: -53px;
+                    "
+                >
+                    <div class="label-end">
+                        <div class="right-label">LOW INTEREST</div>
+                        <div class="right-label">LOW IMPACT</div>
+                    </div>
+                    <div class="label-end">
+                        <div class="left-label">HIGH INTEREST</div>
+                        <div class="left-label">HIGH IMPACT</div>
+                    </div>
                 </div>
             </div>
 
             <div id="whiteboard">
-                <div class="label horizontal-left">LOW IMPACT</div>
-                <div class="label horizontal-right">HIGH IMPACT</div>
+                <div class="label horizontal-left">LOW<br />IMPACT</div>
+                <div class="label horizontal-right">HIGH<br />IMPACT</div>
                 <div class="label vertical-top">HIGH INTEREST</div>
                 <div class="label vertical-bottom">LOW INTEREST</div>
                 <div class="container">
