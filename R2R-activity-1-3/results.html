@@ -4,29 +4,69 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Activity 1.3</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
+            rel="stylesheet"
+        />
         <style>
-            .main-activity-container {
+            /* .main-activity-container {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
                 margin: 35px;
+            } */
+
+            body {
+                font-family: "Poppins", sans-serif;
+                background-color: #e6ecf0;
+                padding: 40px 0;
             }
+
+            .main-activity-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                margin: 15px;
+                background-color: #ffffff;
+                border-radius: 10px;
+                padding: 45px;
+            }
+
+            /* before refactorings */
+            /* #sticky-header {
+                display: flex;
+                justify-content: space-evenly;
+                padding: 20px 0;
+                /* background-color: #f4f4f4; */
+            /* width: 70vw;
+                height: 100px;
+                margin-bottom: 25px; */
+
+            /* z-index: 2; */
+            /* position: relative; */
+            /* top: 45px; Move it up so it overlaps the line */
+            /* } */
+
             #sticky-header {
                 display: flex;
                 justify-content: space-evenly;
                 padding: 20px 0;
                 /* background-color: #f4f4f4; */
-                width: 70vw;
+                /* width: 70vw; */
                 height: 100px;
                 margin-bottom: 25px;
 
                 z-index: 2;
                 position: relative;
                 top: 45px; /* Move it up so it overlaps the line */
+                overflow: none;
+                /* font-size: ; */
             }
 
-            .sticky-note {
+            /* before refactorings */
+            /* .sticky-note {
                 width: 100px;
                 height: 100px;
                 background-color: #ffeb3b;
@@ -38,6 +78,24 @@
             }
             .sticky-note:hover {
                 background-color: #ffe100; /* Darker shade of yellow to indicate it's selected */
+            /* } */
+
+            .sticky-note {
+                /* width: 100px; */
+                /* height: 100px; */
+                /* min-width: none; */
+                /* min-height: none; */
+                background-color: #ffeb3b;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                cursor: pointer;
+                text-align: center;
+                aspect-ratio: 1 / 1;
+                max-width: 100px;
+                max-height: 100px;
+                /* width: 50px; */
+                /* height: 50px;                */
             }
 
             #whiteboard {
@@ -215,13 +273,49 @@
                 margin-top: -11px;
                 margin-bottom: 47px;
             }
+
+            button,
+            input {
+                /* width: 100%; */
+                padding: 12px 15px;
+                margin-top: 20px;
+                border: none;
+                background-color: #2ea44f;
+                color: #fff;
+                border-radius: 6px;
+                font-weight: 600;
+                cursor: pointer;
+                transition: background-color 0.3s;
+
+                position: absolute;
+                bottom: 2%;
+                right: 2%;
+                padding: 10px 20px;
+            }
+
+            button:hover {
+                background-color: #21833a;
+            }
+
+            #continue-button {
+                position: absolute;
+                padding: 10px 20px;
+                bottom: -30%;
+                right: 3%;
+            }
+            #refresh-button {
+                position: absolute;
+                padding: 10px 20px;
+                bottom: -25%;
+                right: 3%;
+            }
         </style>
     </head>
 
     <body>
         <div class="main-activity-container">
             <div id="instruction-container">
-                <p>R2R Activity 1.3 (Prototype)</p>
+                <!-- <p>R2R Activity 1.3 (Prototype)</p> -->
 
                 <p>Explore how your lab colleagues answered:</p>
 
@@ -248,9 +342,6 @@
 
             <div class="sorted-notes-container">
                 <div id="sticky-header">
-                    <!-- <div class="sticky-note" draggable="true">Note 1</div>
-                    <div class="sticky-note" draggable="true">Note 2</div>
-                    <div class="sticky-note" draggable="true">Note 3</div> -->
                     <!-- Add as many notes as required -->
                 </div>
 
@@ -297,17 +388,8 @@
                     <div class="arrow vertical-arrow-left"></div>
                 </div>
             </div>
-            <button
-                id="continue-button"
-                style="
-                    position: absolute;
-                    bottom: 2%;
-                    right: 2%;
-                    padding: 10px 20px;
-                "
-            >
-                Continue
-            </button>
+            <button id="refresh-button">Refresh Results</button>
+            <button id="continue-button">Continue</button>
         </div>
 
         <script>
@@ -328,11 +410,12 @@
             let currentSessionID = urlParams.get("sessionId");
 
             // dev mode
-            const dev = false;
+            // const dev = true;
             if (dev === true) {
                 console.log("dev mode");
                 // console.log("currentSessionID: ", currentSessionID);
-                currentSessionID = "999999";
+                // currentSessionID = "999999";
+                currentSessionID = "510205";
             }
 
             // error handling for missing sessionId
@@ -500,6 +583,12 @@
                             });
                     }
                 })
+                .then(() => {
+                    // Trigger a mouseenter event on the first sticky note to render the notes on the whiteboard
+                    const stickyNotes =
+                        document.querySelectorAll(".sticky-note");
+                    stickyNotes[0].dispatchEvent(new MouseEvent("mouseenter"));
+                })
                 .catch((error) => {
                     console.error(
                         "There was an error fetching the data:",
@@ -512,9 +601,16 @@
             continueButton.addEventListener("click", handleContinueClick);
             function handleContinueClick() {
                 // Navigate to resources page
-                const currentSessionID = urlParams.get("sessionId");
                 window.location.href = `https://jackliddy.github.io/R2R-activity-1-3/resources.html?sessionId=${currentSessionID}`;
                 // window.location.href = `http://127.0.0.1:5501/R2R-activity-1-3%20V2/resources.html?sessionId=${currentSessionID}`;
+            }
+
+            // Refresh button logic
+            const refreshButton = document.getElementById("refresh-button");
+            refreshButton.addEventListener("click", handleRefreshClick);
+            function handleRefreshClick() {
+                // Reload page
+                location.reload();
             }
 
             // Function to convert impact and interest values to X and Y coordinates on the whiteboard
