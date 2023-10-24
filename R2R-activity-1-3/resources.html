@@ -4,7 +4,16 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Activity 1.3</title>
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
+            rel="stylesheet"
+        />
         <style>
+            body {
+                font-family: "Poppins", sans-serif;
+                background-color: #e6ecf0;
+                padding: 40px 0;
+            }
             .main-activity-container {
                 display: flex;
                 flex-direction: column;
@@ -228,35 +237,54 @@
                 border-radius: 40px;
                 /* z-index: 1; */
                 /* background-color value of rgb 181,249,156 */
-                background-color: rgb(181, 249, 156);
+                /* background-color: rgb(181, 249, 156); */
+                background-color: #f0fffe;
                 display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
+                flex-direction: column;
+                /* justify-content: space-evenly; */
+                align-items: center;
             }
 
             /* style as a header */
             #resource-topic {
-                font-size: 1.5rem;
+                font-size: 2.2rem;
                 font-weight: bold;
+                margin: 15px;
             }
+            #resource-content {
+                margin: 25px;
 
+                /* font-size: 1.5rem;
+                font-weight: bold; */
+            }
         </style>
     </head>
 
     <body>
         <div class="main-activity-container">
             <div id="instruction-container">
-                <h1>R2R Activity 1.3 (Prototype)</h1>
+                <!-- <h1>R2R Activity 1.3 (Prototype)</h1> -->
 
-                <p>Explore resources and solutions that might work for your lab:</p>
+                <p>
+                    Explore resources and solutions that might work for your
+                    lab:
+                </p>
 
                 <ul>
-                    <li>What resources are available that can solve your most impactful issues?</li>
-                    <li>What solutions are your colleagues most interested in trying? </li>
+                    <li>
+                        What resources are available that can solve your most
+                        impactful issues?
+                    </li>
+                    <li>
+                        What solutions are your colleagues most interested in
+                        trying?
+                    </li>
                 </ul>
-                <p>The sticky notes below are ordered from most high interest and impact to low interest and impact. Click on each to see solutions and resources for improving that issue.</p>
-               
+                <p>
+                    The sticky notes below are ordered from most high interest
+                    and impact to low interest and impact. Click on each to see
+                    solutions and resources for improving that issue.
+                </p>
             </div>
 
             <div class="sorted-notes-container">
@@ -291,14 +319,12 @@
 
             <div id="whiteboard">
                 <div id="resource-pane">
-
                     <div id="resource-topic"></div>
-                    <div id="resource-text"></div>
-
+                    <!-- <div id="resource-text"></div> -->
+                    <div id="resource-content"></div>
                 </div>
-
             </div>
-            <button
+            <!-- <button
                 id="continue-button"
                 style="
                     position: absolute;
@@ -308,32 +334,31 @@
                 "
             >
                 Continue
-            </button>
+            </button> -->
         </div>
 
         <script>
-
             // Rewrite the noteScores object but instead of each having an impact and interest score, they will have a resources property with a string value of placeholder text
-            let notesWithResources = {
-                "Hard to reproduce analyses": {
-                    resources: "Placeholder text 1",
-                },
-                "Hard to find files": { resources: "Placeholder text 2" },
-                "Data loss or corruption": { resources: "Placeholder text" },
-                "Difficult onboarding and offboarding": {
-                    resources: "Placeholder text",
-                },
-                "Forgetting what you did and/or why": {
-                    resources: "Placeholder text",
-                },
-                "Poor file naming": { resources: "Placeholder text" },
-                "Poor record keeping": { resources: "Placeholder text" },
-                "Missed mistakes": { resources: "Placeholder text" },
-                "Poor coordination": { resources: "Placeholder text" },
-                "Hard to reproduce lab protocols": {
-                    resources: "Placeholder text",
-                },
-            };
+            // let notesWithResources = {
+            //     "Hard to reproduce analyses": {
+            //         resources: "Placeholder text 1",
+            //     },
+            //     "Hard to find files": { resources: "Placeholder text 2" },
+            //     "Data loss or corruption": { resources: "Placeholder text" },
+            //     "Difficult onboarding and offboarding": {
+            //         resources: "Placeholder text",
+            //     },
+            //     "Forgetting what you did and/or why": {
+            //         resources: "Placeholder text",
+            //     },
+            //     "Poor file naming": { resources: "Placeholder text" },
+            //     "Poor record keeping": { resources: "Placeholder text" },
+            //     "Missed mistakes": { resources: "Placeholder text" },
+            //     "Poor coordination": { resources: "Placeholder text" },
+            //     "Hard to reproduce lab protocols": {
+            //         resources: "Placeholder text",
+            //     },
+            // };
 
             // Utility to calculate the median value of a given note's linear scores
             function median(values) {
@@ -353,10 +378,11 @@
 
             // dev mode
             const dev = false;
-            if (dev===true) {
+            if (dev === true) {
                 console.log("dev mode");
                 // console.log("currentSessionID: ", currentSessionID);
-                currentSessionID = '999999';
+                // currentSessionID = "999999";
+                currentSessionID = "510205";
             }
 
             // error handling for missing sessionId
@@ -483,18 +509,35 @@
                                     function () {
                                         // Based on the selected note, get the resources from the notesWithResources object and display them in the resource pane
                                         // Render the resource's topic in resource-topic and the resource's text in resource-text
-                                        const note = notesWithResources[
-                                            this.textContent
-                                        ];
-                                        const resourceTopic = document.getElementById(
-                                            "resource-topic"
-                                        );
-                                        const resourceText = document.getElementById(
-                                            "resource-text"
-                                        );
-                                        resourceTopic.textContent = this.textContent;
-                                        resourceText.textContent = note.resources;                                       
+                                        // const note =
+                                        //     notesWithResources[
+                                        //         this.textContent
+                                        //     ];
+                                        const note =
+                                            noteResources[this.textContent];
 
+                                        const resourceTopic =
+                                            document.getElementById(
+                                                "resource-topic"
+                                            );
+                                        // const resourceText =
+                                        //     document.getElementById(
+                                        //         "resource-text"
+                                        //     );
+                                        // Set header
+                                        resourceTopic.textContent =
+                                            this.textContent;
+                                        // Set text
+                                        // resourceText.textContent =
+                                        //     note.resources;
+
+                                        // Render the resource's content in resource-content
+                                        const resourceContent =
+                                            document.getElementById(
+                                                "resource-content"
+                                            );
+                                        resourceContent.innerHTML =
+                                            noteResources[this.textContent];
                                     }
                                 );
                             });
@@ -508,11 +551,11 @@
                 });
 
             // Continue button logic
-            const continueButton = document.getElementById("continue-button");
-            continueButton.addEventListener("click", handleContinueClick);
-            function handleContinueClick() {
-                // Placeholder for now, you can add your logic here later
-            }
+            // const continueButton = document.getElementById("continue-button");
+            // continueButton.addEventListener("click", handleContinueClick);
+            // function handleContinueClick() {
+            //     // Placeholder for now, you can add your logic here later
+            // }
 
             // Function to convert impact and interest values to X and Y coordinates on the whiteboard
             function getCoordinatesFromScores(impact, interest) {
@@ -525,6 +568,101 @@
                 return { x, y };
             }
 
+            var noteResources = {
+                "Missed mistakes": `<div>
+                            <h1>Missed mistakes</h1>
+                            <p>We all make mistakes! Brainstorming with your lab colleagues about approaches to check and validate your lab’s work is a great way to make your work more rigorous.</p>
+                            <ul>
+                                <li>Error Tight: Exercises for Lab Groups to Prevent Research Mistakes
+                                    <ul>
+                                        <li><a href="https://osf.io/preprints/psyarxiv/rsn5y/">https://osf.io/preprints/psyarxiv/rsn5y/</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>`,
+                "Interpreting results": `<div>
+                                <h1>Interpreting results</h1>
+                                <p>Knowing how to appropriately report your results can be tricky - especially if there are unexpected findings. A reporting guideline can help you ensure you are reporting all the results in a systematic manner.</p>
+                                <ul>
+                                    <li>Reporting Guidelines
+                                        <ul>
+                                            <li><a href="https://www.equator-network.org/">https://www.equator-network.org/</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>`,
+                "Designing experiments": `<div>
+                                <h1>Designing experiments</h1>
+                                <p>What are the important factors to consider when designing an experiment? Ensuring that your experiment’s rationale is aligned with the study design and the analyses helps to support the rigor of your research.</p>
+                                <ul>
+                                    <li>Better Inference in Neuroscience: Test Less, Estimate More
+                                        <ul>
+                                            <li><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9665913/">https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9665913/</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                             </div>`,
+                "Hard to reproduce analyses": `<div>
+                                      <h1>Hard to reproduce analyses</h1>
+                                      <p>Ever try to rerun an analysis and get an error? Or a different result? Computational reproducibility can be difficult. There are many ways to improve reproducibility of your analyses that also make future analyses easier for you and your lab colleagues.</p>
+                                      <ul>
+                                          <li>Guide for Reproducible Research
+                                              <ul>
+                                                  <li><a href="https://the-turing-way.netlify.app/reproducible-research/reproducible-research.html">https://the-turing-way.netlify.app/reproducible-research/reproducible-research.html</a></li>
+                                              </ul>
+                                          </li>
+                                      </ul>
+                                  </div>`,
+                "Hard to find files": `<div>
+                              <h1>Hard to find files</h1>
+                              <p>Designing and documenting simple organization rules for your research files is easy and impactful. File naming conventions can be as simple as short set of naming rules documented in a central README file.</p>
+                              <ul>
+                                  <li>File Naming Conventions
+                                      <ul>
+                                          <li><a href="https://datamanagement.hms.harvard.edu/plan-design/file-naming-conventions">https://datamanagement.hms.harvard.edu/plan-design/file-naming-conventions</a></li>
+                                      </ul>
+                                  </li>
+                              </ul>
+                           </div>`,
+                "Data loss or corruption": `<div>
+                                   <h1>Data loss or corruption</h1>
+                                   <p>Data loss or corruption can be a common source of irreproducible research, not to mention headaches and wasted time. Many researchers consider using data repositories to share data after a publication. However, many repositories can be used as a backup and a way to preserve access for your lab colleagues and your future self.</p>
+                                   <ul>
+                                       <li>Registry of research data repositories
+                                           <ul>
+                                               <li><a href="https://www.re3data.org/">https://www.re3data.org//a></li>
+                                           </ul>
+                                       </li>
+                                       <li>Data repositories
+                                           <ul>
+                                               <li><a href="https://datamanagement.hms.harvard.edu/share-publish/data-repositories">https://datamanagement.hms.harvard.edu/share-publish/data-repositories</a></li>
+                                           </ul>
+                                       </li>
+                                   </ul>
+                               </div>`,
+                "Deviating from lab protocols": `<div>
+                                        <h1>Deviating from lab protocols</h1>
+                                        <p>Deviation from a protocol in a study can lead to biased results. In large labs or complex studies, you may have multiple people working on the same method. Ensuring that they are doing the same thing can improve the rigor of your research.</p>
+                                        <ul>
+                                            <li>Protocol checklists
+                                                <ul>
+                                                    <li><a href="https://www.protocols.io/">https://www.protocols.io/</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>`,
+                "Difficult onboarding and offboarding": `<div>
+                                               <h1>Difficult onboarding and offboarding</h1>
+                                               <p>Onboarding new lab colleagues can be time consuming for current members and frustrating for new members. Offboarding is often an afterthought, with files and methods and data leaving along with lab colleagues. An electronic laboratory notebook is one way to improve documentation of important aspects of your lab protocols, data, and systems.</p>
+                                               <ul>
+                                                   <li>How to pick an electronic laboratory notebook
+                                                       <ul>
+                                                           <li><a href="https://www.nature.com/articles/d41586-018-05895-3">https://www.nature.com/articles/d41586-018-05895-3</a></li>
+                                                       </ul>
+                                                   </li>
+                                               </ul>
+                                           </div>`,
+            };
         </script>
     </body>
 </html>
