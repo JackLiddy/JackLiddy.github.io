@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Presentation Form</title>
+    <style>
+        /* Existing CSS ... */
+        body {
+            font-family: Arial, sans-serif;
+            /* background-color: #222; */
+            background-color: #0e0f0f;
+
+            color: #fff;
+            padding: 20px;
+        }
+        .container {
+            width: 550px;
+            /* background-color: #333; */
+            background-color: #181819;
+
+            padding: 20px;
+            border-radius: 8px;
+            /* background-color: #316f82; */
+            /* box-shadow: 10px 10px lightblue; */
+            box-shadow: -3px 0px 0px 0px #316f82;
+        }
+        h2 {
+            /* background-color: #007bff; */
+            background-color: #192225;
+            color: #babdb9;
+
+            padding: 10px;
+            border-radius: 8px 8px 0 0;
+            margin: -20px -20px 20px -20px;
+            font-size: 1em;
+        }
+        input[type="text"], select {
+            flex: 1;
+            margin-right: 10px; /* Spacing between input fields */
+            border-radius: 10px;
+            border: 1px solid #555;
+            padding: 8px;
+            background-color: #828282;
+            color: black;
+        }
+        .info-section {
+            border-bottom: 2px solid #58a8c1;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        .info-section h3 {
+            /* border-bottom: 3px solid #007bff;
+            display: inline-block; */
+            /* border-bottom: 2px solid #58a8c1; */
+    display: inline-block;
+    /* width: 541px; */
+    color: #babdb9;
+
+        }
+        .input-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+        label {
+            display: flex;
+            align-items: center;
+            color: #babdb9;
+
+        }
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            /* background-color: #007bff; */
+            background-color: #316f82;
+
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+/* style placeholder text */
+::placeholder {
+    color: black;
+    opacity: 1; /* Firefox */
+}
+        /* Additional CSS */
+        .dropdown-wrapper {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown-placeholder {
+            position: absolute;
+            pointer-events: none;
+            left: 15px;
+            top: 12px;
+            color: black;
+            transition: 0.2s ease-in-out;
+        }
+        .dropdown-select:required:invalid + .dropdown-placeholder {
+            display: block;
+        }
+        .dropdown-select:focus + .dropdown-placeholder,
+        .dropdown-select:valid + .dropdown-placeholder {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Pre-Fill for Lab Presentation</h2>
+        <section class="info-section">
+            <h3>Laboratory Information</h3>
+            <div class="input-row">
+                <input type="text" placeholder="Lab Name">
+                <div class="dropdown-wrapper">
+                    <select class="dropdown-select"></select>
+                    <label class="dropdown-placeholder" data-placeholder="Field of Research"></label>
+                </div>
+                <label><input type="checkbox"> Computational Lab</label>
+            </div>
+        </section>
+        <section class="info-section">
+            <h3>Presenter</h3>
+            <div class="input-row">
+                <input type="text" placeholder="Name">
+                <div class="dropdown-wrapper">
+                    <select class="dropdown-select"></select>
+                    <label class="dropdown-placeholder" data-placeholder="Career Stage"></label>
+                </div>
+                <div class="dropdown-wrapper">
+                    <select class="dropdown-select"></select>
+                    <label class="dropdown-placeholder" data-placeholder="Laboratory Role"></label>
+                </div>
+            </div>
+        </section>
+        <section class="info-section" id="non-presenting-members-section" style="display:none">
+            <h3>Non-presenting Laboratory Members</h3>
+        </section>
+        <button id="add-member-btn">+ Add Laboratory Member</button>
+        <button id="submit-btn">Submit</button>
+    </div>
+    <script>
+        const fieldOfResearchOptions = ['Physics', 'Chemistry', 'Biology'];
+        const careerStageOptions = ['Undergraduate', 'Postgraduate', 'Professor'];
+        const labRoleOptions = ['Researcher', 'Assistant', 'Observer'];
+
+        function populateSelect(el, options) {
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            defaultOption.disabled = true;
+            defaultOption.selected = true;
+            defaultOption.hidden = true;
+            el.appendChild(defaultOption);
+            
+            options.forEach(option => {
+                const opt = document.createElement('option');
+                opt.value = option;
+                opt.innerText = option;
+                el.appendChild(opt);
+            });
+            
+            el.required = true;
+            el.value = '';
+        }
+
+        document.querySelectorAll('.dropdown-select').forEach((selectEl, index) => {
+            if (index === 0) populateSelect(selectEl, fieldOfResearchOptions);
+            if (index === 1 || index % 3 === 1) populateSelect(selectEl, careerStageOptions);
+            if (index === 2 || index % 3 === 2) populateSelect(selectEl, labRoleOptions);
+        });
+
+        const addMemberBtn = document.getElementById('add-member-btn');
+        const nonPresentingMembersSection = document.getElementById('non-presenting-members-section');
+
+        addMemberBtn.addEventListener('click', () => {
+            const newMemberRow = document.createElement('div');
+            newMemberRow.classList.add('input-row');
+            newMemberRow.innerHTML = `
+                <input type="text" placeholder="Name">
+                <div class="dropdown-wrapper">
+                    <select class="dropdown-select"></select>
+                    <label class="dropdown-placeholder" data-placeholder="Career Stage"></label>
+                </div>
+                <div class="dropdown-wrapper">
+                    <select class="dropdown-select"></select>
+                    <label class="dropdown-placeholder" data-placeholder="Laboratory Role"></label>
+                </div>
+            `;
+            populateSelect(newMemberRow.querySelectorAll('.dropdown-select')[0], careerStageOptions);
+            populateSelect(newMemberRow.querySelectorAll('.dropdown-select')[1], labRoleOptions);
+            nonPresentingMembersSection.appendChild(newMemberRow);
+            nonPresentingMembersSection.style.display = 'block';
+        });
+
+        const submitBtn = document.getElementById('submit-btn');
+        submitBtn.addEventListener('click', () => {
+            const inputs = document.querySelectorAll('input[type="text"], select, input[type="checkbox"]');
+            const data = {
+                labInfo: {},
+                presenter: {},
+                nonPresentingMembers: []
+            };
+            inputs.forEach((input, index) => {
+                if (index < 3) {
+                    const key = input.type === 'checkbox' ? 'computationalLab' : input.placeholder.replace(/ /g, '');
+                    data.labInfo[key] = input.type === 'checkbox' ? input.checked : input.value;
+                } else if (index >= 3 && index < 6) {
+                    const key = input.placeholder.replace(/ /g, '');
+                    data.presenter[key] = input.value;
+                } else {
+                    if (index % 3 === 0) {
+                        data.nonPresentingMembers.push({name: input.value});
+                    } else if (index % 3 === 1) {
+                        data.nonPresentingMembers[data.nonPresentingMembers.length - 1].careerStage = input.value;
+                    } else {
+                        data.nonPresentingMembers[data.nonPresentingMembers.length - 1].labRole = input.value;
+                    }
+                }
+            });
+            console.log(JSON.stringify(data));
+        });
+
+        
+    </script>
+</body>
+</html>
