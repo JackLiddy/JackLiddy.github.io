@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Presentation Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000;
+            /* color: #fff; */
+            padding: 20px;
+        }
+        .container {
+            /* width: 400px; */
+            /* background-color: #ffffff; */
+            /* padding: 20px; */
+            /* border-radius: 8px; */
+            /* left: 10px; */
+            /* top: 10px; */
+
+            width: 348px;
+    background-color: #ffffff;
+    padding: 20px;
+    position: absolute;
+    height: 216px;
+    margin-left: 90px;
+    padding-left: 156px;
+        }
+
+        .content {
+            display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+        }
+
+        .header {
+            padding-top: 0px;
+            /* padding: 10px 0; */
+            /* border-bottom: 1px solid #555; */
+        }
+        /* svg */
+        img {
+            /* width: 400px;
+            height: 400px;
+            position: absolute;
+            left: 10px;
+            top: 10px; */
+
+            position: absolute;
+    left: -177px;
+    top: -1px;
+    height: 101%;
+        }
+
+/* button */
+.generate-link-btn {
+    border-radius: 15px;
+    background-color: #854abe;
+    color: white;
+    font-size: x-large;
+    border-width: inherit;
+    padding: 12px;
+    font-weight: bold;
+
+}
+/* hover */
+.generate-link-btn:hover {
+    background-color: #5e2d8a;
+    color: white;
+}
+/* clicked */
+.generate-link-btn:active {
+    background-color: #49226b;
+    color: white;
+}
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="content">
+            <div class="header">
+                <h2>Time to hear your thoughts!</h2>
+            </div>
+
+            <!-- text -->
+            <p>Click the button below to generate a link/code your lab mates can use to participate in the lesson by offering their own answers.</p>
+
+            <button class="generate-link-btn">Generate Link/Code</button>
+
+            <!-- show local image SVG file-->
+            <img src="raven-white-bg-04 (2).svg" alt="" width="400" height="400">
+        </div>
+    </div>
+
+    <!-- Add button handler  -->
+    <script>
+        // Get button element
+        const generateLinkBtn = document.querySelector('.generate-link-btn');
+
+        // Add event listener
+        generateLinkBtn.addEventListener('click', () => {
+
+            const cookieValue = checkCookie();
+            if (cookieValue){
+                alert("Cookie exists");
+                alert(cookieValue);
+                // Generate link
+
+                // Check API to see if lab session exists
+                // If it does, generate link
+                // If it doesn't, give error message about lab not being pre-filled
+                showLink();
+
+            } else {
+                alert("Cookie does not exist");
+                // Handle manual entry of lab ID
+            }
+        });
+
+
+        function checkCookie() {
+                var name = "labID=";
+                var decodedCookie = decodeURIComponent(document.cookie);
+                var ca = decodedCookie.split(";");
+                for (var i = 0; i < ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) === " ") {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) === 0) {
+                        var value = c.substring(name.length, c.length);
+                        // alert('Cookie "username" exists with value: ' + value);
+                        return value;
+                    }
+                }
+                return false;
+                // alert('Cookie "labID" does not exist!');
+            }
+
+        function showLink() {
+            // Check if lab session exists
+            // If it doesnt, display error and show manual entry form
+            // If it does
+                // Replace content pane with link and start button
+                // Add event listeners
+                // Link should be copied to clipboard when clicked
+                // Start button should start the lab
+                // StartLab() function should be called
+        }
+
+        function showManualEntry() {
+            // Replace content pane with manual entry form and back button
+            // Explain a cookie of the lab session could not be detected. Please enter the lab ID manually.
+        }
+
+        function startLab() {
+            // Replace Raven image
+            // Replace content pane with lab content
+                // Question
+                // Subheading
+                // Countdown timer
+                // Done button
+
+            // On done state - Possibly add to new function
+                // Replace timer with "Time Up"
+                // Add extend button
+                // Add show answers button
+            // Show answer button handler
+                // Fetch all answers from backend
+                    // From answers table, select all answers with the same lab ID
+                // Add additional content panes below to render each answer
+
+        }
+
+    </script>
+</body>
+</html>
