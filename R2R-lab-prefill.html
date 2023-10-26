@@ -23,16 +23,19 @@
                 /* background-color: #316f82; */
                 /* box-shadow: 10px 10px lightblue; */
                 box-shadow: -3px 0px 0px 0px #316f82;
+                padding-top: 0px;
             }
             h2 {
                 /* background-color: #007bff; */
-                background-color: #192225;
+                /* background-color: #192225; */
                 color: #babdb9;
 
-                padding: 10px;
+                /* padding: 10px;
                 border-radius: 8px 8px 0 0;
                 margin: -20px -20px 20px -20px;
-                font-size: 1em;
+                font-size: 1em; */
+                margin: 3px;
+                font-size: 1.5em;
             }
             input[type="text"],
             select {
@@ -91,11 +94,54 @@
                 color: black;
                 opacity: 1; /* Firefox */
             }
+
+            .header {
+                background-color: #192225;
+                color: #babdb9;
+
+                padding: 10px;
+                border-radius: 8px 8px 0 0;
+                /* margin: -20px -20px 20px -20px; */
+                font-size: 1em;
+
+                display: flex;
+                flex-direction: row;
+                align-content: center;
+                align-items: center;
+                justify-content: flex-start;
+
+                padding: 4px;
+                border-radius: 8px 8px 0 0;
+
+                margin-left: -20px;
+                margin-right: -20px;
+            }
+
+            img {
+                width: 18px;
+            }
         </style>
     </head>
     <body>
         <div class="container">
-            <h2>Pre-Fill for Lab Presentation</h2>
+            <div class="header">
+                <img src="bell-icon.png" width="50px" />
+                <h2>Pre-Fill for Lab Presentation</h2>
+            </div>
+
+            <!-- <h2>             <img
+                src="bell-icon.png"
+                alt="Lab Image"
+                width="50px"
+            /> Pre-Fill for Lab Presentation</h2> -->
+
+            <!-- image -->
+            <!-- <img
+                src="bell-icon.png"
+                alt="Lab Image"
+                width="50px"
+            /> -->
+
             <section class="info-section">
                 <h3>Laboratory Information</h3>
                 <div class="input-row">
@@ -146,14 +192,29 @@
 
         <script>
             const dropdownOptions = {
-                fieldOfResearch: ["Physics", "Chemistry", "Computer Science"],
-                careerStage: [
-                    "Undergraduate",
-                    "Graduate",
-                    "Postdoctoral",
-                    "Faculty",
+                fieldOfResearch: [
+                    "Neurobio",
+                    "Cog Neuro",
+                    "Neuroimaging",
+                    "Computational Neuro",
+                    "Deep Learning",
+                    "Other",
                 ],
-                labRole: ["Research Assistant", "Lab Manager", "PI"],
+                careerStage: [
+                    "Professor",
+                    "Postdoc",
+                    "PhD",
+                    "Masters",
+                    "Undergraduate",
+                    "Other",
+                ],
+                labRole: [
+                    "Administrative",
+                    "Managerial",
+                    "Wet bench",
+                    "Computational",
+                    "Other",
+                ],
             };
 
             function populateSelect(el, options) {
@@ -192,7 +253,15 @@
                         Laboratory Role
                     </option>
                 </select>
-            `;
+
+
+                <button class="remove-row-btn" onClick="removeRow()">X</button>`;
+
+                // Add remove event listener
+                newMemberRow.querySelector('.remove-row-btn').addEventListener("click", function() {
+                    removeRow(this);
+                });
+
                 nonPresentingMembersSection.appendChild(newMemberRow);
                 nonPresentingMembersSection.style.display = "block";
 
@@ -337,6 +406,11 @@
                 }
                 alert("There was am error setting the cookie");
             }
+
+            function removeRow(buttonElement) {
+    const rowToRemove = buttonElement.closest(".input-row");
+    rowToRemove.remove();
+}
         </script>
     </body>
 </html>
