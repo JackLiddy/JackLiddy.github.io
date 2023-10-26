@@ -8,17 +8,9 @@
             body {
                 font-family: Arial, sans-serif;
                 background-color: #000000;
-                /* color: #fff; */
                 padding: 20px;
             }
             .container {
-                /* width: 400px; */
-                /* background-color: #ffffff; */
-                /* padding: 20px; */
-                /* border-radius: 8px; */
-                /* left: 10px; */
-                /* top: 10px; */
-
                 width: 348px;
                 background-color: #ffffff;
                 padding: 20px;
@@ -38,24 +30,14 @@
 
             .header {
                 padding-top: 0px;
-                /* padding: 10px 0; */
-                /* border-bottom: 1px solid #555; */
             }
-            /* svg */
             img {
-                /* width: 400px;
-            height: 400px;
-            position: absolute;
-            left: 10px;
-            top: 10px; */
-
                 position: absolute;
                 left: -177px;
                 top: -1px;
                 height: 101%;
             }
 
-            /* button */
             .generate-link-btn {
                 border-radius: 15px;
                 background-color: #854abe;
@@ -69,6 +51,7 @@
             .generate-link-btn:hover {
                 background-color: #5e2d8a;
                 color: white;
+                padding: 13px;
             }
             /* clicked */
             .generate-link-btn:active {
@@ -111,15 +94,17 @@
                 font-weight: bold;
                 margin: 10px;
             }
+            .start-btn:hover {
+                background-color: #5e2d8a;
+                color: white;
+                padding: 13px;
+            }
 
             .button-footer {
                 display: flex;
                 flex-direction: row;
-                /* justify-content: space-between; */
                 align-items: center;
                 text-align: center;
-                /* width: 100%; */
-                /* margin-top: 20px; */
             }
             .countdown-btn {
                 border-radius: 15px;
@@ -185,34 +170,23 @@
                 flex-direction: column;
             }
             .response-container {
-                /* background-color: gray;
-                background-color: gray; */
-    width: 593px;
-    padding: 11px;
-    /* margin: 9px; */
-    display: flex;
-    flex-direction: column;
-    /* padding: 51px; */
-    align-items: center;
-    justify-content: flex-start;
+                width: 593px;
+                padding: 11px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
             }
             .response {
                 background-color: #5e2d8a;
-
-                /* background-color: #5e2d8a; */
-    width: 100%;
-    /* display: flex; */
-    /* padding: 10px; */
-    margin: 10px;
-    display: flex;
-    flex-direction: column;
-    /* align-content: center; */
-    justify-content: flex-start;
-    align-items: center;
-    background-color: #ffffff;
-
+                width: 100%;
+                margin: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                background-color: #ffffff;
             }
-
 
             .arrow {
                 position: absolute;
@@ -220,12 +194,11 @@
                 height: 0;
                 border-style: solid;
 
-
                 position: relative;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    margin: -11px;
+                width: 0;
+                height: 0;
+                border-style: solid;
+                margin: -11px;
             }
             .arrow.horizontal-arrow-top {
                 left: 50%;
@@ -234,14 +207,13 @@
                 border-color: transparent transparent black transparent;
                 transform: translateX(-50%);
 
-
                 left: 312px;
-    top: -11px;
-    border-width: 0 15px 42px;
-    border-color: transparent transparent white transparent;
-    transform: translateX(-50%);
+                top: -11px;
+                border-width: 0 15px 42px;
+                border-color: transparent transparent white transparent;
+                transform: translateX(-50%);
             }
-            .hide-answers-btn{
+            .hide-answers-btn {
                 border-radius: 15px;
                 background-color: #854abe;
                 color: white;
@@ -253,7 +225,43 @@
                 display: none;
             }
 
+            .tooltip {
+                position: relative;
+                display: inline-block;
+            }
 
+            .tooltip .tooltiptext {
+                visibility: hidden;
+                width: 140px;
+                background-color: #555;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px;
+                position: absolute;
+                z-index: 1;
+                bottom: 100%;
+                left: 50%;
+                margin-left: -75px;
+                opacity: 0;
+                transition: opacity 0.3s;
+            }
+
+            .tooltip .tooltiptext::after {
+                content: "";
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                margin-left: -5px;
+                border-width: 5px;
+                border-style: solid;
+                border-color: #555 transparent transparent transparent;
+            }
+
+            .tooltip:hover .tooltiptext {
+                visibility: visible;
+                opacity: 1;
+            }
         </style>
     </head>
     <body>
@@ -296,9 +304,20 @@
                     </p>
 
                     <div class="button-footer">
-                        <button class="link-btn" onclick="onLinkClick()">
-                            LINK HERE
-                        </button>
+                        <div class="tooltip">
+                            <button
+                                class="link-btn"
+                                id="copy-to-clipboard-btn"
+                                onmouseout="handleMouseOut()"
+                                onclick="onLinkClick()"
+                            >
+                                <span class="tooltiptext" id="myTooltip"
+                                    >Copy to clipboard</span
+                                >
+                                Copy link
+                            </button>
+                        </div>
+
                         <button class="start-btn" onclick="startLab()">
                             Start
                         </button>
@@ -365,7 +384,6 @@
                 </div>
             </div>
 
-
             <!-- render responses here -->
             <div class="response-container">
                 <!-- <div class="response">
@@ -373,23 +391,10 @@
                     <p>Answer 1</p> 
                     <div class="arrow horizontal-arrow-top"></div>
                 </div>
-                <div class="response">
-                    <h3>Response 1</h3>
-                    <p>Answer 1</p> 
-                    <div class="arrow horizontal-arrow-top"></div>
-                </div>
-                <div class="response">
-                    <h3>Response 1</h3>
-                    <p>Answer 1</p> 
-                    <div class="arrow horizontal-arrow-top"></div>
                 </div> -->
-
             </div>
-
-
         </div>
 
-        <!-- Add button handler  -->
         <script>
             // Get button element
             const generateLinkBtn =
@@ -402,7 +407,7 @@
                 const cookieValue = checkCookie();
                 if (cookieValue) {
                     // alert("Cookie exists");
-                    alert(cookieValue);
+                    // alert(cookieValue);
                     // Generate link
 
                     // Check API to see if lab session exists
@@ -465,7 +470,7 @@
 
                             // Set link button text to link
                             const linkBtn = document.querySelector(".link-btn");
-                            linkBtn.innerHTML = `${labID}`;
+                            // linkBtn.innerHTML = `${labID}`;
                         } else {
                             console.log("Lab does not exist.");
                             // Display error and manual entry form
@@ -496,6 +501,23 @@
 
             function onLinkClick() {
                 console.log("link clicked");
+                // let enteredSessionId = parseInt(
+                //     document.getElementById("session-id-input").value
+                // );
+
+                // let newSessionId = enteredSessionId + 1;
+
+                let sessionLink = `https://jackliddy.github.io/R2R-prompting/R2R-audience.html?labSession=${labId}`;
+                navigator.clipboard.writeText(sessionLink);
+
+                // visual feedback of copy operation
+                let tooltip = document.getElementById("myTooltip");
+                tooltip.innerHTML = "Copied Link";
+            }
+
+            function handleMouseOut() {
+                var tooltip = document.getElementById("myTooltip");
+                tooltip.innerHTML = "Copy to clipboard";
             }
 
             function startLab() {
@@ -583,10 +605,10 @@
                                 ".response-container"
                             );
 
-
                             submissions.forEach((submission) => {
                                 console.log("submission: ", submission);
-                                const response = document.createElement("response");
+                                const response =
+                                    document.createElement("response");
 
                                 response.innerHTML = `
                                 <h3>${submission.answer}</h3>
@@ -596,41 +618,15 @@
                                 responseContainer.appendChild(response);
                             });
 
-
                             // Toggle hide/show answers
 
-
-                            const showAnswersBtn = document.querySelector(
-                                ".show-answers-btn"
-                            );
+                            const showAnswersBtn =
+                                document.querySelector(".show-answers-btn");
                             showAnswersBtn.style.display = "none";
 
-                            const hideAnswersBtn = document.querySelector(
-                                ".hide-answers-btn"
-                            );
+                            const hideAnswersBtn =
+                                document.querySelector(".hide-answers-btn");
                             hideAnswersBtn.style.display = "flex";
-
-
-                            // showAnswersBtn.innerHTML = "Hide Answers";
-                        
-                            // // remove previous event listener
-                            // showAnswersBtn.removeEventListener("click", () => {
-                            //     showAnswers();
-                            // });
-
-
-                            // showAnswersBtn.addEventListener("click", () => {
-                            //     // Remove all answers from the container
-                            //     responseContainer.innerHTML = "";
-                            //     showAnswersBtn.innerHTML = "Show Answers";
-                            //     // connect back to showAnswers function
-                            //     showAnswersBtn.addEventListener("click", () => {
-                            //         showAnswers();
-                            //     });
-                            // });
-                            
-
-
                         } else {
                             console.log("No lab sessions exist with that ID");
                         }
@@ -644,23 +640,20 @@
                     });
             }
 
-
             function hideAnswers() {
                 // Remove all answers from the container
                 const responseContainer = document.querySelector(
-                                ".response-container"
-                            );
+                    ".response-container"
+                );
                 responseContainer.innerHTML = "";
 
                 // Toggle hide/show answers
-                const showAnswersBtn = document.querySelector(
-                                ".show-answers-btn"
-                            );
+                const showAnswersBtn =
+                    document.querySelector(".show-answers-btn");
                 showAnswersBtn.style.display = "flex";
 
-                const hideAnswersBtn = document.querySelector(
-                                ".hide-answers-btn"
-                            );
+                const hideAnswersBtn =
+                    document.querySelector(".hide-answers-btn");
                 hideAnswersBtn.style.display = "none";
             }
 
