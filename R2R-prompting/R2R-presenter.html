@@ -22,7 +22,7 @@
                 width: 348px;
                 background-color: #ffffff;
                 padding: 20px;
-                position: absolute;
+                position: relative;
                 height: 216px;
                 margin-left: 90px;
                 padding-left: 156px;
@@ -179,109 +179,214 @@
                 font-weight: bold;
                 margin: 10px;
             }
+
+            .outer-window {
+                display: flex;
+                flex-direction: column;
+            }
+            .response-container {
+                /* background-color: gray;
+                background-color: gray; */
+    width: 593px;
+    padding: 11px;
+    /* margin: 9px; */
+    display: flex;
+    flex-direction: column;
+    /* padding: 51px; */
+    align-items: center;
+    justify-content: flex-start;
+            }
+            .response {
+                background-color: #5e2d8a;
+
+                /* background-color: #5e2d8a; */
+    width: 100%;
+    /* display: flex; */
+    /* padding: 10px; */
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    /* align-content: center; */
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #ffffff;
+
+            }
+
+
+            .arrow {
+                position: absolute;
+                width: 0;
+                height: 0;
+                border-style: solid;
+
+
+                position: relative;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    margin: -11px;
+            }
+            .arrow.horizontal-arrow-top {
+                left: 50%;
+                top: -10px;
+                border-width: 0 10px 10px;
+                border-color: transparent transparent black transparent;
+                transform: translateX(-50%);
+
+
+                left: 312px;
+    top: -11px;
+    border-width: 0 15px 42px;
+    border-color: transparent transparent white transparent;
+    transform: translateX(-50%);
+            }
+            .hide-answers-btn{
+                border-radius: 15px;
+                background-color: #854abe;
+                color: white;
+                font-size: x-large;
+                border-width: inherit;
+                padding: 12px;
+                font-weight: bold;
+                margin: 5px;
+                display: none;
+            }
+
+
         </style>
     </head>
     <body>
-        <div class="container">
-            <div class="content">
-                <div class="header">
-                    <h2>Time to hear your thoughts!</h2>
-                </div>
+        <div class="outer-window">
+            <div class="container">
+                <div class="content">
+                    <div class="header">
+                        <h2>Time to hear your thoughts!</h2>
+                    </div>
 
-                <p>
-                    Click the button below to generate a link/code your lab
-                    mates can use to participate in the lesson by offering their
-                    own answers.
-                </p>
+                    <p>
+                        Click the button below to generate a link/code your lab
+                        mates can use to participate in the lesson by offering
+                        their own answers.
+                    </p>
 
-                <button class="generate-link-btn">Generate Link/Code</button>
-
-                <div class="raven">
-                    <img
-                        src="raven-white-bg-04 (2).svg"
-                        alt=""
-                        width="400"
-                        height="400"
-                    />
-                </div>
-            </div>
-
-            <div class="start-content">
-                <div class="header">
-                    <h2>Time to hear your thoughts!</h2>
-                </div>
-
-                <p>
-                    Click the button below to generate a link/code your lab
-                    mates can use to participate in the lesson by offering their
-                    own answers.
-                </p>
-
-                <div class="button-footer">
-                    <button class="link-btn" onclick="onLinkClick()">
-                        LINK HERE
+                    <button class="generate-link-btn">
+                        Generate Link/Code
                     </button>
-                    <button class="start-btn" onclick="startLab()">
-                        Start
+
+                    <div class="raven">
+                        <img
+                            src="raven-white-bg-04 (2).svg"
+                            alt=""
+                            width="400"
+                            height="400"
+                        />
+                    </div>
+                </div>
+
+                <div class="start-content">
+                    <div class="header">
+                        <h2>Time to hear your thoughts!</h2>
+                    </div>
+
+                    <p>
+                        Click the button below to generate a link/code your lab
+                        mates can use to participate in the lesson by offering
+                        their own answers.
+                    </p>
+
+                    <div class="button-footer">
+                        <button class="link-btn" onclick="onLinkClick()">
+                            LINK HERE
+                        </button>
+                        <button class="start-btn" onclick="startLab()">
+                            Start
+                        </button>
+                    </div>
+
+                    <div class="raven">
+                        <img
+                            src="raven-white-bg-09.svg"
+                            alt=""
+                            width="400"
+                            height="400"
+                        />
+                    </div>
+                </div>
+
+                <div class="lab-content">
+                    <div class="header" id="question-text">
+                        <h2>Question Here</h2>
+                    </div>
+
+                    <p>(Answer on your own device)</p>
+
+                    <div class="button-footer">
+                        <button class="countdown-btn">Countdown</button>
+                        <button class="done-btn">Done</button>
+                    </div>
+
+                    <div class="raven">
+                        <img
+                            src="raven-white-bg-09.svg"
+                            alt=""
+                            width="400"
+                            height="400"
+                        />
+                    </div>
+                </div>
+
+                <div class="time-up-content">
+                    <div class="header" id="question-text">
+                        <h2>Thanks for participating!</h2>
+                    </div>
+
+                    <div class="button-footer">
+                        <button class="time-up-btn">Time Up!</button>
+                        <button class="extend-btn" onclick="extendTime()">
+                            Extend
+                        </button>
+                    </div>
+                    <button class="show-answers-btn" onclick="showAnswers()">
+                        Show Answers
                     </button>
-                </div>
-
-                <div class="raven">
-                    <img
-                        src="raven-white-bg-09.svg"
-                        alt=""
-                        width="400"
-                        height="400"
-                    />
-                </div>
-            </div>
-
-            <div class="lab-content">
-                <div class="header" id="question-text">
-                    <h2>Question Here</h2>
-                </div>
-
-                <p>(Answer on your own device)</p>
-
-                <div class="button-footer">
-                    <button class="countdown-btn">Countdown</button>
-                    <button class="done-btn">Done</button>
-                </div>
-
-                <div class="raven">
-                    <img
-                        src="raven-white-bg-09.svg"
-                        alt=""
-                        width="400"
-                        height="400"
-                    />
-                </div>
-            </div>
-
-            <div class="time-up-content">
-                <div class="header" id="question-text">
-                    <h2>Thanks for participating!</h2>
-                </div>
-
-                <div class="button-footer">
-                    <button class="time-up-btn">Time Up!</button>
-                    <button class="extend-btn" onclick="extendTime()">
-                        Extend
+                    <button class="hide-answers-btn" onclick="hideAnswers()">
+                        Hide Answers
                     </button>
-                </div>
-                <button class="show-answers-btn" onclick="showAnswers()">
-                    Show Answers
-                </button>
 
-                <div class="raven">
-                    <img
-                        src="raven-white-bg-09.svg"
-                        alt=""
-                        width="400"
-                        height="400"
-                    />
+                    <div class="raven">
+                        <img
+                            src="raven-white-bg-09.svg"
+                            alt=""
+                            width="400"
+                            height="400"
+                        />
+                    </div>
                 </div>
             </div>
+
+
+            <!-- render responses here -->
+            <div class="response-container">
+                <!-- <div class="response">
+                    <h3>Response 1 </h3>
+                    <p>Answer 1</p> 
+                    <div class="arrow horizontal-arrow-top"></div>
+                </div>
+                <div class="response">
+                    <h3>Response 1</h3>
+                    <p>Answer 1</p> 
+                    <div class="arrow horizontal-arrow-top"></div>
+                </div>
+                <div class="response">
+                    <h3>Response 1</h3>
+                    <p>Answer 1</p> 
+                    <div class="arrow horizontal-arrow-top"></div>
+                </div> -->
+
+            </div>
+
+
         </div>
 
         <!-- Add button handler  -->
@@ -289,6 +394,8 @@
             // Get button element
             const generateLinkBtn =
                 document.querySelector(".generate-link-btn");
+
+            let labId = "";
 
             // Add event listener
             generateLinkBtn.addEventListener("click", () => {
@@ -320,6 +427,7 @@
                     if (c.indexOf(name) === 0) {
                         var value = c.substring(name.length, c.length);
                         // alert('Cookie "username" exists with value: ' + value);
+                        labId = value;
                         return value;
                     }
                 }
@@ -451,6 +559,109 @@
                 // Fetch all answers from backend
                 // From answers table, select all answers with the same lab ID
                 // Add additional content panes below to render each answer
+
+                let url = `https://api.sheety.co/f86a219e4c66ae9bacf55c87219398c1/c4RLabPrefill/submissions?filter[labId]=${labId}`;
+                fetch(url)
+                    .then((response) => response.json())
+                    .then((json) => {
+                        console.log("json: ", json);
+                        console.log("json.submissions: ", json.submissions);
+
+                        // If at least one lab session exists
+                        if (json.submissions.length > 0) {
+                            console.log(
+                                "json.submissions.length: ",
+                                json.submissions.length
+                            );
+
+                            // Fetch non-presenting lab members from sessionData
+
+                            const submissions = json.submissions;
+
+                            // Render a response in the container for each submission
+                            const responseContainer = document.querySelector(
+                                ".response-container"
+                            );
+
+
+                            submissions.forEach((submission) => {
+                                console.log("submission: ", submission);
+                                const response = document.createElement("response");
+
+                                response.innerHTML = `
+                                <h3>${submission.answer}</h3>
+                                <div class="arrow horizontal-arrow-top"></div>
+                                `;
+                                response.className = "response";
+                                responseContainer.appendChild(response);
+                            });
+
+
+                            // Toggle hide/show answers
+
+
+                            const showAnswersBtn = document.querySelector(
+                                ".show-answers-btn"
+                            );
+                            showAnswersBtn.style.display = "none";
+
+                            const hideAnswersBtn = document.querySelector(
+                                ".hide-answers-btn"
+                            );
+                            hideAnswersBtn.style.display = "flex";
+
+
+                            // showAnswersBtn.innerHTML = "Hide Answers";
+                        
+                            // // remove previous event listener
+                            // showAnswersBtn.removeEventListener("click", () => {
+                            //     showAnswers();
+                            // });
+
+
+                            // showAnswersBtn.addEventListener("click", () => {
+                            //     // Remove all answers from the container
+                            //     responseContainer.innerHTML = "";
+                            //     showAnswersBtn.innerHTML = "Show Answers";
+                            //     // connect back to showAnswers function
+                            //     showAnswersBtn.addEventListener("click", () => {
+                            //         showAnswers();
+                            //     });
+                            // });
+                            
+
+
+                        } else {
+                            console.log("No lab sessions exist with that ID");
+                        }
+                    })
+                    .catch((error) => {
+                        // Display error message and manual entry form
+                        console.error(
+                            "There was an error fetching the data:",
+                            error
+                        );
+                    });
+            }
+
+
+            function hideAnswers() {
+                // Remove all answers from the container
+                const responseContainer = document.querySelector(
+                                ".response-container"
+                            );
+                responseContainer.innerHTML = "";
+
+                // Toggle hide/show answers
+                const showAnswersBtn = document.querySelector(
+                                ".show-answers-btn"
+                            );
+                showAnswersBtn.style.display = "flex";
+
+                const hideAnswersBtn = document.querySelector(
+                                ".hide-answers-btn"
+                            );
+                hideAnswersBtn.style.display = "none";
             }
 
             function extendTime() {
