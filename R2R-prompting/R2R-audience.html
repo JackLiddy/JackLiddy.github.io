@@ -453,12 +453,12 @@
                         // console.log('question: ', question);
                         // console.log('labSession: ', labSession);
 
-                        let labID = Math.floor(Math.random() * 1000000) + 1;
+                        // let labID = Math.floor(Math.random() * 1000000) + 1;
                         let url =
                             "https://api.sheety.co/f86a219e4c66ae9bacf55c87219398c1/c4RLabPrefill/submissions";
                         let body = {
                             submission: {
-                                labId: labID,
+                                labId: labSession,
                                 userName: selectedStudent,
                                 question: question,
                                 answer: answer,
