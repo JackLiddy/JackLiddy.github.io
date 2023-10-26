@@ -182,8 +182,16 @@
                 newMemberRow.classList.add("input-row");
                 newMemberRow.innerHTML = `
                 <input type="text" placeholder="Name" class="member-name">
-                <select name="careerStage"></select>
-                <select name="labRole"></select>
+                <select name="careerStage">
+                    <option value="" disabled selected hidden>
+                        Career Stage
+                    </option>
+                </select>
+                <select name="labRole">
+                    <option value="" disabled selected hidden>
+                        Laboratory Role
+                    </option>
+                </select>
             `;
                 nonPresentingMembersSection.appendChild(newMemberRow);
                 nonPresentingMembersSection.style.display = "block";
