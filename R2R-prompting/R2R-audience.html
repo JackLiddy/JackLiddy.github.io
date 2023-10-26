@@ -16,21 +16,6 @@
                 background-color: black;
             }
             .question-container {
-                /* width: 400px; */
-                /* background-color: #ffffff; */
-                /* padding: 20px; */
-                /* border-radius: 8px; */
-                /* left: 10px; */
-                /* top: 10px; */
-
-                /* width: 348px;
-                background-color: #ffffff;
-                padding: 20px;
-                position: absolute;
-                height: 216px;
-                margin-left: 90px;
-                padding-left: 156px; */
-
                 width: 380px;
                 background-color: #ffffff;
                 padding: 20px;
@@ -57,14 +42,7 @@
                 /* padding: 10px 0; */
                 /* border-bottom: 1px solid #555; */
             }
-            /* svg */
             #top-img {
-                /* width: 400px;
-            height: 400px;
-            position: absolute;
-            left: 10px;
-            top: 10px; */
-
                 position: absolute;
                 left: -131px;
                 top: -1px;
@@ -80,20 +58,6 @@
             }
 
             .student-selection-container {
-                /* width: 400px; */
-                /* background-color: #ffffff; */
-                /* padding: 20px; */
-                /* border-radius: 8px; */
-                /* left: 10px; */
-                /* top: 10px; */
-
-                /* width: 348px;
-                background-color: #ffffff;
-                padding: 20px;
-                position: absolute;
-                height: 216px;
-                margin-left: 90px;
-                padding-left: 156px; */
 
                 width: 380px;
                 background-color: #ffffff;
@@ -109,21 +73,6 @@
             }
 
             .answer-container {
-                /* width: 400px; */
-                /* background-color: #ffffff; */
-                /* padding: 20px; */
-                /* border-radius: 8px; */
-                /* left: 10px; */
-                /* top: 10px; */
-
-                /* width: 348px;
-                background-color: #ffffff;
-                padding: 20px;
-                position: absolute;
-                height: 216px;
-                margin-left: 90px;
-                padding-left: 156px; */
-
                 display: flex;
                 border-radius: 10px;
 
@@ -328,15 +277,11 @@
             document.querySelector(".question h2").innerText = question;
 
             // Fetch lab members from database
-            // let url =
-            //             "https://api.sheety.co/f86a219e4c66ae9bacf55c87219398c1/c4RLabPrefill/table1?filter[labId]=labSession";
             let url = `https://api.sheety.co/f86a219e4c66ae9bacf55c87219398c1/c4RLabPrefill/table1?filter[labId]=${labSession}`;
             fetch(url)
                 .then((response) => response.json())
                 .then((json) => {
-                    // let labExists = json.table1.some(
-                    //     (entry) => entry.labId == labID
-                    // );
+
 
                     let labExists = true;
                     console.log("json.table1: ", json.table1);
@@ -346,41 +291,6 @@
                         console.log("json.table1.length: ", json.table1.length);
 
                         const sessionData = json.table1[0];
-
-                        // Fetch the non-presenting members from this json
-                        /*
-                                sessionData.labData = "
-                                {
-                                    "labInfo": {
-                                        "labName": "My Lab",
-                                        "fieldOfResearch": "Computer Science",
-                                        "computationalLab": false
-                                    },
-                                    "presenter": {
-                                        "name": "Jack1",
-                                        "careerStage": "Graduate",
-                                        "labRole": "Research Assistant"
-                                    },
-                                    "nonPresentingMembers": [
-                                        {
-                                        "name": "Jack2",
-                                        "careerStage": "Graduate",
-                                        "labRole": "Lab Manager"
-                                        },
-                                        {
-                                        "name": "Jack3",
-                                        "careerStage": "Graduate",
-                                        "labRole": "PI"
-                                        },
-                                        {
-                                        "name": "Jack4",
-                                        "careerStage": "Graduate",
-                                        "labRole": "Lab Manager"
-                                        }
-                                    ]
-                                    }"
-                                    */
-                        // Fetch non-presenting lab members from sessionData
 
                         const labData = JSON.parse(sessionData.labData);
                         console.log(
