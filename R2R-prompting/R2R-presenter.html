@@ -1,129 +1,314 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab Presentation Form</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #000000;
-            /* color: #fff; */
-            padding: 20px;
-        }
-        .container {
-            /* width: 400px; */
-            /* background-color: #ffffff; */
-            /* padding: 20px; */
-            /* border-radius: 8px; */
-            /* left: 10px; */
-            /* top: 10px; */
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Lab Presentation Form</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #000000;
+                /* color: #fff; */
+                padding: 20px;
+            }
+            .container {
+                /* width: 400px; */
+                /* background-color: #ffffff; */
+                /* padding: 20px; */
+                /* border-radius: 8px; */
+                /* left: 10px; */
+                /* top: 10px; */
 
-            width: 348px;
-    background-color: #ffffff;
-    padding: 20px;
-    position: absolute;
-    height: 216px;
-    margin-left: 90px;
-    padding-left: 156px;
-        }
+                width: 348px;
+                background-color: #ffffff;
+                padding: 20px;
+                position: absolute;
+                height: 216px;
+                margin-left: 90px;
+                padding-left: 156px;
+            }
 
-        .content {
-            display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
-        }
+            .content {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                text-align: center;
+            }
 
-        .header {
-            padding-top: 0px;
-            /* padding: 10px 0; */
-            /* border-bottom: 1px solid #555; */
-        }
-        /* svg */
-        img {
-            /* width: 400px;
+            .header {
+                padding-top: 0px;
+                /* padding: 10px 0; */
+                /* border-bottom: 1px solid #555; */
+            }
+            /* svg */
+            img {
+                /* width: 400px;
             height: 400px;
             position: absolute;
             left: 10px;
             top: 10px; */
 
-            position: absolute;
-    left: -177px;
-    top: -1px;
-    height: 101%;
-        }
+                position: absolute;
+                left: -177px;
+                top: -1px;
+                height: 101%;
+            }
 
-/* button */
-.generate-link-btn {
-    border-radius: 15px;
-    background-color: #854abe;
-    color: white;
-    font-size: x-large;
-    border-width: inherit;
-    padding: 12px;
-    font-weight: bold;
+            /* button */
+            .generate-link-btn {
+                border-radius: 15px;
+                background-color: #854abe;
+                color: white;
+                font-size: x-large;
+                border-width: inherit;
+                padding: 12px;
+                font-weight: bold;
+            }
+            /* hover */
+            .generate-link-btn:hover {
+                background-color: #5e2d8a;
+                color: white;
+            }
+            /* clicked */
+            .generate-link-btn:active {
+                background-color: #49226b;
+                color: white;
+            }
 
-}
-/* hover */
-.generate-link-btn:hover {
-    background-color: #5e2d8a;
-    color: white;
-}
-/* clicked */
-.generate-link-btn:active {
-    background-color: #49226b;
-    color: white;
-}
+            .start-content {
+                display: none;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                text-align: center;
+            }
 
-    </style>
-</head>
-<body>
+            .lab-content {
+                display: none;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                text-align: center;
+            }
+            .link-btn {
+                border-radius: 15px;
+                background-color: #854abe;
+                color: white;
+                font-size: x-large;
+                border-width: inherit;
+                padding: 12px;
+                font-weight: bold;
+                margin: 10px;
+            }
+            .start-btn {
+                border-radius: 15px;
+                background-color: #854abe;
+                color: white;
+                font-size: x-large;
+                border-width: inherit;
+                padding: 12px;
+                font-weight: bold;
+                margin: 10px;
+            }
 
-    <div class="container">
-        <div class="content">
-            <div class="header">
-                <h2>Time to hear your thoughts!</h2>
+            .button-footer {
+                display: flex;
+                flex-direction: row;
+                /* justify-content: space-between; */
+                align-items: center;
+                text-align: center;
+                /* width: 100%; */
+                /* margin-top: 20px; */
+            }
+            .countdown-btn {
+                border-radius: 15px;
+                background-color: #dd8b3c;
+                color: white;
+                font-size: x-large;
+                border-width: inherit;
+                padding: 12px;
+                font-weight: bold;
+                margin: 10px;
+            }
+            .done-btn {
+                border-radius: 15px;
+                background-color: #854abe;
+                color: white;
+                font-size: x-large;
+                border-width: inherit;
+                padding: 12px;
+                font-weight: bold;
+                margin: 10px;
+            }
+
+            .time-up-content {
+                display: none;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                text-align: center;
+            }
+            .time-up-btn {
+                border-radius: 15px;
+                background-color: #dd8b3c;
+                color: white;
+                font-size: x-large;
+                border-width: inherit;
+                padding: 12px;
+                font-weight: bold;
+                margin: 10px;
+            }
+            .show-answers-btn {
+                border-radius: 15px;
+                background-color: #854abe;
+                color: white;
+                font-size: x-large;
+                border-width: inherit;
+                padding: 12px;
+                font-weight: bold;
+                margin: 5px;
+            }
+            .extend-btn {
+                border-radius: 15px;
+                background-color: #854abe;
+                color: white;
+                font-size: x-large;
+                border-width: inherit;
+                padding: 12px;
+                font-weight: bold;
+                margin: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="content">
+                <div class="header">
+                    <h2>Time to hear your thoughts!</h2>
+                </div>
+
+                <p>
+                    Click the button below to generate a link/code your lab
+                    mates can use to participate in the lesson by offering their
+                    own answers.
+                </p>
+
+                <button class="generate-link-btn">Generate Link/Code</button>
+
+                <div class="raven">
+                    <img
+                        src="raven-white-bg-04 (2).svg"
+                        alt=""
+                        width="400"
+                        height="400"
+                    />
+                </div>
             </div>
 
-            <!-- text -->
-            <p>Click the button below to generate a link/code your lab mates can use to participate in the lesson by offering their own answers.</p>
+            <div class="start-content">
+                <div class="header">
+                    <h2>Time to hear your thoughts!</h2>
+                </div>
 
-            <button class="generate-link-btn">Generate Link/Code</button>
+                <p>
+                    Click the button below to generate a link/code your lab
+                    mates can use to participate in the lesson by offering their
+                    own answers.
+                </p>
 
-            <!-- show local image SVG file-->
-            <img src="raven-white-bg-04 (2).svg" alt="" width="400" height="400">
+                <div class="button-footer">
+                    <button class="link-btn" onclick="onLinkClick()">
+                        LINK HERE
+                    </button>
+                    <button class="start-btn" onclick="startLab()">
+                        Start
+                    </button>
+                </div>
+
+                <div class="raven">
+                    <img
+                        src="raven-white-bg-09.svg"
+                        alt=""
+                        width="400"
+                        height="400"
+                    />
+                </div>
+            </div>
+
+            <div class="lab-content">
+                <div class="header" id="question-text">
+                    <h2>Question Here</h2>
+                </div>
+
+                <p>(Answer on your own device)</p>
+
+                <div class="button-footer">
+                    <button class="countdown-btn">Countdown</button>
+                    <button class="done-btn">Done</button>
+                </div>
+
+                <div class="raven">
+                    <img
+                        src="raven-white-bg-09.svg"
+                        alt=""
+                        width="400"
+                        height="400"
+                    />
+                </div>
+            </div>
+
+            <div class="time-up-content">
+                <div class="header" id="question-text">
+                    <h2>Thanks for participating!</h2>
+                </div>
+
+                <div class="button-footer">
+                    <button class="time-up-btn">Time Up!</button>
+                    <button class="extend-btn" onclick="extendTime()">
+                        Extend
+                    </button>
+                </div>
+                <button class="show-answers-btn" onclick="showAnswers()">
+                    Show Answers
+                </button>
+
+                <div class="raven">
+                    <img
+                        src="raven-white-bg-09.svg"
+                        alt=""
+                        width="400"
+                        height="400"
+                    />
+                </div>
+            </div>
         </div>
-    </div>
 
-    <!-- Add button handler  -->
-    <script>
-        // Get button element
-        const generateLinkBtn = document.querySelector('.generate-link-btn');
+        <!-- Add button handler  -->
+        <script>
+            // Get button element
+            const generateLinkBtn =
+                document.querySelector(".generate-link-btn");
 
-        // Add event listener
-        generateLinkBtn.addEventListener('click', () => {
+            // Add event listener
+            generateLinkBtn.addEventListener("click", () => {
+                const cookieValue = checkCookie();
+                if (cookieValue) {
+                    // alert("Cookie exists");
+                    alert(cookieValue);
+                    // Generate link
 
-            const cookieValue = checkCookie();
-            if (cookieValue){
-                alert("Cookie exists");
-                alert(cookieValue);
-                // Generate link
+                    // Check API to see if lab session exists
+                    // If it does, generate link
+                    // If it doesn't, give error message about lab not being pre-filled
+                    showLink(cookieValue);
+                } else {
+                    alert("Cookie does not exist");
+                    // Handle manual entry of lab ID
+                }
+            });
 
-                // Check API to see if lab session exists
-                // If it does, generate link
-                // If it doesn't, give error message about lab not being pre-filled
-                showLink();
-
-            } else {
-                alert("Cookie does not exist");
-                // Handle manual entry of lab ID
-            }
-        });
-
-
-        function checkCookie() {
+            function checkCookie() {
                 var name = "labID=";
                 var decodedCookie = decodeURIComponent(document.cookie);
                 var ca = decodedCookie.split(";");
@@ -142,41 +327,135 @@
                 // alert('Cookie "labID" does not exist!');
             }
 
-        function showLink() {
-            // Check if lab session exists
-            // If it doesnt, display error and show manual entry form
-            // If it does
+            function showLink(labID) {
+                // Check if lab session exists
+                let url =
+                    "https://api.sheety.co/f86a219e4c66ae9bacf55c87219398c1/c4RLabPrefill/table1";
+                fetch(url)
+                    .then((response) => response.json())
+                    .then((json) => {
+                        let labExists = json.table1.some(
+                            (entry) => entry.labId == labID
+                        );
+                        if (labExists) {
+                            console.log("Lab exists!");
+                            // Display link and start button
+
+                            // Replace content pane with link and start button
+
+                            // Hide the content pane
+                            const content = document.querySelector(".content");
+                            content.style.display = "none";
+                            console.log("content pane hidden");
+
+                            // Display the lab content pane
+                            const labContent =
+                                document.querySelector(".start-content");
+                            labContent.style.display = "flex";
+                            labContent.style.justifyContent = "space-between";
+                            labContent.style.height = "100%";
+
+                            // Set link button text to link
+                            const linkBtn = document.querySelector(".link-btn");
+                            linkBtn.innerHTML = `${labID}`;
+                        } else {
+                            console.log("Lab does not exist.");
+                            // Display error and manual entry form
+                        }
+                        console.log(json.table1);
+                    })
+                    .catch((error) => {
+                        // Display error message and manual entry form
+                        console.error(
+                            "There was an error fetching the data:",
+                            error
+                        );
+                    });
+
+                // If it doesnt, display error and show manual entry form
+                // If it does
                 // Replace content pane with link and start button
                 // Add event listeners
                 // Link should be copied to clipboard when clicked
                 // Start button should start the lab
                 // StartLab() function should be called
-        }
+            }
 
-        function showManualEntry() {
-            // Replace content pane with manual entry form and back button
-            // Explain a cookie of the lab session could not be detected. Please enter the lab ID manually.
-        }
+            function showManualEntry() {
+                // Replace content pane with manual entry form and back button
+                // Explain a cookie of the lab session could not be detected. Please enter the lab ID manually.
+            }
 
-        function startLab() {
-            // Replace Raven image
-            // Replace content pane with lab content
+            function onLinkClick() {
+                console.log("link clicked");
+            }
+
+            function startLab() {
+                // Replace Raven image with raven-white-bg-09.svg
+                // const raven = document.querySelector('.raven');
+                // raven.innerHTML = '<img src="raven-white-bg-09.svg" alt="" width="400" height="400">';
+                console.log("raven image replaced");
+
+                // Replace content pane with lab content
                 // Question
                 // Subheading
                 // Countdown timer
                 // Done button
 
-            // On done state - Possibly add to new function
-                // Replace timer with "Time Up"
-                // Add extend button
-                // Add show answers button
-            // Show answer button handler
+                // Hide the content pane
+                const content = document.querySelector(".start-content");
+                content.style.display = "none";
+                console.log("content pane hidden");
+
+                // Display the lab content pane
+                const labContent = document.querySelector(".lab-content");
+                labContent.style.display = "flex";
+                labContent.style.justifyContent = "space-between";
+                labContent.style.height = "100%";
+
+                // Fetch the question from the URL parameter 'question'
+                const urlParams = new URLSearchParams(window.location.search);
+                const question = urlParams.get("question");
+                // Display the question
+                const questionText = document.querySelector("#question-text");
+                questionText.innerHTML = "<h2>" + question + "</h2>";
+                console.log("question", question);
+                console.log("question displayed");
+
+                // Add event listener to countdown button
+                const countdownBtn = document.querySelector(".countdown-btn");
+
+                // Add event listener to done button
+                const doneBtn = document.querySelector(".done-btn");
+                doneBtn.addEventListener("click", () => {
+                    // On done state - Possibly add to new function
+                    // Replace timer with "Time Up"
+                    // Add extend button
+                    // Add show answers button
+
+                    // Hide the lab content (question) pane
+                    const content = document.querySelector(".lab-content");
+                    content.style.display = "none";
+                    console.log("lab pane hidden");
+
+                    // Display the time-up content pane
+                    const labContent =
+                        document.querySelector(".time-up-content");
+                    labContent.style.display = "flex";
+                    labContent.style.justifyContent = "space-between";
+                    labContent.style.height = "100%";
+                });
+            }
+
+            function showAnswers() {
                 // Fetch all answers from backend
-                    // From answers table, select all answers with the same lab ID
+                // From answers table, select all answers with the same lab ID
                 // Add additional content panes below to render each answer
+            }
 
-        }
-
-    </script>
-</body>
+            function extendTime() {
+                console.log("time extended");
+            }
+        </script>
+    </body>
 </html>
