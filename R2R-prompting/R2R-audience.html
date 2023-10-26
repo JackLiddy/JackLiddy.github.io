@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Lab Presentation Form</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                /* background-color: #933c3c; */
+                /* color: black; */
+                padding: 20px;
+
+                display: flex;
+                flex-direction: column;
+                background-color: black;
+            }
+            .question-container {
+                /* width: 400px; */
+                /* background-color: #ffffff; */
+                /* padding: 20px; */
+                /* border-radius: 8px; */
+                /* left: 10px; */
+                /* top: 10px; */
+
+                /* width: 348px;
+                background-color: #ffffff;
+                padding: 20px;
+                position: absolute;
+                height: 216px;
+                margin-left: 90px;
+                padding-left: 156px; */
+
+                width: 380px;
+                background-color: #ffffff;
+                padding: 20px;
+                position: relative;
+                height: 216px;
+                margin-left: 90px;
+                padding-left: 191px;
+                padding-left: 90px;
+                border-radius: 10px;
+
+                /* display: none; */
+            }
+
+            .content {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                text-align: center;
+            }
+
+            .header {
+                padding-top: 0px;
+                /* padding: 10px 0; */
+                /* border-bottom: 1px solid #555; */
+            }
+            /* svg */
+            #top-img {
+                /* width: 400px;
+            height: 400px;
+            position: absolute;
+            left: 10px;
+            top: 10px; */
+
+                position: absolute;
+                left: -131px;
+                top: -1px;
+                height: 101%;
+                z-index: 1;
+            }
+
+            .question {
+                -webkit-text-stroke: 1.5px white;
+                font-size: 2em;
+                font-weight: bolder;
+                z-index: 2;
+            }
+
+            .student-selection-container {
+                /* width: 400px; */
+                /* background-color: #ffffff; */
+                /* padding: 20px; */
+                /* border-radius: 8px; */
+                /* left: 10px; */
+                /* top: 10px; */
+
+                /* width: 348px;
+                background-color: #ffffff;
+                padding: 20px;
+                position: absolute;
+                height: 216px;
+                margin-left: 90px;
+                padding-left: 156px; */
+
+                width: 380px;
+                background-color: #ffffff;
+                padding: 20px;
+                border-radius: 10px;
+                /* position: absolute; */
+                /* height: 216px; */
+                /* margin-left: 90px; */
+                /* padding-left: 191px; */
+                /* padding-left: 90px; */
+
+                display: none;
+            }
+
+            .answer-container {
+                /* width: 400px; */
+                /* background-color: #ffffff; */
+                /* padding: 20px; */
+                /* border-radius: 8px; */
+                /* left: 10px; */
+                /* top: 10px; */
+
+                /* width: 348px;
+                background-color: #ffffff;
+                padding: 20px;
+                position: absolute;
+                height: 216px;
+                margin-left: 90px;
+                padding-left: 156px; */
+
+                display: flex;
+                border-radius: 10px;
+
+                width: 520px;
+                margin: 10px;
+                padding: 22px;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            #answer-input-area {
+                width: 90%;
+                /* margin: 10px; */
+                background-color: #d9d9d9;
+                margin-bottom: 10px;
+                padding: 24px;
+            }
+
+            #answer-footer {
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                justify-content: flex-start;
+            }
+
+            .footer-img {
+                /* width: 400px; */
+                /* position: relative; */
+            }
+
+            .submit-answer-btn {
+            }
+
+            .submit-answer-btn {
+                border-radius: 15px;
+                background-color: #854abe;
+                color: white;
+                font-size: x-large;
+                border-width: inherit;
+                padding: 12px;
+                font-weight: bold;
+                width: 42vw;
+                height: 90px;
+            }
+            /* hover */
+            .submit-answer-btn:hover {
+                background-color: #5e2d8a;
+                color: white;
+            }
+            /* clicked */
+            .submit-answer-btn:active {
+                background-color: #49226b;
+                color: white;
+            }
+            #computer-raven-img {
+                position: absolute;
+                width: 143px;
+                left: 472px;
+                top: 615px;
+            }
+
+            .student-select-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                /* padding: 10px; */
+                margin-bottom: 10px;
+            }
+
+            #student-selection-dropdown {
+                padding: 5px;
+                border-radius: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="question-container">
+            <div class="content">
+                <!-- <div class="header">
+                <h2>Time to hear your thoughts!</h2>
+            </div>
+
+            <p>
+                Click the button below to generate a link/code your lab
+                mates can use to participate in the lesson by offering their
+                own answers.
+            </p>
+
+            <button class="generate-link-btn">Generate Link/Code</button> -->
+
+                <div class="question">
+                    <h2>QUESTION HERE</h2>
+                </div>
+
+                <!-- <div class="raven"> -->
+                <img
+                    id="top-img"
+                    src="raven-white-bg-08.svg"
+                    alt=""
+                    width="400"
+                    height="400"
+                />
+                <!-- </div> -->
+            </div>
+        </div>
+
+        <div class="answer-container">
+            <div class="student-select-container">
+                <p>
+                    Select your name from the dropdown menu below to submit your
+                    answer to the question.
+                </p>
+
+                <!-- dropdown -->
+                <select
+                    id="student-selection-dropdown"
+                    name="student-selection-dropdown"
+                >
+                    <option value="" disabled selected hidden>
+                        Lab Members
+                    </option>
+                    <!-- <option value="student1">Student 1</option>
+                <option value="student2">Student 2</option>
+                <option value="student3">Student 3</option>
+                <option value="student4">Student 4</option> -->
+                </select>
+            </div>
+
+            <!-- <div id="answer-input-area"> -->
+            <!-- text area here -->
+            <textarea
+                name="answer"
+                id="answer-input-area"
+                cols="30"
+                rows="10"
+                placeholder="Enter your answer here..."
+            ></textarea>
+            <!-- </div> -->
+            <div id="answer-footer">
+                <!-- submit button and raven -->
+                <button class="submit-answer-btn" onclick="handleSubmit()">
+                    Submit
+                </button>
+                <div class="footer-img">
+                    <img
+                        id="computer-raven-img"
+                        src="raven-white-bg-11.svg"
+                        alt=""
+                    />
+                </div>
+            </div>
+        </div>
+
+        <div class="student-selection-container">
+            <!-- <div class="content"> -->
+            <!-- <div class="header">
+                <h2>Time to hear your thoughts!</h2>
+            </div>
+
+            <p>
+                Click the button below to generate a link/code your lab
+                mates can use to participate in the lesson by offering their
+                own answers.
+            </p>
+
+            <button class="generate-link-btn">Generate Link/Code</button> -->
+
+            <p>
+                Select your name from the dropdown menu below to submit your
+                answer to the question.
+            </p>
+
+            <!-- dropdown -->
+            <select
+                id="student-selection-dropdown"
+                name="student-selection-dropdown"
+            >
+                <option value="" disabled selected hidden>Lab Members</option>
+                <!-- <option value="student1">Student 1</option>
+                <option value="student2">Student 2</option>
+                <option value="student3">Student 3</option>
+                <option value="student4">Student 4</option> -->
+            </select>
+
+            <!-- <button class="select-student-btn" onClick="select-student">Continue</button> -->
+
+            <!-- </div> -->
+        </div>
+
+        <script>
+            // Fetch lab session code form parameter
+            // Fetch question from parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const labSession = urlParams.get("labSession");
+            const question = urlParams.get("question");
+            console.log("question: ", question);
+            console.log("labSession: ", labSession);
+
+            // Set question text
+            document.querySelector(".question h2").innerText = question;
+
+            // Fetch lab members from database
+            // let url =
+            //             "https://api.sheety.co/f86a219e4c66ae9bacf55c87219398c1/c4RLabPrefill/table1?filter[labId]=labSession";
+            let url = `https://api.sheety.co/f86a219e4c66ae9bacf55c87219398c1/c4RLabPrefill/table1?filter[labId]=${labSession}`;
+            fetch(url)
+                .then((response) => response.json())
+                .then((json) => {
+                    // let labExists = json.table1.some(
+                    //     (entry) => entry.labId == labID
+                    // );
+
+                    let labExists = true;
+                    console.log("json.table1: ", json.table1);
+
+                    // If at least one lab session exists
+                    if (json.table1.length > 0) {
+                        console.log("json.table1.length: ", json.table1.length);
+
+                        const sessionData = json.table1[0];
+
+                        // Fetch the non-presenting members from this json
+                        /*
+                                sessionData.labData = "
+                                {
+                                    "labInfo": {
+                                        "labName": "My Lab",
+                                        "fieldOfResearch": "Computer Science",
+                                        "computationalLab": false
+                                    },
+                                    "presenter": {
+                                        "name": "Jack1",
+                                        "careerStage": "Graduate",
+                                        "labRole": "Research Assistant"
+                                    },
+                                    "nonPresentingMembers": [
+                                        {
+                                        "name": "Jack2",
+                                        "careerStage": "Graduate",
+                                        "labRole": "Lab Manager"
+                                        },
+                                        {
+                                        "name": "Jack3",
+                                        "careerStage": "Graduate",
+                                        "labRole": "PI"
+                                        },
+                                        {
+                                        "name": "Jack4",
+                                        "careerStage": "Graduate",
+                                        "labRole": "Lab Manager"
+                                        }
+                                    ]
+                                    }"
+                                    */
+                        // Fetch non-presenting lab members from sessionData
+
+                        const labData = JSON.parse(sessionData.labData);
+                        console.log(
+                            "labData: ",
+                            labData["nonPresentingMembers"]
+                        );
+
+                        // Display the non-presenting members in a dropdown menu
+                        const nonPresentingMembers =
+                            labData["nonPresentingMembers"];
+                        console.log(
+                            "nonPresentingMembers: ",
+                            nonPresentingMembers
+                        );
+
+                        // Populate the dropdown menu with the non-presenting members
+                        const dropdown = document.getElementById(
+                            "student-selection-dropdown"
+                        );
+                        nonPresentingMembers.forEach((member) => {
+                            console.log("member: ", member);
+                            const option = document.createElement("option");
+                            option.value = member.name;
+                            option.text = member.name;
+                            dropdown.appendChild(option);
+                        });
+                    }
+
+                    if (labExists) {
+                        console.log("Lab exists!");
+                    } else {
+                        console.log("Lab does not exist.");
+                    }
+                    console.log(json.table1);
+                })
+                .catch((error) => {
+                    // Display error message and manual entry form
+                    console.error(
+                        "There was an error fetching the data:",
+                        error
+                    );
+                });
+
+            function handleSubmit() {
+                // Check if student has been selected from dropdown
+                const dropdown = document.getElementById(
+                    "student-selection-dropdown"
+                );
+                const selectedStudent = dropdown.value;
+                console.log("selectedStudent: ", selectedStudent);
+                // handle empty case
+                if (selectedStudent == "") {
+                    alert("Please select your name from the dropdown menu.");
+                } else {
+                    // Check if answer has been entered
+                    const answer =
+                        document.getElementById("answer-input-area").value;
+                    console.log("answer: ", answer);
+                    // handle empty case
+                    if (answer == "") {
+                        alert("Please enter your answer in the text area.");
+                    } else {
+                        // Submit answer to database
+                        // Fetch lab session code form parameter
+                        // Fetch question from parameter
+                        // const urlParams = new URLSearchParams(window.location.search);
+                        // const labSession = urlParams.get("labSession");
+                        // const question = urlParams.get("question");
+
+                        // console.log('question: ', question);
+                        // console.log('labSession: ', labSession);
+
+                        let labID = Math.floor(Math.random() * 1000000) + 1;
+                        let url =
+                            "https://api.sheety.co/f86a219e4c66ae9bacf55c87219398c1/c4RLabPrefill/submissions";
+                        let body = {
+                            submission: {
+                                labId: labID,
+                                userName: selectedStudent,
+                                question: question,
+                                answer: answer,
+                                date: new Date().toLocaleString(),
+                            },
+                        };
+                        fetch(url, {
+                            method: "POST",
+                            body: JSON.stringify(body),
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                        })
+                            .then((response) => response.json())
+                            .then((json) => {
+                                // Update the div with the new sessionId
+                                console.log("response: ", json);
+                                console.log("Submitted Data to server");
+                                alert("Submitted Data to server");
+
+                                // Hide all info sections
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                                alert(
+                                    "There was an error submitting your answer."
+                                );
+                            });
+
+                        // // Set question text
+                        // document.querySelector(".question h2").innerText = question;
+                        console.log("end");
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>
