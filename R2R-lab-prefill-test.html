@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Lab Presentation Form</title>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+        <style>
+            body {
+                font-family: 'Poppins', sans-serif;
+
+                /* font-family: Arial, sans-serif; */
+                /* background-color: #222; */
+                background-color: #0e0f0f;
+
+                color: #fff;
+                padding: 20px;
+                
+            }
+            .container {
+                width: 550px;
+                /* background-color: #333; */
+                background-color: #181819;
+
+                padding: 20px;
+                border-radius: 8px;
+                /* background-color: #316f82; */
+                /* box-shadow: 10px 10px lightblue; */
+                box-shadow: -3px 0px 0px 0px #316f82;
+                padding-top: 0px;
+            }
+            h2 {
+                /* background-color: #007bff; */
+                /* background-color: #192225; */
+                color: #babdb9;
+
+                /* padding: 10px;
+                border-radius: 8px 8px 0 0;
+                margin: -20px -20px 20px -20px;
+                font-size: 1em; */
+                margin: 3px;
+                font-size: 1.5em;
+            }
+            input[type="text"],
+            select {
+                flex: 1;
+                margin-right: 10px; /* Spacing between input fields */
+                border-radius: 10px;
+                border: 1px solid #555;
+                padding: 8px;
+                background-color: #828282;
+                color: black;
+            }
+            .info-section {
+                border-bottom: 2px solid #58a8c1;
+                padding-bottom: 15px;
+                margin-bottom: 15px;
+            }
+            .info-section h3 {
+                /* border-bottom: 3px solid #007bff;
+            display: inline-block; */
+                /* border-bottom: 2px solid #58a8c1; */
+                display: inline-block;
+                /* width: 541px; */
+                color: #babdb9;
+            }
+            .input-row {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-top: 10px;
+                align-items: flex-end;
+            }
+            label {
+                display: flex;
+                align-items: center;
+                color: #babdb9;
+            }
+            input[type="checkbox"] {
+                margin-right: 5px;
+            }
+            button {
+                display: block;
+                width: 100%;
+                /* background-color: #007bff; */
+                background-color: #316f82;
+
+                color: #fff;
+                padding: 10px;
+                border: none;
+                border-radius: 10px;
+                cursor: pointer;
+                text-align: center;
+                margin-top: 10px;
+            }
+
+            /* style placeholder text */
+            ::placeholder {
+                color: black;
+                opacity: 1; /* Firefox */
+            }
+
+            .header {
+                background-color: #192225;
+                color: #babdb9;
+
+                padding: 10px;
+                border-radius: 8px 8px 0 0;
+                /* margin: -20px -20px 20px -20px; */
+                font-size: 1em;
+
+                display: flex;
+                flex-direction: row;
+                align-content: center;
+                align-items: center;
+                justify-content: flex-start;
+
+                padding: 4px;
+                border-radius: 8px 8px 0 0;
+
+                margin-left: -20px;
+                margin-right: -20px;
+            }
+
+            img {
+                width: 18px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <img src="bell-icon.png" width="50px" />
+                <h2>Pre-Fill for Lab Presentation</h2>
+            </div>
+
+            <!-- <h2>             <img
+                src="bell-icon.png"
+                alt="Lab Image"
+                width="50px"
+            /> Pre-Fill for Lab Presentation</h2> -->
+
+            <!-- image -->
+            <!-- <img
+                src="bell-icon.png"
+                alt="Lab Image"
+                width="50px"
+            /> -->
+
+            <section class="info-section">
+                <h3>Laboratory Information</h3>
+                <div class="input-row">
+                    <input
+                        type="text"
+                        placeholder="Lab Name"
+                        class="lab-name"
+                    />
+                    <select name="fieldOfResearch" placeholder="field">
+                        <option value="" disabled selected hidden>
+                            Field of Research
+                        </option>
+                    </select>
+                    <label><input type="checkbox" /> Computational Lab</label>
+                </div>
+            </section>
+            <section class="info-section">
+                <h3>Presenter</h3>
+                <div class="input-row">
+                    <input
+                        type="text"
+                        placeholder="Name"
+                        class="presenter-name"
+                    />
+                    <select name="careerStage">
+                        <option value="" disabled selected hidden>
+                            Career Stage
+                        </option>
+                    </select>
+                    <!-- TODO: Change to multi-select -->
+                    <select name="labRole">
+                        <option value="" disabled selected hidden>
+                            Laboratory Role
+                        </option>
+                    </select>
+                </div>
+            </section>
+            <section
+                class="info-section"
+                id="non-presenting-members-section"
+                style="display: none"
+            >
+                <h3>Non-presenting Laboratory Members</h3>
+            </section>
+            <button id="add-member-btn">+ Add Laboratory Member</button>
+            <button id="submit-btn">Submit</button>
+        </div>
+
+        <script>
+            const dropdownOptions = {
+                fieldOfResearch: [
+                    "Neurobio",
+                    "Cog Neuro",
+                    "Neuroimaging",
+                    "Computational Neuro",
+                    "Deep Learning",
+                    "Other",
+                ],
+                careerStage: [
+                    "Professor",
+                    "Postdoc",
+                    "PhD",
+                    "Masters",
+                    "Undergraduate",
+                    "Other",
+                ],
+                labRole: [
+                    "Administrative",
+                    "Managerial",
+                    "Wet bench",
+                    "Computational",
+                    "Other",
+                ],
+            };
+
+            function populateSelect(el, options) {
+                options.forEach((option) => {
+                    const opt = document.createElement("option");
+                    opt.value = option;
+                    opt.innerText = option;
+                    el.appendChild(opt);
+                });
+            }
+
+            document.querySelectorAll("select").forEach((selectEl) => {
+                const name = selectEl.getAttribute("name");
+                if (dropdownOptions[name]) {
+                    populateSelect(selectEl, dropdownOptions[name]);
+                }
+            });
+
+            const addMemberBtn = document.getElementById("add-member-btn");
+            const nonPresentingMembersSection = document.getElementById(
+                "non-presenting-members-section"
+            );
+
+            addMemberBtn.addEventListener("click", () => {
+                const newMemberRow = document.createElement("div");
+                newMemberRow.classList.add("input-row");
+                newMemberRow.innerHTML = `
+                <input type="text" placeholder="Name" class="member-name">
+                <select name="careerStage">
+                    <option value="" disabled selected hidden>
+                        Career Stage
+                    </option>
+                </select>
+                <select name="labRole">
+                    <option value="" disabled selected hidden>
+                        Laboratory Role
+                    </option>
+                </select>
+
+
+                <button class="remove-row-btn" onClick="removeRow()">X</button>`;
+
+                // Add remove event listener
+                newMemberRow.querySelector('.remove-row-btn').addEventListener("click", function() {
+                    removeRow(this);
+                });
+
+                nonPresentingMembersSection.appendChild(newMemberRow);
+                nonPresentingMembersSection.style.display = "block";
+
+                newMemberRow.querySelectorAll("select").forEach((selectEl) => {
+                    const name = selectEl.getAttribute("name");
+                    if (dropdownOptions[name]) {
+                        populateSelect(selectEl, dropdownOptions[name]);
+                    }
+                });
+            });
+
+            // Handle submission
+            const submitBtn = document.getElementById("submit-btn");
+            submitBtn.addEventListener("click", () => {
+                // Gather input data
+                const formData = {
+                    labInfo: {
+                        labName: document.querySelector(".lab-name").value,
+                        fieldOfResearch: document.querySelector(
+                            'select[name="fieldOfResearch"]'
+                        ).value,
+                        computationalLab: document.querySelector(
+                            'input[type="checkbox"]'
+                        ).checked,
+                    },
+                    presenter: {
+                        name: document.querySelector(".presenter-name").value,
+                        careerStage: document.querySelector(
+                            'select[name="careerStage"]'
+                        ).value,
+                        labRole: document.querySelector(
+                            'select[name="labRole"]'
+                        ).value,
+                    },
+                    nonPresentingMembers: Array.from(
+                        document.querySelectorAll(
+                            "#non-presenting-members-section .input-row"
+                        )
+                    ).map((row) => {
+                        return {
+                            name: row.querySelector(".member-name").value,
+                            careerStage: row.querySelector(
+                                'select[name="careerStage"]'
+                            ).value,
+                            labRole: row.querySelector('select[name="labRole"]')
+                                .value,
+                        };
+                    }),
+                };
+
+                console.log(JSON.stringify(formData, null, 2));
+                const labData = JSON.stringify(formData, null, 2);
+
+                // Send to server
+                let labID = Math.floor(Math.random() * 1000000) + 1;
+                let url =
+                    "https://api.sheety.co/f86a219e4c66ae9bacf55c87219398c1/c4RLabPrefill/table1";
+                let body = {
+                    table1: {
+                        labId: labID,
+                        labName: "test lab name",
+                        labData: labData,
+                        date: new Date().toLocaleString(),
+                    },
+                };
+                fetch(url, {
+                    method: "POST",
+                    body: JSON.stringify(body),
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                })
+                    .then((response) => response.json())
+                    .then((json) => {
+                        // Update the div with the new sessionId
+                        console.log("response: ", json);
+                        console.log("Submitted Data to server");
+                        // alert("Submitted Data to server");
+
+                        // Hide all info sections
+                        document
+                            .querySelectorAll(".info-section")
+                            .forEach((section) => {
+                                section.style.display = "none";
+                            });
+                        // Hide the buttons
+                        document.querySelectorAll("button").forEach((btn) => {
+                            btn.style.display = "none";
+                        });
+
+
+                        const msgEl = document.createElement("h3");
+                        msgEl.innerText = `You have successfully created a lab group!`;
+                        document
+                            .querySelector(".container")
+                            .appendChild(msgEl);
+
+
+                        // Display the lab ID
+                        const labIdEl = document.createElement("h3");
+                        labIdEl.innerText = `Lab ID: ${labID}`;
+                        document
+                            .querySelector(".container")
+                            .appendChild(labIdEl);
+
+
+
+
+                        // Add the lab ID to local storage
+                        // localStorage.setItem('labId', labID);
+                        // Check if added
+                        // console.log(localStorage.getItem('labId'));
+
+                        // Add the lab ID as a cookie
+                        // document.cookie = `labId=${labID}`;
+                        // Check if added
+                        // console.log(document.cookie);
+
+                        setCookie("labID", `${labID}`, 30);
+                        checkCookie();
+
+
+                        localStorage.setItem('labId', labID);
+                        console.log('local storage: ');
+                        console.log(localStorage.getItem('labId'));
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        alert("There was an error submitting your answer.");
+                    });
+            });
+
+            function setCookie(name, value, days) {
+                var expires = "";
+                if (days) {
+                    var date = new Date();
+                    date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);
+                    expires = "; expires=" + date.toUTCString();
+                }
+                document.cookie =
+                    name + "=" + (value || "") + expires + "; path=/";
+            }
+
+            function checkCookie() {
+                var name = "labID=";
+                var decodedCookie = decodeURIComponent(document.cookie);
+                var ca = decodedCookie.split(";");
+                for (var i = 0; i < ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) === " ") {
+                        c = c.substring(1);
+                    }
+                    if (c.indexOf(name) === 0) {
+                        var value = c.substring(name.length, c.length);
+                        // alert('Cookie "username" exists with value: ' + value);
+                        return;
+                    }
+                }
+                alert("There was am error setting the cookie");
+            }
+
+            function removeRow(buttonElement) {
+    const rowToRemove = buttonElement.closest(".input-row");
+    rowToRemove.remove();
+}
+        </script>
+    </body>
+</html>
