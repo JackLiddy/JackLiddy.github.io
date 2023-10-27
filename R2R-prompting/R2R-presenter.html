@@ -262,6 +262,35 @@
                 visibility: visible;
                 opacity: 1;
             }
+            .manual-entry-content {
+                display: none;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                text-align: center;
+            }
+
+            .enter-id-btn {
+                border-radius: 15px;
+                background-color: #854abe;
+                color: white;
+                font-size: large;
+                border-width: inherit;
+                padding: 12px;
+                font-weight: bold;
+                margin: 10px;
+            }
+            input[type="text"],
+            select {
+                flex: 1;
+                margin-right: 10px; /* Spacing between input fields */
+                border-radius: 10px;
+                border: 1px solid #555;
+                padding: 8px;
+                background-color: #ffffff;
+                color: black;
+            }
+
         </style>
     </head>
     <body>
@@ -382,6 +411,49 @@
                         />
                     </div>
                 </div>
+
+                <div class="manual-entry-content">
+                    <div class="header" id="manual-entry-text">
+                        <h3>We couldnt detect a cookie storing your most recently entered lab group</h2>
+                        <h3>Please enter your lab ID in the field below</h2>
+                    </div>
+
+                    <!-- <div class="button-footer">
+                        <button class="time-up-btn">Time Up!</button>
+                        <button class="extend-btn" onclick="extendTime()">
+                            Extend
+                        </button>
+                    </div>
+                    <button class="show-answers-btn" onclick="showAnswers()">
+                        Show Answers
+                    </button> -->
+                    <!-- <button class="enter-id-btn" onclick="enterId()">
+                        Enter ID
+                    </button> -->
+
+                    <!-- Text field for entering ID -->
+                    <input
+                        type="text"
+                        id="session-id-input"
+                        placeholder="Enter Lab ID"
+                    />
+                    <!-- button for submitting -->
+                    <button class="enter-id-btn" onclick="manualEnterId()">
+                        Enter ID
+                    </button>
+
+
+                    <div class="raven">
+                        <img
+                            src="raven-white-bg-09.svg"
+                            alt=""
+                            width="400"
+                            height="400"
+                        />
+                    </div>
+                </div>
+
+
             </div>
 
             <!-- render responses here -->
@@ -413,10 +485,14 @@
                     // Check API to see if lab session exists
                     // If it does, generate link
                     // If it doesn't, give error message about lab not being pre-filled
-                    showLink(cookieValue);
+
+                    showManualEntry();
+                    // showLink(cookieValue);
                 } else {
                     alert("Cookie does not exist");
+                    console.log('cookie does not exist');
                     // Handle manual entry of lab ID
+                    showManualEntry();
                 }
             });
 
@@ -440,7 +516,7 @@
                 // alert('Cookie "labID" does not exist!');
             }
 
-            function showLink(labID) {
+            function showLink(labID, manualEntry = false) {
                 // Check if lab session exists
                 let url =
                     "https://api.sheety.co/f86a219e4c66ae9bacf55c87219398c1/c4RLabPrefill/table1";
@@ -454,12 +530,29 @@
                             console.log("Lab exists!");
                             // Display link and start button
 
-                            // Replace content pane with link and start button
+                            // Hide differnt content panes depending on whether manual entry was used
+                            if (manualEntry == true){
+                                console.log('manual entry true');
+                                // Hide manual entry form
+                                const manualEntryContent = document.querySelector(".manual-entry-content");
+                                manualEntryContent.style.display = "none";
+                            }
+                            else {
+                                console.log('manual entry false');
+                                const content = document.querySelector(".content");
+                            content.style.display = "none";
+                            console.log("content pane hidden");   
+                            }
 
                             // Hide the content pane
-                            const content = document.querySelector(".content");
-                            content.style.display = "none";
-                            console.log("content pane hidden");
+                            // const content = document.querySelector(".content");
+                            // content.style.display = "none";
+                            // console.log("content pane hidden");
+
+
+
+
+
 
                             // Display the lab content pane
                             const labContent =
@@ -473,6 +566,7 @@
                             // linkBtn.innerHTML = `${labID}`;
                         } else {
                             console.log("Lab does not exist.");
+                            alert("We were unable to find that lab ID. Please try again.");
                             // Display error and manual entry form
                         }
                         console.log(json.table1);
@@ -497,6 +591,22 @@
             function showManualEntry() {
                 // Replace content pane with manual entry form and back button
                 // Explain a cookie of the lab session could not be detected. Please enter the lab ID manually.
+
+
+                // Hide the content pane
+                const content = document.querySelector(".content");
+                content.style.display = "none";
+                console.log("content pane hidden");
+
+                // Display the lab content pane
+                const manualEntryContent =
+                    document.querySelector(".manual-entry-content");
+                    manualEntryContent.style.display = "flex";
+                    manualEntryContent.style.justifyContent = "space-between";
+                    manualEntryContent.style.height = "100%";
+
+
+                // run showLink() function with entered lab ID
             }
 
             function onLinkClick() {
@@ -663,6 +773,16 @@
 
             function extendTime() {
                 console.log("time extended");
+            }
+
+            function manualEnterId() {
+                // Get entered lab ID
+                let enteredLabId = document.getElementById("session-id-input")
+                    .value;
+                console.log("enteredLabId: ", enteredLabId);
+
+                // Start lab with entered lab ID and manual entry parameter true
+                showLink(enteredLabId, true);
             }
         </script>
     </body>
