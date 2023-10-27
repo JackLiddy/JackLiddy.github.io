@@ -29,6 +29,7 @@
                 width: 550px;
                 /* background-color: #333; */
                 background-color: #181819;
+                background-color: #0e0f0f00;
 
                 padding: 20px;
                 border-radius: 8px;
@@ -36,6 +37,15 @@
                 /* box-shadow: 10px 10px lightblue; */
                 /* box-shadow: -3px 0px 0px 0px #316f82; */
                 padding-top: 0px;
+
+                /* width: 800px; */
+                width: 90vw;
+                display: flex;
+                flex-direction: column;
+                align-items: stretch;
+                align-content: center;
+                 justify-content: flex-start;
+
             }
             h2 {
                 /* background-color: #007bff; */
@@ -171,6 +181,22 @@
                 visibility: visible;
                 opacity: 1;
             }
+
+            #add-member-btn {
+                width: 80%;
+            }
+            #submit-btn {
+                width: 80%;
+            }
+            .footer-buttons {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .remove-row-btn {
+                width: 80px;
+            }
+
         </style>
     </head>
     <body>
@@ -237,8 +263,10 @@
             >
                 <h3>Non-presenting Laboratory Members</h3>
             </section>
-            <button id="add-member-btn">+ Add Laboratory Member</button>
-            <button id="submit-btn">Submit</button>
+            <div class="footer-buttons">
+                <button id="add-member-btn">+ Add Laboratory Member</button>
+                <button id="submit-btn">Submit</button>
+            </div>
         </div>
 
         <script>
