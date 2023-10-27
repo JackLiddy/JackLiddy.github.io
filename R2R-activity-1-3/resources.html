@@ -77,8 +77,8 @@
 
             #whiteboard {
                 width: 90vw;
-
-                height: 70vh;
+                height: 450px;
+                /* height: 70vh; */
                 /* background-color: white; */
                 /* background-color: rgb(255, 246, 209); */
                 position: relative;
@@ -163,7 +163,6 @@
                 border-color: transparent transparent transparent black;
                 transform: translateY(-50%);
             }
-
 
             /* New arrow classes for the top and left sides */
             .arrow.horizontal-arrow-top {
@@ -279,22 +278,19 @@
                 font-weight: bold; */
             }
 
-
-
-.word-list {
-            display: flex;
-            justify-content: space-between;
-            /* font-size: 12px; */
-            font-size: 1.5vw;
-        }
-        .word-list span:not(:last-child)::after {
-            content: "|";
-            margin: 0 5px;
-        }
-        .bold {
-            font-weight: bold;
-        }
-
+            .word-list {
+                display: flex;
+                justify-content: space-between;
+                /* font-size: 12px; */
+                font-size: 1.5vw;
+            }
+            .word-list span:not(:last-child)::after {
+                content: "|";
+                margin: 0 5px;
+            }
+            .bold {
+                font-weight: bold;
+            }
         </style>
     </head>
 
@@ -361,25 +357,20 @@
                 <div id="resource-pane">
                     <!-- <div id="resource-topic"></div> -->
                     <div class="word-list">
-        
-                        
                         <span id="Organization">Organization</span>
-                                             
+
                         <span id="Documentation">Documentation</span>
-                                
+
                         <span id="Automation">Automation</span>
                         <span id="Dissemination">Dissemination</span>
-                                
-                 
+
                         <span id="Alignment">Alignment</span>
-                                   
+
                         <span id="Containment">Containment</span>
-                                               
+
                         <span id="Interpretation">Interpretation</span>
 
                         <span id="Validation">Validation</span>
-
-                            
                     </div>
                     <!-- <div id="resource-text"></div> -->
                     <div id="resource-content"></div>
@@ -600,19 +591,16 @@
                                         resourceContent.innerHTML =
                                             noteResources[this.textContent];
 
-
-
                                         // Bolden the resource's solutions in the word list
-                                        const wordList = document.querySelector(
-                                            ".word-list"
-                                        );
+                                        const wordList =
+                                            document.querySelector(
+                                                ".word-list"
+                                            );
                                         // Clear all bolded words
                                         wordList
                                             .querySelectorAll("span")
                                             .forEach((span) => {
-                                                span.classList.remove(
-                                                    "bold"
-                                                );
+                                                span.classList.remove("bold");
                                             });
                                         // Bold the current resource's solutions
                                         const solutions =
@@ -631,7 +619,6 @@
                                                     }
                                                 });
                                         });
-
                                     }
                                 );
                             });
@@ -639,8 +626,6 @@
                         document
                             .querySelector(".sticky-note")
                             .dispatchEvent(new Event("mouseenter"));
-                            
-
                     }
                 })
                 .catch((error) => {
@@ -774,9 +759,6 @@
                 "Deviating from lab protocols": "Containment",
                 "Difficult onboarding and offboarding": "Documentation",
             };
-
-
-
         </script>
     </body>
 </html>
