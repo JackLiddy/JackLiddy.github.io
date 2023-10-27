@@ -507,7 +507,11 @@
 
                 // let newSessionId = enteredSessionId + 1;
 
-                let sessionLink = `https://jackliddy.github.io/R2R-prompting/R2R-audience.html?labSession=${labId}`;
+                const urlParams = new URLSearchParams(window.location.search);
+                const question = urlParams.get("question");
+
+
+                let sessionLink = `https://jackliddy.github.io/R2R-prompting/R2R-audience.html?labSession=${labId}&question=${question}`;
                 navigator.clipboard.writeText(sessionLink);
 
                 // visual feedback of copy operation
