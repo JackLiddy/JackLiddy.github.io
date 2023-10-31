@@ -177,8 +177,9 @@
                 flex-direction: column;
                 align-items: center;
                 justify-content: flex-start;
+                gap: 4px;
             }
-            .response {
+            /* .response {
                 background-color: #5e2d8a;
                 width: 100%;
                 margin: 10px;
@@ -187,6 +188,37 @@
                 justify-content: flex-start;
                 align-items: center;
                 background-color: #ffffff;
+            } */
+            .response-left {
+                background-color: #5e2d8a;
+                width: 100%;
+                margin: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                background-color: #ffffff;
+
+                width: 90%;
+    margin-right: -65px;
+    border-radius: 3px;
+
+            }
+            .response-right {
+                background-color: #5e2d8a;
+                /* width: 100%; */
+                margin: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                background-color: #ffffff;
+
+                width: 90%;
+            /* left: 0px; */
+                margin-left: -50px;
+                border-radius: 3px;
+
             }
 
             .arrow {
@@ -201,7 +233,7 @@
                 border-style: solid;
                 margin: -11px;
             }
-            .arrow.horizontal-arrow-top {
+            .arrow.left {
                 left: 50%;
                 top: -10px;
                 border-width: 0 10px 10px;
@@ -213,6 +245,23 @@
                 border-width: 0 15px 42px;
                 border-color: transparent transparent white transparent;
                 transform: translateX(-50%);
+
+                left: -252px;
+            }
+            .arrow.right {
+                left: 50%;
+                top: -10px;
+                border-width: 0 10px 10px;
+                border-color: transparent transparent black transparent;
+                transform: translateX(-50%);
+
+                left: 312px;
+                top: -11px;
+                border-width: 0 15px 42px;
+                border-color: transparent transparent white transparent;
+                transform: translateX(-50%);
+
+                left: 282px;
             }
             .hide-answers-btn {
                 border-radius: 15px;
@@ -291,6 +340,25 @@
                 background-color: #ffffff;
                 color: black;
             }
+
+            .dot {
+  height: 35px;
+  width: 35px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  margin-top: -35px;
+
+  /* random color */
+}
+
+.dot.right {
+    left: 305px;
+}
+.dot.left {
+    right: 305px;
+}
 
         </style>
     </head>
@@ -459,12 +527,7 @@
 
             <!-- render responses here -->
             <div class="response-container">
-                <!-- <div class="response">
-                    <h3>Response 1 </h3>
-                    <p>Answer 1</p> 
-                    <div class="arrow horizontal-arrow-top"></div>
-                </div>
-                </div> -->
+
             </div>
         </div>
 
@@ -490,7 +553,7 @@
                     showManualEntry();
                     // showLink(cookieValue);
                 } else {
-                    alert("Cookie does not exist");
+                    // alert("Cookie does not exist");
                     console.log('cookie does not exist');
                     // Handle manual entry of lab ID
                     showManualEntry();
@@ -509,7 +572,7 @@
                     if (c.indexOf(name) === 0) {
                         var value = c.substring(name.length, c.length);
                         // alert('Cookie "username" exists with value: ' + value);
-                        labId = value;
+                        // labId = value; Re-comment later
                         return value;
                     }
                 }
@@ -549,9 +612,6 @@
                             // const content = document.querySelector(".content");
                             // content.style.display = "none";
                             // console.log("content pane hidden");
-
-
-
 
 
 
@@ -690,6 +750,9 @@
                     labContent.style.justifyContent = "space-between";
                     labContent.style.height = "100%";
                 });
+
+                // Start countdown timer
+                startCountdown();
             }
 
             function showAnswers() {
@@ -720,6 +783,11 @@
                                 ".response-container"
                             );
 
+                            // Clear the contents of the container
+                            responseContainer.innerHTML = "";
+
+                            // Re-implement this
+                            /*
                             submissions.forEach((submission) => {
                                 console.log("submission: ", submission);
                                 const response =
@@ -732,6 +800,46 @@
                                 response.className = "response";
                                 responseContainer.appendChild(response);
                             });
+                            */
+                            //    Refactor the above code block such that the rendered submissions render differently on an alternating basis
+                            // Start below:
+                            let i = 0;
+                            submissions.forEach((submission) => {
+                                console.log("submission: ", submission);
+                                const response = document.createElement("response");
+
+                                const randomColor = Math.floor(Math.random()*16777215).toString(16);
+
+                                // Alternate between the two different response styles
+                                if (i % 2 == 0) {
+                                    response.innerHTML = `
+                                    <h3>${submission.answer}</h3>
+                                    <div class="arrow right"></div>
+                                    <span class="dot right" style="background-color: #${randomColor}"></span>
+                                    `;
+
+                                    response.className = "response-right";
+                                    // response.style.backgroundColor =
+                                    //     "#5e2d8a";
+                                } else {
+
+                                    response.innerHTML = `
+                                    <h3>${submission.answer}</h3>
+                                    <div class="arrow left"></div>
+                                    <span class="dot left" style="background-color: #${randomColor}"></span>
+                                    `;
+
+                                    response.className = "response-left";
+                                    // response.style.backgroundColor =
+                                    //     "#316f82";
+                                }
+                                responseContainer.appendChild(response);
+                                i++;
+                            });
+
+
+
+
 
                             // Toggle hide/show answers
 
@@ -781,9 +889,36 @@
                 let enteredLabId = document.getElementById("session-id-input")
                     .value;
                 console.log("enteredLabId: ", enteredLabId);
+                labId = enteredLabId;
 
                 // Start lab with entered lab ID and manual entry parameter true
                 showLink(enteredLabId, true);
+            }
+
+            function startCountdown() {
+                // When called, this function should start a countdown timer and display the time remaining in the countdown button
+                // When the countdown reaches 0, the timer should be replaced with "Time Up!"
+
+                // Get the countdown button
+                const countdownBtn = document.querySelector(".countdown-btn");
+                // Set the countdown time
+                let secondsRemaining = 60;
+                // Update the button text with the countdown time
+                countdownBtn.innerHTML = `${secondsRemaining}`;
+                // Start the countdown
+                let countdown = setInterval(() => {
+                    // Decrement the countdown time
+                    secondsRemaining--;
+                    // Update the button text with the countdown time
+                    countdownBtn.innerHTML = `${secondsRemaining}`;
+                    // If the countdown reaches 0
+                    if (secondsRemaining <= 0) {
+                        // Replace the timer with "Time Up!"
+                        countdownBtn.innerHTML = "Time Up!";
+                        // Stop the countdown
+                        clearInterval(countdown);
+                    }
+                }, 1000);
             }
         </script>
     </body>
