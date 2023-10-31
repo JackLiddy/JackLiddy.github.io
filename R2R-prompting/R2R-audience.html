@@ -29,12 +29,20 @@
                 /* display: none; */
             }
 
-            .content {
+            .question-content {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
                 align-items: center;
                 text-align: center;
+            }
+            .thank-you-content {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                text-align: center;
+                display: none;
             }
 
             .header {
@@ -56,9 +64,14 @@
                 font-weight: bolder;
                 z-index: 2;
             }
+            .thank-you-msg {
+                -webkit-text-stroke: 1.5px white;
+                font-size: 2em;
+                font-weight: bolder;
+                z-index: 2;
+            }
 
             .student-selection-container {
-
                 width: 380px;
                 background-color: #ffffff;
                 padding: 20px;
@@ -90,6 +103,27 @@
                 background-color: #d9d9d9;
                 margin-bottom: 10px;
                 padding: 24px;
+            }
+            .textarea-container {
+                position: relative;
+                /* width: 300px; */
+                width: 100%;
+            }
+
+            /* textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    box-sizing: border-box;
+    resize: vertical;
+} */
+
+            #charCount {
+                position: absolute;
+                bottom: 29px;
+                right: 10px;
+                font-size: 14px;
+                color: #888;
             }
 
             #answer-footer {
@@ -148,28 +182,87 @@
                 padding: 5px;
                 border-radius: 10px;
             }
+
+
+            .preview-container {
+                /* display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                margin-bottom: 10px; */
+
+                display: flex;
+    border-radius: 10px;
+    width: 520px;
+    margin: 10px;
+    padding: 22px;
+    background-color: rgba(255, 255, 255, 0);
+    flex-direction: column;
+    align-items: center;
+
+    display: none;
+            }
+
+            .response-container {
+                width: 593px;
+                padding: 11px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+            }
+            .response {
+                background-color: #5e2d8a;
+                width: 100%;
+                margin: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                background-color: #ffffff;
+
+                height: 128px;
+                 border-radius: 10px;
+            }
+            .response h3 {
+                text-align: center;
+                font-weight: normal;
+            }
+            .arrow {
+                position: absolute;
+                width: 0;
+                height: 0;
+                border-style: solid;
+
+                position: relative;
+                width: 0;
+                height: 0;
+                border-style: solid;
+                margin: -11px;
+            }
+            .arrow.horizontal-arrow-top {
+                left: 50%;
+                top: -10px;
+                border-width: 0 10px 10px;
+                border-color: transparent transparent black transparent;
+                transform: translateX(-50%);
+
+                left: 312px;
+                top: -11px;
+                border-width: 0 15px 42px;
+                border-color: transparent transparent white transparent;
+                transform: translateX(-50%);
+            }
+
         </style>
     </head>
     <body>
         <div class="question-container">
-            <div class="content">
-                <!-- <div class="header">
-                <h2>Time to hear your thoughts!</h2>
-            </div>
-
-            <p>
-                Click the button below to generate a link/code your lab
-                mates can use to participate in the lesson by offering their
-                own answers.
-            </p>
-
-            <button class="generate-link-btn">Generate Link/Code</button> -->
-
+            <div class="question-content">
                 <div class="question">
                     <h2>QUESTION HERE</h2>
                 </div>
 
-                <!-- <div class="raven"> -->
                 <img
                     id="top-img"
                     src="raven-white-bg-08.svg"
@@ -177,7 +270,19 @@
                     width="400"
                     height="400"
                 />
-                <!-- </div> -->
+            </div>
+            <div class="thank-you-content">
+                <div class="thank-you-msg">
+                    <h2>Thank you for participating!</h2>
+                </div>
+
+                <img
+                    id="top-img"
+                    src="raven-white-bg-08.svg"
+                    alt=""
+                    width="400"
+                    height="400"
+                />
             </div>
         </div>
 
@@ -205,13 +310,25 @@
 
             <!-- <div id="answer-input-area"> -->
             <!-- text area here -->
-            <textarea
+            <!-- <textarea
                 name="answer"
                 id="answer-input-area"
                 cols="30"
                 rows="10"
                 placeholder="Enter your answer here..."
-            ></textarea>
+            ></textarea> -->
+            <div class="textarea-container">
+                <textarea
+                    id="answer-input-area"
+                    cols="30"
+                    rows="10"
+                    placeholder="Enter your answer here..."
+                    maxlength="140"
+                    oninput="updateCharacterCount()"
+                ></textarea>
+                <div id="charCount">140/140 characters</div>
+            </div>
+
             <!-- </div> -->
             <div id="answer-footer">
                 <!-- submit button and raven -->
@@ -227,42 +344,18 @@
                 </div>
             </div>
         </div>
-
-        <div class="student-selection-container">
-            <!-- <div class="content"> -->
-            <!-- <div class="header">
-                <h2>Time to hear your thoughts!</h2>
+        <div class="preview-container">
+            <!-- answer-preview-bubble -->
+            <div class="response-container">
             </div>
-
-            <p>
-                Click the button below to generate a link/code your lab
-                mates can use to participate in the lesson by offering their
-                own answers.
-            </p>
-
-            <button class="generate-link-btn">Generate Link/Code</button> -->
-
-            <p>
-                Select your name from the dropdown menu below to submit your
-                answer to the question.
-            </p>
-
-            <!-- dropdown -->
-            <select
-                id="student-selection-dropdown"
-                name="student-selection-dropdown"
-            >
-                <option value="" disabled selected hidden>Lab Members</option>
-                <!-- <option value="student1">Student 1</option>
-                <option value="student2">Student 2</option>
-                <option value="student3">Student 3</option>
-                <option value="student4">Student 4</option> -->
-            </select>
-
-            <!-- <button class="select-student-btn" onClick="select-student">Continue</button> -->
-
-            <!-- </div> -->
+            <!-- edit-button-container -->
+            <div class="edit-button-container">
+            </div>
         </div>
+        <div class="edit-container">
+            
+        </div>        
+
 
         <script>
             // Fetch lab session code form parameter
@@ -281,8 +374,6 @@
             fetch(url)
                 .then((response) => response.json())
                 .then((json) => {
-
-
                     let labExists = true;
                     console.log("json.table1: ", json.table1);
 
@@ -387,9 +478,41 @@
                                 // Update the div with the new sessionId
                                 console.log("response: ", json);
                                 console.log("Submitted Data to server");
-                                alert("Submitted Data to server");
+                                // alert("Submitted Data to server");
 
-                                // Hide all info sections
+                                // TODO: Move below to other function
+
+                                // Swap out the question container with thank you message and raven
+                                document.querySelector(
+                                    ".question-content"
+                                ).style.display = "none";
+                                document.querySelector(
+                                    ".thank-you-content"
+                                ).style.display = "flex";
+
+                                // Swap out the answer container with the preview container
+                                document.querySelector(
+                                    ".answer-container"
+                                ).style.display = "none";
+                                document.querySelector(
+                                    ".preview-container"
+                                ).style.display = "flex";
+
+                                // Render the response in the container
+                                const responseContainer = document.querySelector(
+                                    ".response-container"
+                                );
+                                const response =
+                                    document.createElement("response");
+
+                                response.innerHTML = `
+                                        <h3>${answer}</h3>
+                                        <div class="arrow horizontal-arrow-top"></div>
+
+                                `;
+                                response.className = "response";
+                                responseContainer.appendChild(response);
+                                
                             })
                             .catch((error) => {
                                 console.log(error);
@@ -403,6 +526,15 @@
                         console.log("end");
                     }
                 }
+            }
+
+            // Updates remaining character count in text area
+            function updateCharacterCount() {
+                const textArea = document.getElementById("answer-input-area");
+                const charCount = document.getElementById("charCount");
+
+                const charsLeft = 140 - textArea.value.length;
+                charCount.textContent = `${charsLeft}/140 characters`;
             }
         </script>
     </body>
