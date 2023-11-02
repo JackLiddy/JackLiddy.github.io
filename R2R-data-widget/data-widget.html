@@ -9,11 +9,15 @@
             html {
                 margin: 0;
                 padding: 0;
-                overflow: hidden;
+                /* overflow: hidden; */
                 font-family: 'Inter';
                 font-size: 14px;
             }
-
+            .embed-container {
+                width: 700px;
+                height: 600px;
+                /* overflow: hidden; */
+            }
             .outer-container {
     /* background-color: white;
     border-color: purple;
@@ -22,6 +26,9 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    /* overflow: hidden; */
+    
+    /* overflow: hidden; */
 }
 .header {
     /* position: fixed;
@@ -41,7 +48,7 @@
 
     /* header should be sticky such that it is always at the top */
     /* position: sticky; */
-    position: fixed;
+    /* position: fixed; */
     top: 0;
     z-index: 100;
 
@@ -85,6 +92,7 @@
     border-color: purple;
     border-style: solid;
     border-width: 1.5px; */
+    width: 120px;
 }
 .main-container {
     /* position: relative;
@@ -93,8 +101,75 @@
     border-color: purple;
     border-style: solid;
     border-width: 1.5px;
+    height: 445px;
+     /* overflow: hidden; */
+     overflow: hidden;
+     /* margin-top: 10px; */
+     margin-top: 0px;
+     border-radius: 10px;
+
+}
+.citation-pane {
+    /* position: relative;
+    top: 50px; */
+    /* position: relative;
+    position:fixed;
+    /* background-color: green; */
+    /* width: 90%;
+    height: 700px;
+    height:100%;
+    color:red;
+    top:1700px;  */
+
+    height: 80px;
+    width: 90%;
+    background-color: transparent;
+
+    /* header should be sticky such that it is always at the top */
+    /* position: sticky; */
+    /* position: fixed; */
+    /* top: 600px; */
+    /* left: 60px; */
+    z-index: 100;
+    /* display: none; */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
+.collapsible-btn {
+  background-color: #844684;
+  color: #2f2f2f;
+  cursor: pointer;
+  padding: 5px;
+  width: 90%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  text-align: center;
 }
 
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+/* .active, .collapsible:hover {
+  background-color: #ccc;
+} */
+
+/* Style the collapsible content. Note: hidden by default */
+.citation-content {
+  /* padding: 0 18px; */
+  display: none;
+  /* overflow: hidden; */
+  background-color: rgb(43, 43, 43);
+  width: 100%;
+  flex-direction: column;
+    align-items: center;
+  /* display: flex; */
+  color: white;
+}
+.citation-content p {  
+    text-align: center;
+}
 
             
             .section {
@@ -110,7 +185,7 @@
 
             #section1 {
                 background-color: rgb(43, 43, 43);
-                margin-top: 150px;
+                /* margin-top: 150px; */
             }
 
             #section2 {
@@ -127,13 +202,13 @@
                 background-color: rgb(18, 18, 18);
             }
 
-            .controls {
+            /* .controls {
                 position: fixed;
                 bottom: 0;
                 right: 171px;
                 background: white;
                 padding: 1em;
-            }
+            } */
 
 
             .section1-question-text {
@@ -318,80 +393,105 @@
     </head>
 
     <body>
-        <div class="outer-container">
-            <div class="header">
-                <div class="header-text">
-                    <h3>How widespread are these issues? </h1>
-                    <p3> Rigor & reproducibility issues go beyond just big bad-faith fraud. In fact, most rigor violations are the result of scientists acting in good faith, but lacking proper the tools, procedures, & training!</p3>
-                    <p3><b>Click on the plots below and take a guess at the extent of the problem... </b></p3>                   
-                </div>
-                <!-- render a locally stored svg -->
-                <img class="header-image" src="raven-white-bg-01.svg" >
-            </div>
-            <div class="main-container">
-                <div class="section" id="section1">
-
-                  <div class="section1-question-text">
-                    <p>What percentage of researchers do you think believe that there is a reproducibility crisis?</p>
-                  </div>
-                  <div class="donut1">
-                    <!-- <p>DONUT HERE</p> -->
-                  </div>
-                  <button class="next-btn" onclick="onNextButtonClick()">Next</button>
-                  <!-- id="section1-next" -->
-                </div>
-                <div class="section" id="section2">
-
-                  <div class="section1-question-text">
-                    <p>What percentage of researchers do you think believe that there is a reproducibility crisis? (Baker, 2016)</p>
-                    <p>n = 1,578</p>
-                  </div>
-                  <div class="section2-donuts-containers">
-                    <div class="donut2-container">
-                        <div class="donut2">
-                            <!-- <p>DONUT HERE</p> -->
-                          </div>
+        <div class="embed-container">
+            <div class="outer-container">
+                <div class="header">
+                    <div class="header-text">
+                        <h3>How widespread are these issues? </h1>
+                        <p3> Rigor & reproducibility issues go beyond just big bad-faith fraud. In fact, most rigor violations are the result of scientists acting in good faith, but lacking proper the tools, procedures, & training!</p3>
+                        <p3><b>Click on the plots below and take a guess at the extent of the problem... </b></p3>                   
                     </div>
-                    <div class="donut3-container">
-                        <div class="donut3">
-                            <!-- <p>DONUT HERE</p> -->
-                          </div>
+                    <!-- render a locally stored svg -->
+                    <img class="header-image" src="raven-white-bg-01.svg" >
+                </div>
+                <div class="main-container">
+                    <div class="section" id="section1">
+
+                    <div class="section1-question-text">
+                        <p>What percentage of researchers do you think believe that there is a reproducibility crisis?</p>
                     </div>
-                  </div>
-                  <!-- <button id="section2-next">Next</button> -->
-                  <button class="next-btn" onclick="onNextButtonClick()">Next</button>
+                    <div class="donut1">
+                        <!-- <p>DONUT HERE</p> -->
+                    </div>
+                    <button class="next-btn" onclick="onNextButtonClick()">Next</button>
+                    <!-- id="section1-next" -->
+                    </div>
+                    <div class="section" id="section2">
+
+                    <div class="section1-question-text">
+                        <p>What percentage of researchers do you think believe that there is a reproducibility crisis? (Baker, 2016)</p>
+                        <p>n = 1,578</p>
+                    </div>
+                    <div class="section2-donuts-containers">
+                        <div class="donut2-container">
+                            <div class="donut2">
+                                <!-- <p>DONUT HERE</p> -->
+                            </div>
+                        </div>
+                        <div class="donut3-container">
+                            <div class="donut3">
+                                <!-- <p>DONUT HERE</p> -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <button id="section2-next">Next</button> -->
+                    <button class="next-btn" onclick="onNextButtonClick()">Next</button>
 
 
+                    </div>
+                    <div class="section" id="section3">
+                    <div class="section3-question-text">
+                        <p>What percentage of work in your field do you think is reproducible? (Baker, 2016)
+                        n = XXXX</p>
+                    </div>
+                    <div class="donut4">
+                        <!-- <p>DONUT HERE</p> -->
+                    </div>
+                    <button class="next-btn" onclick="onNextButtonClick()">Next</button>
+
+                    </div>
+                    <div class="section" id="section4">
+                        <div class="section3-question-text">
+                            <p>What percentage of work in your field do you think is reproducible? (Baker, 2016)
+                            n = XXXX</p>
+                        </div>
+                        <div class="chart-container">
+                            <!-- <p> CHART HERE</p> -->
+                        </div>
+                    </div>
                 </div>
-                <div class="section" id="section3">
-                  <div class="section3-question-text">
-                    <p>What percentage of work in your field do you think is reproducible? (Baker, 2016)
-                      n = XXXX</p>
-                  </div>
-                  <div class="donut4">
-                    <!-- <p>DONUT HERE</p> -->
-                  </div>
-                  <button class="next-btn" onclick="onNextButtonClick()">Next</button>
 
-                </div>
-                <div class="section" id="section4">
-                  <div class="section3-question-text">
-                    <p>What percentage of work in your field do you think is reproducible? (Baker, 2016)
-                      n = XXXX</p>
-                  </div>
-                  <div class="chart-container">
-                    <!-- <p> CHART HERE</p> -->
+                <div class="citation-pane">
+                    <div class="citation-content">
+                        <p>Data comes from a 2016 online Nature survey.</p>
+                        <p>Baker, M. 1,500 scientists lift the lid on reproducibility. Nature 533, 452–454 (2016). https://doi.org/10.1038/533452a</p>
+                        <p>View Paper</p>
+                        <p>Download citation</p>
+                      </div>
+                    <button type="button" class="collapsible-btn">Open Collapsible</button>
 
-                  </div>
                 </div>
 
             </div>
-        </div>
 
-        <div class="controls">
-            <button id="back">Back</button>
-            <!-- <button id="next">Next</button> -->
-        </div>
+
+            <!-- <div class="citation-pane">
+                <button type="button" class="collapsible-btn">Open Collapsible</button>
+                <div class="citation-content">
+                    <p>Lorem ipsum...</p>
+                    <p>Lorem ipsum...</p>
+                    <p>Lorem ipsum...</p>
+                    <p>Lorem ipsum...</p>
+                    <p>Lorem ipsum...</p>
+                  </div>
+            </div> -->
+
+            <!-- <div class="controls"> -->
+                <!-- <button id="back">Back</button> -->
+                <!-- <button id="next">Next</button> -->
+            <!-- </div> -->
+
+    </div>
 
 
         <script src="https://d3js.org/d3.v3.min.js"></script>
@@ -401,7 +501,7 @@
             const totalSections = sections.length;
 
             // Disable scroll
-            document.body.style.overflow = "hidden";
+            // document.body.style.overflow = "hidden";
 
             // document.getElementById("next").addEventListener("click", () => {
             //     if (currentSection < totalSections - 1) {
@@ -417,23 +517,28 @@
                 }
             }
 
-            document.getElementById("back").addEventListener("click", () => {
-                if (currentSection > 0) {
-                    currentSection--;
-                    scrollToSection(currentSection);
-                }
-            });
+            // document.getElementById("back").addEventListener("click", () => {
+            //     if (currentSection > 0) {
+            //         currentSection--;
+            //         scrollToSection(currentSection);
+            //     }
+            // });
 
             function scrollToSection(sectionIndex) {
                 const yOffset = sections[sectionIndex].offsetTop - 150;
-                window.scrollTo({
+                const mainContainer = document.querySelector(".main-container");
+                mainContainer.scrollTo({
                     top: yOffset,
                     behavior: "smooth",
                 });
+                // window.scrollTo({
+                //     top: yOffset,
+                //     behavior: "smooth",
+                // });
             }
             // initialize page on scroll to section 2
-            currentSection = 2;
-            scrollToSection(2);
+            currentSection = 0;
+            // scrollToSection(0);
 
 
             // Donut 1 implementation
@@ -464,6 +569,8 @@
             if (d3.event.buttons == 1) {
                 // console.log("mouse down");
                 updateDonutPercent(d3.mouse(this));
+                updateDonutPercent2(d3.mouse(this));
+                // updateDonutPercent2(d3.mouse(this));
             }
             // change color of slice while mouse is hovering over it
             // d3.select(this).style("fill", "red");
@@ -679,9 +786,9 @@
 
         function getRemainingValue2() {
             let remainingValue2 =
-                100 - mainSliceValue2;
+                100 - mainSliceValue;
 
-            emptySliceValue2 = remainingValue2;
+            emptySliceValue = remainingValue2;
             return remainingValue2;
         }
         function getRemainingValue3() {
@@ -694,7 +801,7 @@
 
         var svg2 = d3.select(".donut2").append("svg").append("g");
 
-        svg2.append("g").attr("class", "slices");
+        svg2.append("g").attr("class", "slices2");
         svg2.append("g").attr("class", "labels");
         svg2.append("g").attr("class", "lines");
 
@@ -770,9 +877,9 @@
             // Copy of slider implementation
             let remainingValue2 = getRemainingValue2();
             // let currentValue = +document.getElementById("slider1").value;
-            let currentValue2 = mainSliceValue2;
-            mainSliceValue2 = slicePercent2;
-            let maxValue2 = currentValue2 + remainingValue2;
+            let currentValue2 = mainSliceValue;
+            // mainSliceValue2 = slicePercent2;
+            // let maxValue2 = currentValue2 + remainingValue2;
 
             // document.getElementById("slider1-value").innerHTML =
             //         document.getElementById("slider1").value;
@@ -919,11 +1026,11 @@
                 {
                     label: "Slice 1",
                     // value: +document.getElementById("slider1").value,
-                    value: +mainSliceValue2,
+                    value: +mainSliceValue,
                 },
                 {
                     label: "No Response",
-                    value: +emptySliceValue2,
+                    value: +emptySliceValue,
                 },
             ];
         }
@@ -968,7 +1075,7 @@
 
             /* ------- PIE SLICES ------- */
             var slice = svg2
-                .select(".slices")
+                .select(".slices2")
                 .selectAll("path.slice")
                 .data(pie(data), key);
 
@@ -1030,7 +1137,7 @@
         svg2
             .append("text")
             .attr("text-anchor", "middle")
-            .attr("class", "donut-percent")
+            .attr("class", "donut-percent2")
             .attr("y", 18)
             .attr("style", "color: blue;")
             .attr("style", "fill: white;")
@@ -1040,14 +1147,14 @@
                     // "%"
                     // mainSliceValue + "%"
                     // mainSliceValue + "%"
-                    Math.round(mainSliceValue2) + "%"
+                    Math.round(mainSliceValue) + "%"
                 );
             });
 
             svg3
             .append("text")
             .attr("text-anchor", "middle")
-            .attr("class", "donut-percent")
+            .attr("class", "donut-percent3")
             .attr("y", 18)
             .attr("style", "color: blue;")
             .attr("style", "fill: white;")
@@ -1070,7 +1177,7 @@
                         // +document.getElementById("slider1").value +
                         // "%"
                         // mainSliceValue + "%"
-                        Math.round(mainSliceValu2) + "%"
+                        Math.round(mainSliceValue) + "%"
                     );
                 });
         }
@@ -1486,6 +1593,24 @@
         }
 
 
+        // Collapsable citation handler
+        var coll = document.getElementsByClassName("collapsible-btn");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            // var content = this.nextElementSibling;
+            // var content = this.previousElementSibling;
+            // var content = getElementByClassName("citation-content");
+            let content = document.querySelector(".citation-content");
+            if (content.style.display === "flex") {
+            content.style.display = "none";
+            } else {
+            content.style.display = "flex";
+            }
+        });
+        }
           
         </script>
     </body>
