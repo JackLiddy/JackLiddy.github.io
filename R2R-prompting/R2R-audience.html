@@ -63,7 +63,6 @@
                 font-size: 2em;
                 font-weight: bolder;
                 z-index: 2;
-                margin-top: -40px;
             }
             .thank-you-msg {
                 -webkit-text-stroke: 1.5px white;
@@ -96,6 +95,7 @@
                 background-color: white;
                 flex-direction: column;
                 align-items: center;
+                overflow: hidden;
             }
 
             #answer-input-area {
@@ -150,7 +150,7 @@
                 border-width: inherit;
                 padding: 12px;
                 font-weight: bold;
-                width: 42vw;
+                width: 85%;
                 height: 90px;
             }
             /* hover */
@@ -167,7 +167,8 @@
                 position: absolute;
                 width: 143px;
                 left: 472px;
-                top: 615px;
+                /* top: 615px; */
+                top: 507px;
             }
 
             .student-select-container {
@@ -182,6 +183,7 @@
             #student-selection-dropdown {
                 padding: 5px;
                 border-radius: 10px;
+                display: none;
             }
 
 
@@ -254,6 +256,364 @@
                 border-color: transparent transparent white transparent;
                 transform: translateX(-50%);
             }
+            .member-dropdown {
+                display: none;
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            @media only screen and (max-width: 600px) {
+                body {
+                font-family: Arial, sans-serif;
+                /* background-color: #933c3c; */
+                /* color: black; */
+                padding: 0px;
+                margin: 0px;
+                display: flex;
+                flex-direction: column;
+                background-color: rgb(0, 0, 0);
+                width: 100vw;
+                justify-content: flex-start;
+                align-items: center;
+                margin-top: 5px;;
+                
+
+            }
+            .question-container {
+                /* width: 380px; */
+                background-color: #ffffff;
+                padding: 0px;
+                position: inherit;
+                height: 25vh;
+                margin-left: 0px;
+                padding-left: 0px;
+                padding-left: 0px;
+                border-radius: 10px;
+                width: 90vw;
+
+
+                /* display: none; */
+            }
+
+            .question-content {
+                display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+            }
+            .thank-you-content {
+                /* display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                align-items: center;
+                text-align: center; */
+
+                display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    text-align: center;
+    justify-content: space-between;
+
+
+
+
+                display: none;
+            }
+
+            .header {
+                padding-top: 0px;
+                /* padding: 10px 0; */
+                /* border-bottom: 1px solid #555; */
+            }
+            #top-img {
+    /* position: relative; */
+    left: 0px;
+    top: 0px;
+
+    position: relative;
+
+    left: -22px;
+    top: 0px;
+
+    position: relative;
+
+    width: 80%;
+    width: 68vw;
+            }
+
+            .top-img-container {
+                width: 10vw;
+            }
+
+            .question {
+                -webkit-text-stroke: 1.5px white;
+                font-size: 1.5em;
+                font-weight: bolder;
+                z-index: 2;
+
+                margin-left: 56px;
+            }
+            .question h2 {
+                margin-top: 0px;
+            }
+            .thank-you-msg {
+                -webkit-text-stroke: 1.5px white;
+                font-size: 2em;
+                font-weight: bolder;
+                z-index: 2;
+            }
+            .thank-you-msg h2 {
+                margin-top: 0px;
+            }
+
+            .student-selection-container {
+                width: 380px;
+                background-color: #ffffff;
+                padding: 20px;
+                border-radius: 10px;
+                /* position: absolute; */
+                /* height: 216px; */
+                /* margin-left: 90px; */
+                /* padding-left: 191px; */
+                /* padding-left: 90px; */
+
+                display: none;
+            }
+
+            .answer-container {
+                display: flex;
+                border-radius: 10px;
+
+                width: 520px;
+                margin: 10px;
+                padding: 22px;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+
+                width: 90vw;
+                margin: 5px;
+                padding: 5px;
+                background-color: white;
+                flex-direction: column;
+                align-items: center;    
+                justify-content: center;
+
+                height: 50vh;  
+
+            }
+
+            #answer-input-area {
+                width: 85%;
+                /* margin: 10px; */
+                background-color: #d9d9d9;
+                margin-bottom: 10px;
+                padding: 24px;
+                border-radius: 10px;
+            }
+            .textarea-container {
+                /* position: relative; */
+                /* width: 300px; */
+                width: 95%;
+                display: flex;
+                flex-direction: column;
+    align-content: center;
+    justify-content: flex-start;
+    align-items: center;
+    /* border-radius: 15px; */
+            }
+
+            /* textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    box-sizing: border-box;
+    resize: vertical;
+} */
+
+            #charCount {
+                position: relative;
+                /* bottom: 29px;
+                right: 10px; */
+                font-size: 14px;
+                color: #888;
+                right: -30%;
+            }
+
+            #answer-footer {
+                display: flex;
+                flex-direction: row;
+                width: 100%;
+                justify-content: flex-start;
+
+                    padding-top: 16px;
+                    align-items: flex-start;
+
+            }
+
+            .footer-img {
+                /* width: 400px; */
+                /* position: relative; */
+                width: 10px;
+                height: 10px;
+            }
+
+            .submit-answer-btn {
+            }
+
+            .submit-answer-btn {
+                border-radius: 15px;
+                background-color: #854abe;
+                color: white;
+                font-size: x-large;
+                border-width: inherit;
+                padding: 12px;
+                font-weight: bold;
+                width: 85%;
+                height: 90px;
+            }
+            /* hover */
+            .submit-answer-btn:hover {
+                background-color: #5e2d8a;
+                color: white;
+            }
+            /* clicked */
+            .submit-answer-btn:active {
+                background-color: #49226b;
+                color: white;
+            }
+            #computer-raven-img {
+                position: relative;
+    width: 143px;
+    left: -86px;
+    top: -18px;
+            }
+
+            .student-select-container {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                /* padding: 10px; */
+                margin-bottom: 10px;
+            }
+
+            #student-selection-dropdown {
+                padding: 5px;
+                border-radius: 10px;
+                display: none;
+            }
+
+
+            .preview-container {
+                /* display: flex;
+                flex-direction: column;
+                align-items: center;
+                width: 100%;
+                margin-bottom: 10px; */
+
+                display: flex;
+    border-radius: 10px;
+    width: 100%;
+    margin: 10px;
+    padding: 22px;
+    background-color: rgba(255, 255, 255, 0);
+    flex-direction: column;
+    align-items: center;
+
+    display: none;
+            }
+
+            .response-container {
+                width: 95vw;
+                padding: 11px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+            }
+            .response {
+                background-color: #5e2d8a;
+                width: 90vw;
+                margin: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                background-color: #ffffff;
+
+                height: 128px;
+                 border-radius: 10px;
+            }
+            .response h3 {
+                text-align: center;
+                font-weight: normal;
+            }
+            .arrow {
+                position: absolute;
+                width: 0;
+                height: 0;
+                border-style: solid;
+
+                position: relative;
+                width: 0;
+                height: 0;
+                border-style: solid;
+                margin: -11px;
+                display: none;
+            }
+            .arrow.horizontal-arrow-top {
+                left: 50%;
+                top: -10px;
+                border-width: 0 10px 10px;
+                border-color: transparent transparent black transparent;
+                transform: translateX(-50%);
+
+                left: 312px;
+                top: -11px;
+                border-width: 0 15px 42px;
+                border-color: transparent transparent white transparent;
+                transform: translateX(-50%);
+                left: 201px;
+                display: none;
+            }
+            .member-dropdown {
+                display: none;
+            }
+}
+
+
 
         </style>
     </head>
@@ -263,27 +623,46 @@
                 <div class="question">
                     <h2>QUESTION HERE</h2>
                 </div>
-
-                <img
+                <div class="top-img-container">
+                    <img
                     id="top-img"
                     src="raven-white-bg-08.svg"
                     alt=""
                     width="400"
                     height="400"
                 />
+                </div>
+                <!-- <img
+                    id="top-img"
+                    src="raven-white-bg-08.svg"
+                    alt=""
+                    width="400"
+                    height="400"
+                /> -->
+
             </div>
             <div class="thank-you-content">
                 <div class="thank-you-msg">
                     <h2>Thank you for participating!</h2>
                 </div>
 
-                <img
+                <div class="top-img-container">
+                    <img
                     id="top-img"
                     src="raven-white-bg-08.svg"
                     alt=""
                     width="400"
                     height="400"
                 />
+                </div>
+                
+                <!-- <img
+                    id="top-img"
+                    src="raven-white-bg-08.svg"
+                    alt=""
+                    width="400"
+                    height="400"
+                /> -->
             </div>
         </div>
 
@@ -327,7 +706,7 @@
                     maxlength="140"
                     oninput="updateCharacterCount()"
                 ></textarea>
-                <div id="charCount">140/140 characters</div>
+                <div id="charCount">0/140 characters</div>
             </div>
 
             <!-- </div> -->
@@ -347,6 +726,7 @@
         </div>
         <div class="preview-container">
             <!-- answer-preview-bubble -->
+
             <div class="response-container">
             </div>
             <!-- edit-button-container -->
@@ -366,6 +746,15 @@
             const question = urlParams.get("question");
             console.log("question: ", question);
             console.log("labSession: ", labSession);
+
+
+            // const anonymous = urlParams.get("anonymous");
+            const anonymous = true;
+            // If anonymous mode is on, hide the student selection container
+            if (anonymous){
+                document.querySelector(".student-select-container").style.display = "none";
+            }
+
 
             // Set question text
             document.querySelector(".question h2").innerText = question;
@@ -390,25 +779,28 @@
                             labData["nonPresentingMembers"]
                         );
 
-                        // Display the non-presenting members in a dropdown menu
-                        const nonPresentingMembers =
-                            labData["nonPresentingMembers"];
-                        console.log(
-                            "nonPresentingMembers: ",
-                            nonPresentingMembers
-                        );
+                        // If lab session is not anonymous, display dropdown menu
+                        if( !anonymous ) {
+                            // Display the non-presenting members in a dropdown menu
+                            const nonPresentingMembers =
+                                labData["nonPresentingMembers"];
+                            console.log(
+                                "nonPresentingMembers: ",
+                                nonPresentingMembers
+                            );
 
-                        // Populate the dropdown menu with the non-presenting members
-                        const dropdown = document.getElementById(
-                            "student-selection-dropdown"
-                        );
-                        nonPresentingMembers.forEach((member) => {
-                            console.log("member: ", member);
-                            const option = document.createElement("option");
-                            option.value = member.name;
-                            option.text = member.name;
-                            dropdown.appendChild(option);
-                        });
+                            // Populate the dropdown menu with the non-presenting members
+                            const dropdown = document.getElementById(
+                                "student-selection-dropdown"
+                            );
+                            nonPresentingMembers.forEach((member) => {
+                                console.log("member: ", member);
+                                const option = document.createElement("option");
+                                option.value = member.name;
+                                option.text = member.name;
+                                dropdown.appendChild(option);
+                            });
+                        }
                     }
 
                     if (labExists) {
@@ -427,12 +819,21 @@
                 });
 
             function handleSubmit() {
-                // Check if student has been selected from dropdown
-                const dropdown = document.getElementById(
-                    "student-selection-dropdown"
-                );
-                const selectedStudent = dropdown.value;
+
+                // Assign student value if not anonymous
+                let selectedStudent = "";
+                if (anonymous){
+                    selectedStudent = "Anonymous";
+                }
+                else{
+                     // Check if student has been selected from dropdown
+                    const dropdown = document.getElementById(
+                        "student-selection-dropdown"
+                    ); 
+                    selectedStudent = dropdown.value;
+                }
                 console.log("selectedStudent: ", selectedStudent);
+
                 // handle empty case
                 if (selectedStudent == "") {
                     alert("Please select your name from the dropdown menu.");
@@ -534,8 +935,9 @@
                 const textArea = document.getElementById("answer-input-area");
                 const charCount = document.getElementById("charCount");
 
-                const charsLeft = 140 - textArea.value.length;
-                charCount.textContent = `${charsLeft}/140 characters`;
+                // const charsLeft = 140 - textArea.value.length;
+                const charsUsed = textArea.value.length;
+                charCount.textContent = `${charsUsed}/140 characters`;
             }
         </script>
     </body>
