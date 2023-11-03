@@ -762,6 +762,16 @@
             // Set question text
             document.querySelector(".question h2").innerText = question;
 
+            // if quesiton is too long, make font smaller
+            // if (question.length > 55) {
+            //     document.querySelector(".question h2").style.fontSize = "1.5em";
+            // }
+            // set margin-top to -30px
+            if (question.length > 55) {
+                document.querySelector(".question").style.marginTop = "-30px";
+            }
+
+
             // Fetch lab members from database
             let url = `https://api.sheety.co/f86a219e4c66ae9bacf55c87219398c1/c4RLabPrefill/table1?filter[labId]=${labSession}`;
             fetch(url)
