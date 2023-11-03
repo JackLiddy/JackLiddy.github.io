@@ -85,6 +85,11 @@
                 font-weight: bold;
                 margin: 10px;
             }
+            .link-btn:hover {
+                background-color: #5e2d8a;
+                color: white;
+                padding: 13px;
+            }
             .start-btn {
                 border-radius: 15px;
                 background-color: #854abe;
@@ -127,7 +132,10 @@
                 font-weight: bold;
                 margin: 10px;
             }
-
+            .done-btn:hover {
+                background-color: #5e2d8a;
+                padding: 13px;
+            }
             .time-up-content {
                 display: none;
                 flex-direction: column;
@@ -155,6 +163,11 @@
                 font-weight: bold;
                 margin: 5px;
             }
+
+            .show-answers-btn:hover { 
+                background-color: #5e2d8a;
+                padding: 13px;
+            }
             .extend-btn {
                 border-radius: 15px;
                 background-color: #854abe;
@@ -165,7 +178,11 @@
                 font-weight: bold;
                 margin: 10px;
             }
-
+            .extend-btn:hover {
+                background-color: #5e2d8a;
+                color: white;
+                padding: 13px;
+            }
             .outer-window {
                 display: flex;
                 flex-direction: column;
@@ -275,6 +292,12 @@
                 display: none;
             }
 
+            .hide-answers-btn:hover {
+                background-color: #5e2d8a;
+                color: white;
+                padding: 13px;
+            }
+
             .tooltip {
                 position: relative;
                 display: inline-block;
@@ -330,6 +353,11 @@
                 font-weight: bold;
                 margin: 10px;
             }
+            .enter-id-btn:hover {
+                padding: 13px;
+                background-color: #5e2d8a;
+            }
+
             input[type="text"],
             select {
                 flex: 1;
@@ -379,6 +407,15 @@
                     <button class="generate-link-btn">
                         Generate Link/Code
                     </button>
+
+                    <div class="raven">
+                        <img
+                            src="raven-white-bg-04 (2).svg"
+                            alt=""
+                            width="400"
+                            height="400"
+                        />
+                    </div>
 
                     <div class="raven">
                         <img
@@ -440,7 +477,7 @@
 
                     <div class="button-footer">
                         <button class="countdown-btn">Countdown</button>
-                        <button class="done-btn">Done</button>
+                        <button class="done-btn">End Timer</button>
                     </div>
 
                     <div class="raven">
@@ -630,7 +667,7 @@
                             alert("We were unable to find that lab ID. Please try again.");
                             // Display error and manual entry form
                         }
-                        console.log(json.table1);
+                        // console.log(json.table1);
                     })
                     .catch((error) => {
                         // Display error message and manual entry form
@@ -724,8 +761,8 @@
                 // Display the question
                 const questionText = document.querySelector("#question-text");
                 questionText.innerHTML = "<h2>" + question + "</h2>";
-                console.log("question", question);
-                console.log("question displayed");
+                // console.log("question", question);
+                // console.log("question displayed");
 
                 // Add event listener to countdown button
                 const countdownBtn = document.querySelector(".countdown-btn");
@@ -764,15 +801,15 @@
                 fetch(url)
                     .then((response) => response.json())
                     .then((json) => {
-                        console.log("json: ", json);
-                        console.log("json.submissions: ", json.submissions);
+                        // console.log("json: ", json);
+                        // console.log("json.submissions: ", json.submissions);
 
                         // If at least one lab session exists
                         if (json.submissions.length > 0) {
-                            console.log(
-                                "json.submissions.length: ",
-                                json.submissions.length
-                            );
+                            // console.log(
+                            //     "json.submissions.length: ",
+                            //     json.submissions.length
+                            // );
 
                             // Fetch non-presenting lab members from sessionData
 
@@ -805,7 +842,7 @@
                             // Start below:
                             let i = 0;
                             submissions.forEach((submission) => {
-                                console.log("submission: ", submission);
+                                // console.log("submission: ", submission);
                                 const response = document.createElement("response");
 
                                 const randomColor = Math.floor(Math.random()*16777215).toString(16);
@@ -850,6 +887,13 @@
                             const hideAnswersBtn =
                                 document.querySelector(".hide-answers-btn");
                             hideAnswersBtn.style.display = "flex";
+
+
+                            // Resize parent window of iframe
+                            const height = document.documentElement.scrollHeight || document.body.scrollHeight;
+                            parent.postMessage({ height: height }, '*');                           
+
+
                         } else {
                             console.log("No lab sessions exist with that ID");
                         }
@@ -882,6 +926,16 @@
 
             function extendTime() {
                 console.log("time extended");
+
+                // Hide current content pane
+                const timeUpContent = document.querySelector(
+                    ".time-up-content"
+                );
+                timeUpContent.style.display = "none";
+
+                // Show lab content pane
+                const labContent = document.querySelector(".lab-content");
+                labContent.style.display = "flex";
             }
 
             function manualEnterId() {
