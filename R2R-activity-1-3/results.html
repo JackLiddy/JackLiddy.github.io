@@ -20,7 +20,6 @@
             body {
                 font-family: "Poppins", sans-serif;
                 background-color: #e6ecf0;
-                background-color: #e6ecf000;
                 /* padding: 40px 0; */
             }
 
@@ -552,9 +551,9 @@
                                             noteCopy.style.position =
                                                 "absolute";
                                             noteCopy.style.left =
-                                                coords.x + "px";
+                                                coords.x - 40 + "px";
                                             noteCopy.style.top =
-                                                coords.y + "px";
+                                                coords.y - 40 + "px";
                                             noteCopy.classList.add(
                                                 "whiteboard-note"
                                             ); // Add a class to differentiate these from original sticky-notes
