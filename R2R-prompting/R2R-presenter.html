@@ -578,7 +578,11 @@
             // Add event listener
             generateLinkBtn.addEventListener("click", () => {
                 const cookieValue = checkCookie();
-                if (cookieValue) {
+                const labUrlParam = checkUrlParam();
+                if (labUrlParam){
+                    showLink(labUrlParam);
+                }
+                else if (cookieValue) {
                     // alert("Cookie exists");
                     // alert(cookieValue);
                     // Generate link
@@ -974,6 +978,23 @@
                     }
                 }, 1000);
             }
+
+
+            // If there is a URL parameter ?labSession=70523 then return that value. Else, return false.
+            function checkUrlParam(){
+                const urlParams = new URLSearchParams(window.location.search);
+                const labSession = urlParams.get('labSession');
+                if (labSession){
+                    console.log('url param exists');
+                    labId = labSession;
+                    return labSession;
+                }
+                else {
+                    console.log('url param does not exist');
+                    return false;
+                }
+            }
+        
         </script>
     </body>
 </html>
