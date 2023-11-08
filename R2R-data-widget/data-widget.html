@@ -717,6 +717,18 @@
 
 
         function updateDonutPercent(clickCoordinates){
+
+
+            if (clickCoordinates == null){
+                // console.log("click coordinates null");
+                let remainingValue = getRemainingValue();
+                updateDonutTitle();
+                change(getData());
+                getRemainingValue();
+                return;
+            }
+
+
             // console.log("percent changed");
             // Click value relative to the svg
 
@@ -919,7 +931,7 @@
         let animationSpeed2 = 45;
         let mainSliceValue2 = 30;
 
-        let emptySliceValue3 = 100 - (15*4);
+        let emptySliceValue3 = 100 - (91);
         let animationSpeed3 = 45;
         let mainSliceValue3 = 91;
 
@@ -947,7 +959,7 @@
         svg2.append("g").attr("class", "lines");
 
         var svg3 = d3.select(".donut3").append("svg").append("g");
-        svg3.append("g").attr("class", "slices");
+        svg3.append("g").attr("class", "slices3");
         svg3.append("g").attr("class", "labels");
         svg3.append("g").attr("class", "lines");
 
@@ -966,6 +978,16 @@
 
 
         function updateDonutPercent2(clickCoordinates){
+
+            if (clickCoordinates == null){
+                // console.log("click coordinates null");
+                let remainingValue = getRemainingValue2();
+                updateDonutTitle2();
+                change2(getData2());
+                getRemainingValue2();
+                return;
+            }
+
             // console.log("percent changed");
             // Click value relative to the svg
 
@@ -1029,12 +1051,24 @@
             getRemainingValue2();
         }
         function updateDonutPercent3(clickCoordinates){
+
+            if (clickCoordinates == null){
+                // console.log("click coordinates null");
+                let remainingValue = getRemainingValue3();
+                updateDonutTitle3();
+                change3(getData3());
+                getRemainingValue3();
+                return;
+            }
+
+
             // console.log("percent changed");
             // Click value relative to the svg
 
             // let clickCoordinates = d3.mouse(this);
             // console.log('click coords', clickCoordinates);
             // console.log(d3.event);
+
 
             // Get coordinates of the center of the svg
             let svgCenter = [svg3.attr("width") / 2, svg3.attr("height") / 2];
@@ -1198,11 +1232,11 @@
                 {
                     label: "Slice 1",
                     // value: +document.getElementById("slider1").value,
-                    value: +mainSliceValue2,
+                    value: +mainSliceValue3,
                 },
                 {
                     label: "No Response",
-                    value: +emptySliceValue2,
+                    value: +emptySliceValue3,
                 },
             ];
         }
@@ -1248,7 +1282,7 @@
 
             /* ------- PIE SLICES ------- */
             var slice = svg3
-                .select(".slices")
+                .select(".slices3")
                 .selectAll("path.slice")
                 .data(pie(data), key);
 
@@ -1796,6 +1830,8 @@
             }
 
         }
+
+        updateDonutPercent(null);
           
         </script>
     </body>
