@@ -11,6 +11,7 @@
                 padding: 0;
                 /* overflow: hidden; */
                 font-family: 'Inter';
+                background-color: black;
                 font-size: 14px;
             }
             .embed-container {
@@ -39,7 +40,7 @@
     background: white;
     z-index: 100; */
     background-color: white;
-    border-color: purple;
+    border-color: #854abe;
     border-width: 10px;
     border-radius: 10px;
     height: 150px;
@@ -58,7 +59,7 @@
 
 
     /* thick border */
-    border-color: purple;
+    border-color: #854abe;
     border-width: 3px;
     border-radius: 10px;
     border-style: solid;
@@ -98,15 +99,22 @@
     /* position: relative;
     top: 50px; */
     width: 90%;
-    border-color: purple;
+    border-color: #854abe;
     border-style: solid;
-    border-width: 1.5px;
+    border-width: 2px;
     height: 445px;
      /* overflow: hidden; */
      overflow: hidden;
      /* margin-top: 10px; */
      margin-top: 0px;
      border-radius: 10px;
+
+     -webkit-transition: height 1s; 
+  -moz-transition: height 1s; 
+  -ms-transition: height 1s; 
+  -o-transition: height 1s; 
+  transition: height 1s;  
+
 
 }
 .citation-pane {
@@ -138,8 +146,8 @@
     align-items: center;
 }
 .collapsible-btn {
-  background-color: #844684;
-  color: #2f2f2f;
+  background-color: #854abe;
+  color: #1e1e1e;
   cursor: pointer;
   padding: 5px;
   width: 90%;
@@ -160,12 +168,21 @@
   /* padding: 0 18px; */
   display: none;
   /* overflow: hidden; */
-  background-color: rgb(43, 43, 43);
+  background-color: rgb(24 24 25);;
   width: 100%;
   flex-direction: column;
     align-items: center;
   /* display: flex; */
   color: white;
+  border-color: #854abe;
+    border-style: solid;
+    border-width: 2px;
+}
+.citation-content p a{
+    color: #854abe;
+}
+.citation-content a{
+    color: white;
 }
 .citation-content p {  
     text-align: center;
@@ -184,22 +201,25 @@
             }
 
             #section1 {
-                background-color: rgb(43, 43, 43);
+                background-color: rgb(24 24 25);
+                height: 450px;
                 /* margin-top: 150px; */
             }
 
             #section2 {
-                background-color: rgb(29, 29, 29);
+                background-color: rgb(24 24 25);
+                height: 700px;
+                justify-content: flex-start;
             }
 
             #section3 {
-                background-color: rgb(80, 80, 80);
+                background-color: rgb(24 24 25);
             }
             #section4 {
-                background-color: rgb(53, 53, 53);
+                background-color: rgb(24 24 25);
             }
             #section5 {
-                background-color: rgb(18, 18, 18);
+                background-color: rgb(24 24 25);
             }
 
             /* .controls {
@@ -247,6 +267,7 @@
               align-items: center;
               justify-content: center;
               text-align: center;
+              justify-content: space-between;
               /* font-size: medium; */
               /* color: white; */
             }
@@ -281,28 +302,28 @@
     }
 
     .donut-percent {
-        font-size: 36px;
+        font-size: 66px;
         font-weight: bold;
         color: white;
         /* z-index: 100; */
         fill: white;
     }
     .donut-percent2 {
-        font-size: 36px;
+        font-size: 66px;
         font-weight: bold;
         color: white;
         /* z-index: 100; */
-        fill: white;
+        fill: rgb(133 74 190);;
     }
     .donut-percent3 {
-        font-size: 36px;
+        font-size: 66px;
         font-weight: bold;
         color: white;
         /* z-index: 100; */
-        fill: white;
+        fill: #e15456;
     }
     .donut-percent4 {
-        font-size: 36px;
+        font-size: 66px;
         font-weight: bold;
         color: white;
         /* z-index: 100; */
@@ -318,8 +339,8 @@
         /* position: absolute; */
     }
     .donut2 {
-        width: 200px;
-        height: 200px;
+        width: 300px;
+        height: 300px;
         /* width: 412px;
     height: 420px; */
         /* margin-top: -44px; */
@@ -327,8 +348,8 @@
         /* position: absolute; */
     }
     .donut3 {
-        width: 200px;
-        height: 200px;
+        width: 300px;
+        height: 300px;
         /* width: 412px;
     height: 420px; */
         /* margin-top: -44px; */
@@ -344,11 +365,11 @@
         /* background-color: black; */
         /* position: absolute; */
     }
-    .next-btn {
+    /* .next-btn { */
       /* position: fixed; */
       /* bottom: 0; */
       /* right: 0; */
-      position: relative;
+      /* position: relative;
       background: orange;
     color: black;
     padding: 30px;
@@ -356,7 +377,7 @@
     padding-bottom: 10px;
     border-radius: 10px;
     left: 231px;
-    bottom: 10px;
+    bottom: 10px; */
       /* padding: 1em; */
       /* margin-top: 100px; */
       /* margin-left: 100px; */
@@ -365,7 +386,7 @@
       /* margin: 100px; */
       /* margin: 100px 100px 100px 100px; */
       /* margin: 100px 100px 100px 100px; */
-    }
+    /* } */
     .donut2-container{
 
     }
@@ -389,6 +410,83 @@
         fill: white;
     }
 
+
+    .feedback-container {
+        display: flex;
+    align-content: flex-start;
+    justify-content: center;
+    align-items: center;
+
+       height: 200px;
+       width: 100%;
+    }
+    .feedback {
+       background-color: white;
+       width: 85%;
+       height: 100%;
+       border-radius: 2px;
+       display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    }
+    .feedback-content {
+        display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    /* margin-left: 80px; */
+    height: 100%;
+    width: 70%;
+    }
+    .feedback-image-container {
+        position: relative;
+}
+
+    .feedback-image1 {
+        position: absolute;
+        /* width: 100px; */
+        /* height: 100%; */
+        height: 110%;
+    top: -17px;
+    left: -47px;
+    
+    }
+    .feedback-heading {
+        font-size: 32px
+    }
+    .feedback-text {
+        font-size: 18px
+    }
+
+
+    .feedback-btn-containers {
+    }
+    .feedback-btn-containers button {
+        width: 150px;
+    height: 38px;
+    font-size: 17px;
+    background-color: #dd8b3c;
+    color: #6e2e14;
+    font-weight: 800;
+    border: none;
+    border-radius: 5px;
+    }
+
+    .next-button {
+        width: 150px;
+    height: 38px;
+    font-size: 17px;
+    background-color: #dd8b3c;
+    color: #6e2e14;
+    font-weight: 800;
+    border: none;
+    border-radius: 5px;
+    position: relative;
+    left: 231px;
+    bottom: 10px;
+    }
+
+
         </style>
     </head>
 
@@ -406,49 +504,63 @@
                 </div>
                 <div class="main-container">
                     <div class="section" id="section1">
+                        <div class="section1-question-text">
+                            <p>What percentage of researchers do you think believe that there is a reproducibility crisis?</p>
+                        </div>
+                        <div class="donut1">
+                            <!-- <p>DONUT HERE</p> -->
+                        </div>
+                        <!-- <button class="next-btn" onclick="onNextButtonClick()">Next</button> -->
+                        <button class="next-button" onclick="onNextButtonClick()">Next</button>
+                    </div>
 
-                    <div class="section1-question-text">
-                        <p>What percentage of researchers do you think believe that there is a reproducibility crisis?</p>
-                    </div>
-                    <div class="donut1">
-                        <!-- <p>DONUT HERE</p> -->
-                    </div>
-                    <button class="next-btn" onclick="onNextButtonClick()">Next</button>
-                    <!-- id="section1-next" -->
-                    </div>
                     <div class="section" id="section2">
 
-                    <div class="section1-question-text">
-                        <p>What percentage of researchers do you think believe that there is a reproducibility crisis? (Baker, 2016)</p>
-                        <p>n = 1,578</p>
-                    </div>
-                    <div class="section2-donuts-containers">
-                        <div class="donut2-container">
-                            <div class="donut2">
-                                <!-- <p>DONUT HERE</p> -->
+                        <div class="section1-question-text">
+                            <p>What percentage of researchers do you think believe that there is a reproducibility crisis? (Baker, 2016)</p>
+                            <p>n = 1,578</p>
+                        </div>
+                        <div class="section2-donuts-containers">
+                            <div class="donut2-container">
+                                <div class="donut2">
+                                    <!-- <p>DONUT HERE</p> -->
+                                </div>
+                            </div>
+                            <div class="donut3-container">
+                                <div class="donut3">
+                                    <!-- <p>DONUT HERE</p> -->
+                                </div>
                             </div>
                         </div>
-                        <div class="donut3-container">
-                            <div class="donut3">
-                                <!-- <p>DONUT HERE</p> -->
+                        <div class="feedback-container" id="feedback-container-1">
+                            <div class="feedback" id="feedback1">
+                                <!-- img -->
+                                <div class="feedback-image-container"> 
+                                    <img class="feedback-image1" src="raven-white-bg-01.svg" >
+                                </div>
+                                <div class="feedback-content">
+                                    <div class="feedback-heading" id="feedback-heading-1"></div>
+                                    <div class="feedback-text" id="follow-up-q1"></div>
+                                    <div class="feedback-text" id="follow-up-q2"></div>
+                                    <div class="feedback-btn-containers">
+                                        <button id="back" >Back</button>
+                                        <button class="" onclick="onNextButtonClick()">Next</button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
+                        <!-- <button class="next-btn" onclick="onNextButtonClick()">Next</button> -->
                     </div>
-                    <!-- <button id="section2-next">Next</button> -->
-                    <button class="next-btn" onclick="onNextButtonClick()">Next</button>
 
-
-                    </div>
                     <div class="section" id="section3">
-                    <div class="section3-question-text">
-                        <p>What percentage of work in your field do you think is reproducible? (Baker, 2016)
-                        n = XXXX</p>
-                    </div>
-                    <div class="donut4">
-                        <!-- <p>DONUT HERE</p> -->
-                    </div>
-                    <button class="next-btn" onclick="onNextButtonClick()">Next</button>
-
+                        <div class="section3-question-text">
+                            <p>What percentage of work in your field do you think is reproducible? (Baker, 2016)
+                            n = XXXX</p>
+                        </div>
+                        <div class="donut4">
+                            <!-- <p>DONUT HERE</p> -->
+                        </div>
+                        <button class="next-button" onclick="onNextButtonClick()">Next</button>
                     </div>
                     <div class="section" id="section4">
                         <div class="section3-question-text">
@@ -463,12 +575,17 @@
 
                 <div class="citation-pane">
                     <div class="citation-content">
-                        <p>Data comes from a 2016 online Nature survey.</p>
+                        <p>Data comes from a <a href="https://www.nature.com/articles/533452a">2016 online </a> Nature survey.</p>
                         <p>Baker, M. 1,500 scientists lift the lid on reproducibility. Nature 533, 452–454 (2016). https://doi.org/10.1038/533452a</p>
-                        <p>View Paper</p>
-                        <p>Download citation</p>
+                        <!-- <p>View Paper</p> -->
+                        <!-- <p>Download citation</p> -->
+                        <a href="https://www.nature.com/articles/533452a.pdf">View Paper</a>
+                        <a href="https://www.nature.com/articles/533452a#citeas:~:text=org/10.1038/533452a-,Download%20citation,-Published">Download citation</a>
+                        
+                        <!-- link within text below, using anchor -->
+                        
                       </div>
-                    <button type="button" class="collapsible-btn">Open Collapsible</button>
+                    <button type="button" class="collapsible-btn">Curious as to where these numbers came frorm? Click here for a citation.</button>
 
                 </div>
 
@@ -512,17 +629,38 @@
 
             function onNextButtonClick() {
                 if (currentSection < totalSections - 1) {
+
+                    // Render the feedback container's contents
+                    if (currentSection === 0){
+                        // Get feedback heading 1
+                        let feedbackHeading1 = document.getElementById("feedback-heading-1");
+                        feedbackHeading1.innerHTML = "Feedback Heading 1";
+                        // Get follow up q1
+                        let followUpQ1 = document.getElementById("follow-up-q1");
+                        followUpQ1.innerHTML = "Follow up q1";
+                        // Get follow up q2
+                        let followUpQ2 = document.getElementById("follow-up-q2");
+                        followUpQ2.innerHTML = "Follow up q2";
+
+                    }
+
+
+
+                    increaseMainContainerHeight();
                     currentSection++;
                     scrollToSection(currentSection);
                 }
+                if(currentSection === 1){
+                    // increaseMainContainerHeight();
+                }
             }
 
-            // document.getElementById("back").addEventListener("click", () => {
-            //     if (currentSection > 0) {
-            //         currentSection--;
-            //         scrollToSection(currentSection);
-            //     }
-            // });
+            document.getElementById("back").addEventListener("click", () => {
+                if (currentSection > 0) {
+                    currentSection--;
+                    scrollToSection(currentSection);
+                }
+            });
 
             function scrollToSection(sectionIndex) {
                 const yOffset = sections[sectionIndex].offsetTop - 150;
@@ -537,9 +675,9 @@
                 // });
             }
             // initialize page on scroll to section 2
-            currentSection = 0;
-            // scrollToSection(0);
-
+            // currentSection = 1;
+            // scrollToSection(1);
+            // increaseMainContainerHeight();
 
             // Donut 1 implementation
             // Donut 1 code
@@ -735,7 +873,7 @@
             .append("text")
             .attr("text-anchor", "middle")
             .attr("class", "donut-percent")
-            .attr("y", 18)
+            .attr("y", 24)
             .attr("style", "color: blue;")
             .attr("style", "fill: darkOrange;")
             .text(function () {
@@ -774,7 +912,7 @@
 <!-- section 2 -->
         <script>
 
-        // Donut 1 implementation
+        // Donut 2 implementation
         // Donut 1 code
         let emptySliceValue2 = 100 - (15*4);
         let animationSpeed2 = 45;
@@ -782,7 +920,9 @@
 
         let emptySliceValue3 = 100 - (15*4);
         let animationSpeed3 = 45;
-        let mainSliceValue3 = 30;
+        let mainSliceValue3 = 91;
+
+
 
         function getRemainingValue2() {
             let remainingValue2 =
@@ -951,8 +1091,8 @@
             getRemainingValue3();
         }
 
-        var width2 = 200,
-            height2 = 200,
+        var width2 = 300,
+            height2 = 300,
             radius2 = Math.min(width2, height2) / 2;
 
         var pie2 = d3.layout
@@ -974,8 +1114,8 @@
 
 
             // donut 3
-            var width3 = 200,
-            height3 = 200,
+            var width3 = 300,
+            height3 = 300,
             radius3 = Math.min(width3, height3) / 2;
 
         var pie3 = d3.layout
@@ -1009,7 +1149,7 @@
         // Use svg2.attr() to scale the donut chart to the size of the container
         svg2.attr(
             "transform",
-            "translate(100,100) scale(0.5)"
+            "translate(150,150) scale(0.8)"
         );
 
         var key = function (d) {
@@ -1037,9 +1177,10 @@
 
         change2(getData2());
 
+        // translate half of initial width and height before downscale
         svg3.attr(
             "transform",
-            "translate(100,100) scale(0.5)"
+            "translate(150,150) scale(0.8)"
         );
 
         var key = function (d) {
@@ -1189,7 +1330,7 @@
                         // +document.getElementById("slider1").value +
                         // "%"
                         // mainSliceValue + "%"
-                        Math.round(mainSliceValu3) + "%"
+                        Math.round(mainSliceValue3) + "%"
                     );
                 });
         }
@@ -1526,7 +1667,9 @@
                 .call(yAxis)
             .append("text")
                 .attr("transform", "rotate(-90)")
+                // .attr("transform",  "translate(0, 50)")
                 .attr("y", 6)
+                // .attr("dx", "-20px")
                 .attr("dy", ".71em")
                 .style("text-anchor", "end")
                 .text("Value");
@@ -1610,6 +1753,47 @@
             content.style.display = "flex";
             }
         });
+        }
+
+
+        // Function to increase hight of the main-container when called
+        // The height change should appear animated
+        function increaseMainContainerHeight() {
+
+            // scrollToSection
+
+            // Get the current height of the main-container
+            let currentHeight = document.querySelector(".main-container").offsetHeight;
+            // console.log(currentHeight);
+
+            // Increase the height of the main-container by 100px
+            // let newHeight = currentHeight + 100;
+            // get height of section 2
+            // let section2Height = document.querySelector("#section2").offsetHeight;
+
+            // console.log(newHeight);
+
+            // Set the height of the main-container to the new height
+            // document.querySelector(".main-container").style.height = section2Height + "px";
+
+
+            if (currentSection === 0){
+                // let currentHeight = document.querySelector(".main-container").offsetHeight;
+                let section2Height = document.querySelector("#section2").offsetHeight;
+                document.querySelector(".main-container").style.height = section2Height + "px";
+            }
+            else if (currentSection === 1){
+                let section3Height = document.querySelector("#section3").offsetHeight;
+                document.querySelector(".main-container").style.height = section3Height + "px";
+            }
+            else if (currentSection === 2){
+                let section4Height = document.querySelector("#section4").offsetHeight;
+                document.querySelector(".main-container").style.height = section4Height + "px";
+            }
+            else if (currentSection === 3){
+
+            }
+
         }
           
         </script>
