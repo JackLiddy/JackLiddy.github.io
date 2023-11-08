@@ -213,6 +213,7 @@
     margin-top: 10px;
     flex-direction: column;
     align-items: center;
+    position: relative;
 }
 #input-area p {
     color: #854abe;
@@ -235,6 +236,7 @@
     margin: 10px;
     flex-direction: column;
     gap: 10px;
+    position: relative;
 }
 #input-area-footer button {
     width: 300px;
@@ -386,13 +388,12 @@
                 width: 5%;
             }
 
-            img {
+            .header-img img {
                 position: relative;
                 left: -24px;
                 top: -10px;
                 width: 165px;
                 height: 173px;
-
             }
 
 
@@ -414,6 +415,11 @@
                 border-radius: 5px;
                 background-color: #854abe;
                 color: #393040; 
+                color: white;
+            }
+
+            #word-cloud-button:hover { 
+                background-color: #7440a4;
             }
 
 /* input area */
@@ -445,6 +451,23 @@
     height: 50%;
     align-items: center;
 
+            }
+
+            #footer-raven-img {
+                position: relative;
+                height: 10px;
+                /* bottom: 0px;
+                right: 0px;
+                height: 100%;
+                width: 5%; */
+            }
+
+            #footer-raven-img img {
+                position: relative;
+    left: 273px;
+    bottom: 168px;
+    height: 200px;
+    width: 200px;
 
             }
 
@@ -506,13 +529,22 @@
                             </div>
                             <div id="input-area-footer"> 
                                 <button id="submit-response-button" onclick="submitPromptResponse()">Submit Anonymously</button>
-                                <button id="cancel-response-button">Cancel</button>
+                                <button id="cancel-response-button" onclick="cancelResponse()">Cancel</button>
+                                <div id="footer-raven-img">
+                                    <img
+                                    src="raven-white-bg-11.svg"
+                                    alt=""
+                                    width="100"
+                                    height="100"
+                                />
+                                </div>
                             </div>
+
                         </div>
                         <div id="footer-buttons">
                             <button id="back-to-cloud-button">Back to Cloud</button>
                             <button id="contribute-button">Contribute</button>
-                            <button id="next-button">Next</button>
+                            <!-- <button id="next-button">Next</button> -->
                         </div>
                     </div>
                 </div>
@@ -579,38 +611,6 @@
             return { text: entry[0], size: entry[1] };
         });
 
-            // Set up the word cloud layout
-            // let layout = d3.layout.cloud()
-            //     .size([wordCloudWidth, wordCloudHeight])
-            //     .words(topXWords)
-            //     .padding(5)
-            //     .rotate(0)
-            //     .font("Impact")
-            //     .fontSize(function(d) { return d.size * 30; }) // Adjust the size scale factor as needed
-            //     .on("end", draw);
-            // layout.start();
-
-
-        // Get word counts from the large text
-        // var wordCounts = getWordCounts(largeText);
-        // var wordEntries = Object.entries(wordCounts);
-
-        // Sort words by frequency
-        // wordEntries.sort(function(a, b) {
-        //     return b[1] - a[1];
-        // });
-
-        // Select top X words
-        // var topX = 50; // You can change N to your preference
-        // var topXWords = wordEntries.slice(0, topX).map(function(entry) {
-        //     return { text: entry[0], size: entry[1] };
-        // });
-
-        // Get word cloud size from CSS
-        // var wordCloudWidth = parseInt(d3.select("#wordCloud").style("width"));
-        // var wordCloudHeight = parseInt(d3.select("#wordCloud").style("height"));
-        // console.log(wordCloudWidth);
-        // console.log(wordCloudHeight);
 
         // Set word cloud size
         let wordCloudWidth = 600;
@@ -655,7 +655,7 @@
             document.querySelector(".prompt-view").style.display = "flex";
 
             // Add the prompt text
-            document.querySelector("#prompt-text").innerHTML = `How does <b>${selectedWord}</b> Relate to rigor?`;
+            document.querySelector("#prompt-text").innerHTML = `How does the word <b>"${selectedWord}"</b> relate to rigor?`;
             // Fetch all word responses for the selected word
             // let wordResponses = getResponses(selectedWord);
             // Display the responses
@@ -664,7 +664,7 @@
             // Add event listemer to the back to buttons
             document.querySelector("#back-to-cloud-button").addEventListener("click", openQuestionCloudView);
             document.querySelector("#contribute-button").addEventListener("click", openResponsePane);
-            document.querySelector("#next-button").addEventListener("click", handleNextButton);
+            // document.querySelector("#next-button").addEventListener("click", handleNextButton);
 
             loadChatPane(selectedWord);
 
@@ -741,47 +741,7 @@
             return wordCounts;
         }
 
-        /*
-        // Get word counts from the large text
-        var wordCounts = getWordCounts(largeText);
-        var wordEntries = Object.entries(wordCounts);
 
-        // Sort words by frequency
-        wordEntries.sort(function(a, b) {
-            return b[1] - a[1];
-        });
-
-        // Select top X words
-        var topX = 50; // You can change N to your preference
-        var topXWords = wordEntries.slice(0, topX).map(function(entry) {
-            return { text: entry[0], size: entry[1] };
-        });
-
-        // Get word cloud size from CSS
-        // var wordCloudWidth = parseInt(d3.select("#wordCloud").style("width"));
-        // var wordCloudHeight = parseInt(d3.select("#wordCloud").style("height"));
-        // console.log(wordCloudWidth);
-        // console.log(wordCloudHeight);
-
-        // Set word cloud size
-        let wordCloudWidth = 600;
-        let wordCloudHeight = 400;
-
-
-        // Set up the word cloud layout
-        var layout = d3.layout.cloud()
-            // .size([800, 600])
-            .size([wordCloudWidth, wordCloudHeight])
-            .words(topXWords)
-            .padding(5)
-            .rotate(0)
-            .font("Impact")
-            .fontSize(function(d) { return d.size * 30; }) // Adjust the size scale factor as needed
-            .on("end", draw);
-
-        layout.start();
-
-        */
 
 // Function to draw the word cloud
 function draw(words) {
@@ -1024,61 +984,9 @@ function fetchQuestionResponses(questionText) {
                                     i++;
 
                                 });
-                                // initWordCloud(combinedResponses);
-
-                                    // });
 
                             }
 
-
-
-                            // Fetch non-presenting lab members from sessionData
-
-                            // const wordResponses = json.wordResponses;
-
-
-                            // let combinedResponses = "";
-
-                            // Combine all responses into one string
-                            // wordResponses.forEach((wordResponse) => {
-                            //     // console.log("submission: ", submission);
-                            //     combinedResponses += wordResponse.response + " ";
-                            // });
-
-                            // console.log("combinedResponses: ", combinedResponses);
-
-                            // return combinedResponses;
-
-                            // Render a response in the container for each submission
-                            // const responseContainer = document.querySelector(
-                            //     ".response-container"
-                            // );
-
-                            // Clear the contents of the container
-                            // responseContainer.innerHTML = "";
-
-                            // Re-implement this
-                            /*
-                            submissions.forEach((submission) => {
-                                console.log("submission: ", submission);
-                                const response =
-                                    document.createElement("response");
-
-                                response.innerHTML = `
-                                <h3>${submission.answer}</h3>
-                                <div class="arrow horizontal-arrow-top"></div>
-                                `;
-                                response.className = "response";
-                                responseContainer.appendChild(response);
-                            });
-                            */
-                            //    Refactor the above code block such that the rendered submissions render differently on an alternating basis
-                            // Start below:
-                            // let i = 0;
-                            // submissions.forEach((submission) => {
-                            //     console.log('submission: ', submission);
-                            // });
-                            // initWordCloud(combinedResponses);
 
                         }
                         else{
@@ -1241,6 +1149,16 @@ function fetchQuestionResponses(questionText) {
                 charCount.textContent = `${charsUsed}/140 characters`;
             }
 
+
+function cancelResponse(){
+    // Clear the text area
+    document.querySelector("#answer-input-area").value = "";
+    // Hide the response pane
+    document.querySelector("#chat-pane").style.display = "flex";
+    document.querySelector("#input-area").style.display = "none";
+    // Show the footer buttons
+    document.querySelector("#footer-buttons").style.display = "flex";
+}
 
     </script>
 </body>
