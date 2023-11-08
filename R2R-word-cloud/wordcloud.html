@@ -100,11 +100,12 @@
     flex-direction: column;
     align-items: center;
     width: 90%;
-    /* height: 90vh; */
+    height: 90vh;
     
     background-color: #000000;
     border: 2.5px solid #854abe;
-    border-radius: 7px;
+    height: fit-content;
+    border-radius: 6px;
 }
 
 
@@ -209,7 +210,7 @@
 #input-area {
     display: none;
     width: 90%;
-    height: 60%;
+    height: 340px;
     background-color: #ffffff;
     border-radius: 5px;
     padding: 10px;
@@ -217,6 +218,7 @@
     flex-direction: column;
     align-items: center;
     position: relative;
+    justify-content: space-between;
 }
 #input-area p {
     color: #854abe;
@@ -295,6 +297,7 @@
                 align-items: center;
                 justify-content: flex-start;
                 gap: 4px;
+                max-height: 65%;
                 overflow-y: scroll;
                 /* scrollbar-color: green blue; */
             }
@@ -419,7 +422,7 @@
                 background-color: #854abe;
                 color: #393040; 
                 color: white;
-                margin-bottom: 15px;
+                margin-bottom: 10px;
             }
 
             #word-cloud-button:hover { 
@@ -429,7 +432,7 @@
 /* input area */
 #charCount {
                 position: absolute;
-                bottom: 59px;
+                bottom: 21px;
                 right: 23px;
                 font-size: 14px;
                 color: #888;
@@ -452,7 +455,7 @@
                 width: 100%;
                 display: flex;
     flex-direction: column;
-    height: 50%;
+    height: 30%;
     align-items: center;
 
             }
@@ -563,6 +566,7 @@
 
         let layout;
         let currentSelectedWord = null;
+        let isWordCloudView = false;
 
         // Initialize the app
         function initializeApp() {
@@ -592,7 +596,7 @@
         // Initialize the word cloud
         function initWordCloud(questionResponses) {
 
-            console.log('input for initWordCloud: ', questionResponses);
+            // console.log('input for initWordCloud: ', questionResponses);
 
             // Get the question text
             // let questionText = "Why did you decide to become a scientist?";
@@ -642,6 +646,11 @@
 
         // Open the word cloud view
         function openWordCloudView() {
+
+            isWordCloudView = true;
+            console.log('is word cloud set to true');
+            fetchWordResponses(currentSelectedWord);
+
             document.querySelector(".question-cloud-view").style.display = "none";
             document.querySelector(".word-cloud-view").style.display = "flex";
             document.querySelector(".prompt-view").style.display = "none";
@@ -649,11 +658,14 @@
             // Add the word relate text
             document.querySelector("#word-relate-text").innerHTML = `This word cloud was generated from the pool of all student responses to the question "How does <b>${currentSelectedWord}</b> relate to rigor?".`;
 
-            fetchWordResponses(currentSelectedWord);
+            // fetchWordResponses(currentSelectedWord);
             // loadChatPane(selectedWord);
         }
         // Open the prompt view
         function openPromptView(selectedWord) {
+
+            loadChatPane(selectedWord);
+
             document.querySelector(".question-cloud-view").style.display = "none";
             document.querySelector(".word-cloud-view").style.display = "none";
             document.querySelector(".prompt-view").style.display = "flex";
@@ -670,13 +682,14 @@
             document.querySelector("#contribute-button").addEventListener("click", openResponsePane);
             // document.querySelector("#next-button").addEventListener("click", handleNextButton);
 
-            loadChatPane(selectedWord);
+            // loadChatPane(selectedWord);
 
 
         }
         // Open the question cloud view
         function openQuestionCloudView() {
             currentSelectedWord = null;
+            isWordCloudView = false;
             document.querySelector(".question-cloud-view").style.display = "flex";
             document.querySelector(".word-cloud-view").style.display = "none";
             document.querySelector(".prompt-view").style.display = "none";
@@ -697,12 +710,27 @@
 
         function handleInitialWordClick(selectedWord){
 
-            // Set global selected word state
-            currentSelectedWord = selectedWord;
+            // only reset the selected word if in the initial view
+            if (isWordCloudView === false){
+                // Set global selected word state
+                currentSelectedWord = selectedWord;
+                console.log('selected word updated to: ', selectedWord);
+            }
+            else{
+                // ensure previously selected word is used
+                selectedWord = currentSelectedWord;
+            }
+
+            // // Set global selected word state
+            // currentSelectedWord = selectedWord;
 
             // Fetch the existing responses to that word
             let existingResponses = getResponses(selectedWord);
             // If word already has X responses, go to word cloud view
+
+            // If already in word cloud view, reload the chat pane
+
+
             if (false) {
             // if (existingResponses.length > 0) {
                 // Display the word cloud view
@@ -733,7 +761,7 @@
 
         // Function to process the string and return word counts
         function getWordCounts(text) {
-            console.log('text input for getWordCounts:', text);
+            // console.log('text input for getWordCounts:', text);
             var words = text.split(/\s+/);
             var wordCounts = {};
             words.forEach(function(word) {
@@ -818,7 +846,7 @@ function fetchQuestionResponses(questionText) {
                                 combinedResponses += submission.answer + " ";
                             });
 
-                            console.log("combinedResponses: ", combinedResponses);
+                            // console.log("combinedResponses: ", combinedResponses);
 
                             // convert all to lowercase
                             combinedResponses = combinedResponses.toLowerCase();
@@ -827,7 +855,7 @@ function fetchQuestionResponses(questionText) {
                             combinedResponses = combinedResponses.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ");
 
                             let removalWords = ['i', 'of', 'a', 'to', 'the', 'so', 'and', 'for', 
-                            'is', 'it', 'ive', 'its', 'by', 'I', 'that', 'in', 'i\'ve', 'me', ];
+                            'is', 'it', 'ive', 'its', 'by', 'I', 'that', 'in', 'i\'ve', 'me', 'to' ];
                             
                             // Remove removal words from combined responses
                             // removalWords.forEach((removalWord) => {
@@ -842,7 +870,7 @@ function fetchQuestionResponses(questionText) {
                             });
 
 
-                            console.log("combinedResponses: ", combinedResponses);
+                            // console.log("combinedResponses: ", combinedResponses);
 
 
 
@@ -902,7 +930,7 @@ function fetchQuestionResponses(questionText) {
                 fetch(url)
                     .then((response) => response.json())
                     .then((json) => {
-                        console.log("json: ", json);
+                        // console.log("json: ", json);
                         // console.log("json.submissions: ", json.submissions);
 
 
@@ -922,7 +950,10 @@ function fetchQuestionResponses(questionText) {
 
                             // If a given word has at least 3 responses, start at cloud view
                             // if (false) {
-                            if (json.wordResponses.length >= 5) {
+                            if (json.wordResponses.length >= 5 && isWordCloudView == false) {
+
+                                console.log('wordCloudView false');
+
                                 // Display the word cloud view
                                 // console.log("Continue to word cloud view");
                                 openWordCloudView();
@@ -947,15 +978,13 @@ function fetchQuestionResponses(questionText) {
                                 // Populate the chat pane with the responses
                                 const wordResponses = json.wordResponses;
 
-
                                 // wordResponses.forEach((wordResponse) => {
                                 //     console.log("wordResponse 123: ", wordResponse.response);
                                     // combinedResponses += wordResponse.response + " ";
 
-
                                 let i = 0;
                                 wordResponses.forEach((submission) => {
-                                    console.log('submission: ', submission);
+                                    // console.log('submission: ', submission);
 
                                     const entry = document.createElement("response");
 
@@ -999,7 +1028,7 @@ function fetchQuestionResponses(questionText) {
                             const entry = document.createElement("response");
                             const randomColor = Math.floor(Math.random()*16777215).toString(16);
                             entry.innerHTML = `
-                                        <h3>"No Responses Yet"</h3>
+                                        <h3>No Responses Yet</h3>
                                         <div class="arrow right"></div>
                                         <span class="dot right" style="background-color: #${randomColor}"></span>
                                         `;
@@ -1124,8 +1153,29 @@ function fetchQuestionResponses(questionText) {
                                 combinedResponses += submission.response + " ";
                             });
 
-                            console.log("combinedResponses: ", combinedResponses);
+                            // console.log("combinedResponses: ", combinedResponses);
 
+                            let removalWords = ['i', 'of', 'a', 'to', 'the', 'so', 'and', 'for', 
+                            'is', 'it', 'ive', 'its', 'by', 'I', 'that', 'in', 'i\'ve', 'me', 'to', 'their' ];
+                            
+                            // Remove removal words from combined responses
+                            // removalWords.forEach((removalWord) => {
+                            //     combinedResponses = combinedResponses.replace(removalWord, "");
+                            // });
+
+                            // Remove removal words from combined responses
+                            removalWords.forEach((removalWord) => {
+                                // Wrap each in spaces to avoid partial word removal
+                                removalWord  = ' ' + removalWord + ' ';
+                                combinedResponses = combinedResponses.replaceAll(removalWord, " ");
+                            });
+
+
+                            // Add x instances of the selected word to the combined responses
+                            for (let i = 0; i < 15; i++) {
+                                combinedResponses += ("" + selectedWord + " ");
+                            }
+                            
 
                             initWordCloud(combinedResponses);
                         }
