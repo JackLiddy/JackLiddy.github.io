@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Word Cloud Generator</title>
+    <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-cloud/1.2.5/d3.layout.cloud.min.js"></script>
+    <style>
+
+        /* body,
+            html {
+                margin: 0;
+                padding: 0;
+                font-family: 'Inter';
+                background-color: black;
+                font-size: 14px;
+            } */
+        body{
+            background-color: #000000;
+            font-family: 'Inter';
+        }
+        #wordCloud {
+            /* border: 1px solid #ccc; */
+            /* width: 800px;
+            height: 600px; */
+            width: 100%;
+            height: 100%;         
+        }
+        text {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            cursor: pointer;
+            transition: all 0.2s ease;
+
+        }
+        text:hover {
+        fill: #dd8b3c !important; /* Change fill to desired hover color */
+        /* font-size: 55px !important;; */
+    }
+
+
+.embedding-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 800px;
+    height: 100vh;
+    background-color: #000000;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 100vh;
+    background-color: #000000;
+}
+.app-header {
+    width: 95%;
+    height: 20%;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border-radius: 10px;
+    box-shadow: 1px 4px 0px #917b9a;
+    box-shadow: 1px 4px 0px #532688;
+    z-index: 99;
+}
+.header-text-container {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    height: 100%;
+    /* margin: 0 auto; */
+    gap: 10px;
+    margin-right:10px;
+    justify-content: center;
+    align-items: center;
+}
+.header-title {
+    /* color: #854abe; */
+    font-size: 30px;
+    /* text-align: center; */
+    /* margin: 10px; */
+}
+.header-body {
+
+}
+
+
+.app-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 90%;
+    height: 90vh;
+    
+    background-color: #000000;
+    border: 2.5px solid #854abe;
+}
+
+
+/* question-cloud view */
+.main-content-window {
+    height: 100%;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+}
+.question-cloud-view {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin: 12px;
+}
+.word-cloud-view {
+    display: none;
+    flex-direction: column;
+}
+.prompt-view {
+    height: 90%;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* question-cloud view contents */
+#initial-question-text {
+    color: #ffffff;
+    font-size: 30px;
+    margin: 10px;
+    font-size: 18px;
+}
+#initial-question-text b {
+    color: #8449be;
+}
+#second-question-text {
+    color: #ffffff;
+    font-size: 30px;
+    margin: 10px;
+    font-size: 18px;
+}
+#second-question-text b {
+    color: #dd8b3c;
+}
+
+
+/* prompt view contents */
+#prompt-text {
+    color: #854abe;
+    font-size: 30px;
+    text-align: center;
+    margin: 10px;
+}
+/* prompt text color if bold */
+#prompt-text b {
+    color: #dd8b3c;
+}
+
+
+#footer-buttons {
+    display: flex;
+    width: 90%;
+    height: 30%;
+    background-color: #000000;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+#footer-buttons button {
+    width: 25%;
+    height: 50px;
+    /* background-color: #7306a6; */
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: bold;
+}
+#footer-buttons button:hover {
+    background-color: #dd8b3c;
+    cursor: pointer;
+}
+
+/* chat pane */
+#chat-pane {
+
+    display: flex;
+    width: 90%;
+    height: 100%;
+    background-color: #5e5e5e00;
+
+    display: flex;
+    flex-direction: column;
+    /* align-items: flex-start; */
+    padding: 10px;
+    align-items: center;
+    justify-content: flex-start;
+    /* overflow-y: scroll; */
+}
+#input-area {
+    display: none;
+    width: 90%;
+    height: 60%;
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+    flex-direction: column;
+    align-items: center;
+}
+#input-area p {
+    color: #854abe;
+}
+/* #input-area textarea {
+    width: 95%;
+    height: 30%;
+    background-color: #5e5e5e;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    font-size: 20px;
+    font-weight: bold;
+    resize: none;
+} */
+
+#input-area-footer {
+    display: flex;
+    align-self: flex-start;
+    margin: 10px;
+    flex-direction: column;
+    gap: 10px;
+}
+#input-area-footer button {
+    width: 300px;
+    font-size: 24px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+
+#submit-response-button {
+    background-color: #854abe;
+    color: #ffffff; 
+}
+#submit-response-button:hover {
+    background-color: #703da0;
+}
+#cancel-response-button {
+    background-color: #dd8b3c;
+    color: #ffffff; 
+}
+#cancel-response-button:hover {
+    background-color: #b06d2e;
+}
+
+#back-to-cloud-button {
+    background-color: #854abe;
+}
+#back-to-cloud-button:hover {
+    background-color: #703da0;
+}
+#contribute-button {
+    background-color: #907b9a;
+}
+#contribute-button:hover {
+    background-color: #6d5d74;
+}
+#next-button {
+    background-color: #dd8b3c;
+}
+#next-button:hover {
+    background-color: #b06d2e;
+}
+
+
+
+
+.response-container {
+                width: 593px;
+                padding: 11px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                gap: 4px;
+                overflow-y: scroll;
+                /* scrollbar-color: green blue; */
+            }
+
+            /* .response-container::-webkit-scrollbar-corner {
+                background-color: transparent;
+            }
+            ::-webkit-scrollbar-corner {
+                background-color: transparent;
+            } */
+    
+            .response-left {
+                background-color: #5e2d8a;
+                width: 100%;
+                margin: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                background-color: #ffffff;
+
+                width: 70%;
+    /* margin-right: -65px; */
+    border-radius: 3px;
+
+    align-self: flex-end;
+
+            }
+            .response-right {
+                background-color: #5e2d8a;
+                /* width: 100%; */
+                margin: 10px;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                align-items: center;
+                background-color: #ffffff;
+
+                width: 70%;
+            /* left: 0px; */
+                /* margin-left: -169px; */
+                border-radius: 3px;
+                align-self: flex-start;
+            }
+            .arrow {
+                position: absolute;
+                width: 0;
+                height: 0;
+                border-style: solid;
+
+                position: relative;
+                width: 0;
+                height: 0;
+                border-style: solid;
+                margin: -11px;
+            }
+            .arrow.left {
+                left: 50%;
+                top: -10px;
+                border-width: 0 10px 10px;
+                border-color: transparent transparent black transparent;
+                transform: translateX(-50%);
+
+                /* left: 312px; */
+                top: -11px;
+                border-width: 0 15px 42px;
+                border-color: transparent transparent white transparent;
+                transform: translateX(-50%);
+
+                left: -186px;
+                border-radius: 3px;
+            }
+            .arrow.right {
+                left: 50%;
+                top: -10px;
+                border-width: 0 10px 10px;
+                border-color: transparent transparent black transparent;
+                transform: translateX(-50%);
+
+                /* left: 312px; */
+                top: -11px;
+                border-width: 0 15px 42px;
+                border-color: transparent transparent white transparent;
+                transform: translateX(-50%);
+
+                left: 217px;
+            }
+
+            .header-img {
+                position: relative;
+                left: 0px;
+                top: 0px;
+                height: 100%;
+                width: 5%;
+            }
+
+            img {
+                position: relative;
+                left: -24px;
+                top: -10px;
+                width: 165px;
+                height: 173px;
+
+            }
+
+
+            #word-relate-text {
+                color: #ffffff;
+                font-size: 30px;
+                margin: 10px;
+                font-size: 18px;
+            }
+            #word-relate-text b {
+                color: #dd8b3c;
+            }
+
+            #word-cloud-button {
+                width: 90%;
+                font-size: 24px;
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                background-color: #854abe;
+                color: #393040; 
+            }
+
+/* input area */
+#charCount {
+                position: absolute;
+                bottom: 59px;
+                right: 23px;
+                font-size: 14px;
+                color: #888;
+            }
+            #answer-input-area {
+                width: 85%;
+                /* margin: 10px; */
+                background-color: #d9d9d9;
+                margin-bottom: 10px;
+                padding: 24px;
+                border-radius: 3px;
+                font-size: 14px;
+                border: none;
+                resize: none;
+                height: 40%;
+            }
+            .textarea-container {
+                position: relative;
+                /* width: 300px; */
+                width: 100%;
+                display: flex;
+    flex-direction: column;
+    height: 50%;
+    align-items: center;
+
+
+            }
+
+
+    </style>
+</head>
+<body>
+    <!-- <div id="wordCloud"></div> -->
+    
+    <div class="embedding-container">
+        <div class="app-container">
+            <div class="app-header">
+                <div class="header-text-container">
+                    <div class="header-title">How do your ideas relate to rigor?</div>
+                    <div class="header-body">The daily bustle of research can sometimes leave us somewhat disconnected from the basic ideals that drove us to do this kind of work to begin with. Let's ponder these with rigor in mind</div>
+                    <div class="header-footer"><b>Click on a word in the cloud below to explore instrinsic rigor motivations</b></div>
+                </div>
+                <!-- svg image here -->
+                <div class="header-img">
+
+                    <img
+                        src="raven-white-bg-01.svg"
+                        alt=""
+                        width="100"
+                        height="100"
+                    />
+                </div>
+            </div>
+            <div class="app-body">
+                <div class="main-content-window">
+                    <div class="question-cloud-view">
+                        <div id="initial-question-text"></div>
+                        <div id="second-question-text"></div>
+                        <div id="wordCloud"></div>
+                    </div>
+                    <div class="word-cloud-view">
+                        <div id="word-relate-text"></div>
+                        <div id="wordCloud2"></div>
+                        <!-- button -->
+                        <button id="word-cloud-button" onclick="openQuestionCloudView()">Back to Cloud</button>
+                    </div>
+                    <div class="prompt-view">
+                        <div id="prompt-text"></div>
+                        <div id="chat-pane">
+                            <div class="response-container">
+                        </div>
+                        <div id="input-area"> 
+                            <p> Anonymous mode enabled! </p>
+                            <div class="textarea-container">
+                                <textarea
+                                    id="answer-input-area"
+                                    cols="30"
+                                    rows="10"
+                                    placeholder="Enter your answer here..."
+                                    maxlength="140"
+                                    oninput="updateCharacterCount()"
+                                ></textarea>
+                                <div id="charCount">0/140 characters</div>
+                            </div>
+                            <div id="input-area-footer"> 
+                                <button id="submit-response-button" onclick="submitPromptResponse()">Submit Anonymously</button>
+                                <button id="cancel-response-button">Cancel</button>
+                            </div>
+                        </div>
+                        <div id="footer-buttons">
+                            <button id="back-to-cloud-button">Back to Cloud</button>
+                            <button id="contribute-button">Contribute</button>
+                            <button id="next-button">Next</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="expandable-footer">
+                </div>       
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        let layout;
+        let currentSelectedWord = null;
+
+        // Initialize the app
+        function initializeApp() {
+
+            // Async call to fetch the question responses then init the word cloud
+            fetchQuestionResponses("Why did you decide to become a scientist?");
+
+
+            // Call fetchQuestionResponses() to get the responses for the question then call initWordCloud()
+            // fetchQuestionResponses("Why did you decide to become a scientist?")
+                // .then((questionResponses) => {initWordCloud(questionResponses)});
+
+            // initWordCloud();
+
+            // Set up the initial question text
+            let initialTextLine = `This word cloud was generated from the pool of all student responses to the question <b>“Why did you decide to become a scientist?”</b>. `;
+            let secondTextLine = `Highlighted in <b>orange</b> are key words that arose in your lab’s responses.`;
+            document.querySelector("#initial-question-text").innerHTML = initialTextLine;
+            document.querySelector("#second-question-text").innerHTML = secondTextLine;
+
+            // Set up the word cloud
+            // setWordCloud();
+        }
+        initializeApp();
+
+
+        // Initialize the word cloud
+        function initWordCloud(questionResponses) {
+
+            console.log('input for initWordCloud: ', questionResponses);
+
+            // Get the question text
+            // let questionText = "Why did you decide to become a scientist?";
+            // Fetch the responses for the question
+            // let questionResponses = fetchQuestionResponses(questionText);
+            // Get the word counts
+            let wordCounts = getWordCounts(questionResponses);
+            var wordEntries = Object.entries(wordCounts);
+        // Sort words by frequency
+        wordEntries.sort(function(a, b) {
+            return b[1] - a[1];
+        });
+
+            // Get the top X words
+            // let topXWords = getTopXWords(wordCounts, 50);
+
+
+            var topX = 50; // You can change N to your preference
+        var topXWords = wordEntries.slice(0, topX).map(function(entry) {
+            return { text: entry[0], size: entry[1] };
+        });
+
+            // Set up the word cloud layout
+            // let layout = d3.layout.cloud()
+            //     .size([wordCloudWidth, wordCloudHeight])
+            //     .words(topXWords)
+            //     .padding(5)
+            //     .rotate(0)
+            //     .font("Impact")
+            //     .fontSize(function(d) { return d.size * 30; }) // Adjust the size scale factor as needed
+            //     .on("end", draw);
+            // layout.start();
+
+
+        // Get word counts from the large text
+        // var wordCounts = getWordCounts(largeText);
+        // var wordEntries = Object.entries(wordCounts);
+
+        // Sort words by frequency
+        // wordEntries.sort(function(a, b) {
+        //     return b[1] - a[1];
+        // });
+
+        // Select top X words
+        // var topX = 50; // You can change N to your preference
+        // var topXWords = wordEntries.slice(0, topX).map(function(entry) {
+        //     return { text: entry[0], size: entry[1] };
+        // });
+
+        // Get word cloud size from CSS
+        // var wordCloudWidth = parseInt(d3.select("#wordCloud").style("width"));
+        // var wordCloudHeight = parseInt(d3.select("#wordCloud").style("height"));
+        // console.log(wordCloudWidth);
+        // console.log(wordCloudHeight);
+
+        // Set word cloud size
+        let wordCloudWidth = 600;
+        let wordCloudHeight = 400;
+
+
+        // Set up the word cloud layout
+        layout = d3.layout.cloud()
+            // .size([800, 600])
+            .size([wordCloudWidth, wordCloudHeight])
+            .words(topXWords)
+            .padding(5)
+            .rotate(0)
+            .font("Impact")
+            .fontSize(function(d) { return d.size * 30; }) // Adjust the size scale factor as needed
+            .on("end", draw);
+
+        layout.start();
+
+
+
+        }
+
+
+
+        // Open the word cloud view
+        function openWordCloudView() {
+            document.querySelector(".question-cloud-view").style.display = "none";
+            document.querySelector(".word-cloud-view").style.display = "flex";
+            document.querySelector(".prompt-view").style.display = "none";
+
+            // Add the word relate text
+            document.querySelector("#word-relate-text").innerHTML = `This word cloud was generated from the pool of all student responses to the question "How does <b>${currentSelectedWord}</b> relate to rigor?".`;
+
+            fetchWordResponses(currentSelectedWord);
+            // loadChatPane(selectedWord);
+        }
+        // Open the prompt view
+        function openPromptView(selectedWord) {
+            document.querySelector(".question-cloud-view").style.display = "none";
+            document.querySelector(".word-cloud-view").style.display = "none";
+            document.querySelector(".prompt-view").style.display = "flex";
+
+            // Add the prompt text
+            document.querySelector("#prompt-text").innerHTML = `How does <b>${selectedWord}</b> Relate to rigor?`;
+            // Fetch all word responses for the selected word
+            // let wordResponses = getResponses(selectedWord);
+            // Display the responses
+            // document.querySelector("#chat-pane").innerHTML = wordResponses;
+
+            // Add event listemer to the back to buttons
+            document.querySelector("#back-to-cloud-button").addEventListener("click", openQuestionCloudView);
+            document.querySelector("#contribute-button").addEventListener("click", openResponsePane);
+            document.querySelector("#next-button").addEventListener("click", handleNextButton);
+
+            loadChatPane(selectedWord);
+
+
+        }
+        // Open the question cloud view
+        function openQuestionCloudView() {
+            currentSelectedWord = null;
+            document.querySelector(".question-cloud-view").style.display = "flex";
+            document.querySelector(".word-cloud-view").style.display = "none";
+            document.querySelector(".prompt-view").style.display = "none";
+        }
+
+        function openResponsePane() {
+            // Display the response pane
+            document.querySelector("#chat-pane").style.display = "flex";
+            document.querySelector("#input-area").style.display = "flex";
+            // Hide the footer buttons
+            document.querySelector("#footer-buttons").style.display = "none";
+        }
+
+        function handleNextButton() {
+        }
+
+
+
+        function handleInitialWordClick(selectedWord){
+
+            // Set global selected word state
+            currentSelectedWord = selectedWord;
+
+            // Fetch the existing responses to that word
+            let existingResponses = getResponses(selectedWord);
+            // If word already has X responses, go to word cloud view
+            if (false) {
+            // if (existingResponses.length > 0) {
+                // Display the word cloud view
+                console.log("Continue to word cloud view");
+                openWordCloudView();
+                // Display the word relate text
+                // document.querySelector("#word-relate-text").innerHTML = `You selected the word <b>${selectedWord}</b>. Here are some responses from other users:`;
+                // Display the responses
+                // document.querySelector("#wordCloud").innerHTML = existingResponses;
+            }
+            else {
+                // Continue to prompt view
+                console.log("Continue to prompt view");
+                openPromptView(selectedWord);
+            }
+        }
+
+        function getResponses(selectedWord) {
+            // Fetch the existing responses to that word
+            return "test response";
+        }
+
+        // let largeText = fetchQuestionResponses("Why did you decide to become a scientist?");
+
+        // var largeText = `Community for Rigor (C4R) is a new NIH/NINDS-funded initiative that aims to teach scientific rigor at scale. With the involvement of Duquesne, Harvard, Smith, and Johns Hopkins, it is organized by UPenn.
+// The Community for Rigor is built around the idea of aggregation: the CENTER at UPenn serves as a central hub that coordinates the effort, builds web infrastructure, and acts as producers and editors. CENTER also facilitiates grassroots efforts to improve rigor in science. The subject matter expert groups at METERS, hosted at other universities, prepare written materials on critical subjects about scientific rigor. We are always looking for more METERs to join to create excellent materials.`;
+
+
+        // Function to process the string and return word counts
+        function getWordCounts(text) {
+            console.log('text input for getWordCounts:', text);
+            var words = text.split(/\s+/);
+            var wordCounts = {};
+            words.forEach(function(word) {
+                word = word.toLowerCase();
+                if (word != "") { // Ignore empty strings
+                    wordCounts[word] = (wordCounts[word] || 0) + 1;
+                }
+            });
+            return wordCounts;
+        }
+
+        /*
+        // Get word counts from the large text
+        var wordCounts = getWordCounts(largeText);
+        var wordEntries = Object.entries(wordCounts);
+
+        // Sort words by frequency
+        wordEntries.sort(function(a, b) {
+            return b[1] - a[1];
+        });
+
+        // Select top X words
+        var topX = 50; // You can change N to your preference
+        var topXWords = wordEntries.slice(0, topX).map(function(entry) {
+            return { text: entry[0], size: entry[1] };
+        });
+
+        // Get word cloud size from CSS
+        // var wordCloudWidth = parseInt(d3.select("#wordCloud").style("width"));
+        // var wordCloudHeight = parseInt(d3.select("#wordCloud").style("height"));
+        // console.log(wordCloudWidth);
+        // console.log(wordCloudHeight);
+
+        // Set word cloud size
+        let wordCloudWidth = 600;
+        let wordCloudHeight = 400;
+
+
+        // Set up the word cloud layout
+        var layout = d3.layout.cloud()
+            // .size([800, 600])
+            .size([wordCloudWidth, wordCloudHeight])
+            .words(topXWords)
+            .padding(5)
+            .rotate(0)
+            .font("Impact")
+            .fontSize(function(d) { return d.size * 30; }) // Adjust the size scale factor as needed
+            .on("end", draw);
+
+        layout.start();
+
+        */
+
+// Function to draw the word cloud
+function draw(words) {
+
+    let wordCloudId = "#wordCloud";
+
+    if(currentSelectedWord !== null){
+        wordCloudId = "#wordCloud2";
+    }
+
+    // Remove contents of word cloud div
+    d3.select(wordCloudId).selectAll("*").remove();
+
+
+    d3.select(wordCloudId).append("svg")
+        .attr("width", layout.size()[0])
+        .attr("height", layout.size()[1])
+        .append("g")
+        .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+        .selectAll("text")
+        .data(words)
+        .enter().append("text")
+        .style("font-size", function(d) { return d.size + "px"; })
+        .style("font-family", "Impact")
+        .style("fill", function() {
+            // Generate a random color for each word
+            // return 'rgb(' + [Math.floor(Math.random() * 255), Math.floor(Math.random() * 255), Math.floor(Math.random() * 255)].join(',') + ')';
+            return 'rgb(' + [133, 74, 190].join(',') + ')';
+        })
+        .attr("text-anchor", "middle")
+        .attr("transform", function(d) {
+            return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+        })
+        .text(function(d) { return d.text; })
+        .on("click", function(event, d) {
+            // Log the word to the console when clicked
+            console.log(d.text);
+
+            handleInitialWordClick(d.text);
+
+        });
+}
+
+// Function to fetch responses for a given question
+function fetchQuestionResponses(questionText) {
+    let url = `https://api.sheety.co/f86a219e4c66ae9bacf55c87219398c1/c4RLabPrefill/submissions?filter[question]=${questionText}&filter[userName]=Jack-test`;
+                fetch(url)
+                    .then((response) => response.json())
+                    .then((json) => {
+                        // console.log("json: ", json);
+                        // console.log("json.submissions: ", json.submissions);
+
+                        // If at least one lab session exists
+                        if (json.submissions.length > 0) {
+                            // console.log(
+                            //     "json.submissions.length: ",
+                            //     json.submissions.length
+                            // );
+
+                            // Fetch non-presenting lab members from sessionData
+
+                            const submissions = json.submissions;
+
+
+                            let combinedResponses = "";
+
+                            // Combine all responses into one string
+                            submissions.forEach((submission) => {
+                                // console.log("submission: ", submission);
+                                combinedResponses += submission.answer + " ";
+                            });
+
+                            console.log("combinedResponses: ", combinedResponses);
+
+                            // convert all to lowercase
+                            combinedResponses = combinedResponses.toLowerCase();
+
+                            // Parse combined responses and remove punctuation
+                            combinedResponses = combinedResponses.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g," ");
+
+                            let removalWords = ['i', 'of', 'a', 'to', 'the', 'so', 'and', 'for', 
+                            'is', 'it', 'ive', 'its', 'by', 'I', 'that', 'in', 'i\'ve', 'me', ];
+                            
+                            // Remove removal words from combined responses
+                            // removalWords.forEach((removalWord) => {
+                            //     combinedResponses = combinedResponses.replace(removalWord, "");
+                            // });
+
+                            // Remove removal words from combined responses
+                            removalWords.forEach((removalWord) => {
+                                // Wrap each in spaces to avoid partial word removal
+                                removalWord  = ' ' + removalWord + ' ';
+                                combinedResponses = combinedResponses.replaceAll(removalWord, " ");
+                            });
+
+
+                            console.log("combinedResponses: ", combinedResponses);
+
+
+
+                            // return combinedResponses;
+
+                            // Render a response in the container for each submission
+                            // const responseContainer = document.querySelector(
+                            //     ".response-container"
+                            // );
+
+                            // Clear the contents of the container
+                            // responseContainer.innerHTML = "";
+
+                            // Re-implement this
+                            /*
+                            submissions.forEach((submission) => {
+                                console.log("submission: ", submission);
+                                const response =
+                                    document.createElement("response");
+
+                                response.innerHTML = `
+                                <h3>${submission.answer}</h3>
+                                <div class="arrow horizontal-arrow-top"></div>
+                                `;
+                                response.className = "response";
+                                responseContainer.appendChild(response);
+                            });
+                            */
+                            //    Refactor the above code block such that the rendered submissions render differently on an alternating basis
+                            // Start below:
+                            // let i = 0;
+                            // submissions.forEach((submission) => {
+                            //     console.log('submission: ', submission);
+                            // });
+                            initWordCloud(combinedResponses);
+
+                        }
+                        else{
+                            console.log('no submissions');
+                        }
+                    })
+                    .catch((error) => {
+                        // Display error message and manual entry form
+                        console.error(
+                            "There was an error fetching the data:",
+                            error
+                        );
+                    });
+
+                    console.log('end of function');
+                    
+    }
+    // fetchQuestionResponses("Why did you decide to become a scientist?");
+
+    function loadChatPane(selectedWord){
+        let url = `https://api.sheety.co/f86a219e4c66ae9bacf55c87219398c1/wordcloud/wordResponses?filter[prompt]=${selectedWord}`;
+                fetch(url)
+                    .then((response) => response.json())
+                    .then((json) => {
+                        console.log("json: ", json);
+                        // console.log("json.submissions: ", json.submissions);
+
+
+                        const responseContainer = document.querySelector(
+                                    ".response-container"
+                                );
+                                // Clear the contents of the container
+                                responseContainer.innerHTML = "";
+
+                        // If at least one lab session exists
+                        if (json.wordResponses.length > 0) {
+                            // console.log(
+                            //     "json.submissions.length: ",
+                            //     json.submissions.length
+                            // );
+
+
+                            // If a given word has at least 3 responses, start at cloud view
+                            // if (false) {
+                            if (json.wordResponses.length >= 5) {
+                                // Display the word cloud view
+                                // console.log("Continue to word cloud view");
+                                openWordCloudView();
+                                // Display the word relate text
+                                // document.querySelector("#word-relate-text").innerHTML = `You selected the word <b>${selectedWord}</b>. Here are some responses from other users:`;
+                                // Display the responses
+                                // document.querySelector("#wordCloud").innerHTML = existingResponses;
+                            }
+                            else {
+                                // Continue to prompt view
+                                // console.log("Continue to prompt view");
+                                // openPromptView(selectedWord);
+
+
+                                // Render a response in the container for each submission
+                                // const responseContainer = document.querySelector(
+                                //     ".response-container"
+                                // );
+                                // // Clear the contents of the container
+                                // responseContainer.innerHTML = "";
+
+                                // Populate the chat pane with the responses
+                                const wordResponses = json.wordResponses;
+
+
+                                // wordResponses.forEach((wordResponse) => {
+                                //     console.log("wordResponse 123: ", wordResponse.response);
+                                    // combinedResponses += wordResponse.response + " ";
+
+
+                                let i = 0;
+                                wordResponses.forEach((submission) => {
+                                    console.log('submission: ', submission);
+
+                                    const entry = document.createElement("response");
+
+                                    const randomColor = Math.floor(Math.random()*16777215).toString(16);
+
+                                    // Alternate between the two different response styles
+                                    if (i % 2 == 0) {
+                                        entry.innerHTML = `
+                                        <h3>${submission.response}</h3>
+                                        <div class="arrow right"></div>
+                                        <span class="dot right" style="background-color: #${randomColor}"></span>
+                                        `;
+
+                                        entry.className = "response-right";
+                                        // response.style.backgroundColor =
+                                        //     "#5e2d8a";
+                                    } else {
+
+                                        entry.innerHTML = `
+                                        <h3>${submission.response}</h3>
+                                        <div class="arrow left"></div>
+                                        <span class="dot left" style="background-color: #${randomColor}"></span>
+                                        `;
+
+                                        entry.className = "response-left";
+                                        // response.style.backgroundColor =
+                                        //     "#316f82";
+                                    }
+                                    responseContainer.appendChild(entry);
+                                    i++;
+
+                                });
+                                // initWordCloud(combinedResponses);
+
+                                    // });
+
+                            }
+
+
+
+                            // Fetch non-presenting lab members from sessionData
+
+                            // const wordResponses = json.wordResponses;
+
+
+                            // let combinedResponses = "";
+
+                            // Combine all responses into one string
+                            // wordResponses.forEach((wordResponse) => {
+                            //     // console.log("submission: ", submission);
+                            //     combinedResponses += wordResponse.response + " ";
+                            // });
+
+                            // console.log("combinedResponses: ", combinedResponses);
+
+                            // return combinedResponses;
+
+                            // Render a response in the container for each submission
+                            // const responseContainer = document.querySelector(
+                            //     ".response-container"
+                            // );
+
+                            // Clear the contents of the container
+                            // responseContainer.innerHTML = "";
+
+                            // Re-implement this
+                            /*
+                            submissions.forEach((submission) => {
+                                console.log("submission: ", submission);
+                                const response =
+                                    document.createElement("response");
+
+                                response.innerHTML = `
+                                <h3>${submission.answer}</h3>
+                                <div class="arrow horizontal-arrow-top"></div>
+                                `;
+                                response.className = "response";
+                                responseContainer.appendChild(response);
+                            });
+                            */
+                            //    Refactor the above code block such that the rendered submissions render differently on an alternating basis
+                            // Start below:
+                            // let i = 0;
+                            // submissions.forEach((submission) => {
+                            //     console.log('submission: ', submission);
+                            // });
+                            // initWordCloud(combinedResponses);
+
+                        }
+                        else{
+                            console.log('no submissions');
+                            // alert('no submissions yet');
+                            const entry = document.createElement("response");
+                            const randomColor = Math.floor(Math.random()*16777215).toString(16);
+                            entry.innerHTML = `
+                                        <h3>"No Responses Yet"</h3>
+                                        <div class="arrow right"></div>
+                                        <span class="dot right" style="background-color: #${randomColor}"></span>
+                                        `;
+
+                                        entry.className = "response-right";
+
+                            responseContainer.appendChild(entry);
+                        }
+                    })
+                    .catch((error) => {
+                        // Display error message and manual entry form
+                        console.error(
+                            "There was an error fetching the data:",
+                            error
+                        );
+                    });
+
+                    console.log('end of select word init function');
+    }
+
+    // Click handler for submit button in prompt view
+    function submitPromptResponse(){
+
+        console.log('submitting response');
+
+        // Get input from text area
+        // let responseText = document.querySelector("#response-text").value;
+        let responseText = document.querySelector("#answer-input-area").value;
+        // Ensure response not empty
+        if (responseText != "") {
+            // Submit response to database
+            // submitResponse(responseText);
+
+
+            let url =
+                            "https://api.sheety.co/f86a219e4c66ae9bacf55c87219398c1/wordcloud/wordResponses";
+                        let body = {
+                            wordResponse: {
+                                prompt: currentSelectedWord,
+                                response: responseText,
+                                // question: question,
+                                // answer: answer,
+                                date: new Date().toLocaleString(),
+                            },
+                        };
+                        fetch(url, {
+                            method: "POST",
+                            body: JSON.stringify(body),
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                        })
+                            .then((response) => response.json())
+                            .then((json) => {
+                                // Update the div with the new sessionId
+                                console.log("response: ", json);
+                                console.log("Submitted Data to server");
+                                // alert("Submitted Data to server");
+
+            // Clear the text area
+            document.querySelector("#answer-input-area").value = "";
+            // Hide the response pane
+            document.querySelector("#chat-pane").style.display = "flex";
+            document.querySelector("#input-area").style.display = "none";
+            // Show the footer buttons
+            document.querySelector("#footer-buttons").style.display = "flex";
+
+            // Reload the chat pane
+            loadChatPane(currentSelectedWord);
+                                
+                            })
+                            .catch((error) => {
+                                console.log(error);
+                                alert(
+                                    "There was an error submitting your answer."
+                                );
+                            });     
+
+
+
+            // Clear the text area
+            // document.querySelector("#response-text").value = "";
+            // Hide the response pane
+            // document.querySelector("#chat-pane").style.display = "none";
+            // document.querySelector("#input-area").style.display = "none";
+            // Show the footer buttons
+            // document.querySelector("#footer-buttons").style.display = "flex";
+        }
+        else{
+            // alert("Please enter a response");
+            console.log('no response entered');
+        }
+    }
+
+
+    // Fetches current questions for a given selected word and initialize its word cloud
+    function fetchWordResponses(selectedWord) {
+        let url = `https://api.sheety.co/f86a219e4c66ae9bacf55c87219398c1/wordcloud/wordResponses?filter[prompt]=${selectedWord}`;
+                fetch(url)
+                    .then((response) => response.json())
+                    .then((json) => {
+                        // console.log("json: ", json);
+                        // console.log("json.submissions: ", json.submissions);
+
+                        // If at least one lab session exists
+                        if (json.wordResponses.length > 0) {
+                            // console.log(
+                            //     "json.submissions.length: ",
+                            //     json.submissions.length
+                            // );
+
+                            // Fetch non-presenting lab members from sessionData
+
+                            const submissions = json.wordResponses;
+
+
+                            let combinedResponses = "";
+
+                            // Combine all responses into one string
+                            submissions.forEach((submission) => {
+                                // console.log("submission: ", submission);
+                                combinedResponses += submission.response + " ";
+                            });
+
+                            console.log("combinedResponses: ", combinedResponses);
+
+
+                            initWordCloud(combinedResponses);
+                        }
+                        else{
+                            console.log('no submissions');
+                        }
+                    })
+                    .catch((error) => {
+                        // Display error message and manual entry form
+                        console.error(
+                            "There was an error fetching the data:",
+                            error
+                        );
+                    });
+
+                    console.log('end of function');
+    }
+
+    function updateCharacterCount() {
+                const textArea = document.getElementById("answer-input-area");
+                const charCount = document.getElementById("charCount");
+
+                // const charsLeft = 140 - textArea.value.length;
+                const charsUsed = textArea.value.length;
+                charCount.textContent = `${charsUsed}/140 characters`;
+            }
+
+
+    </script>
+</body>
+</html>
