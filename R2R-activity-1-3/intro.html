@@ -1,3 +1,28 @@
+<!-- 
+    Activity 1.3 - Intro Page
+        The app consists of multiple pages. 
+        The intro page is the first page that the user sees. 
+        The intro page has two options: 
+            1. Create a new session
+            2. Join an existing session
+        The user can create a new session by clicking the "Generate code" button. 
+        This will generate a random 6 digit number and store it in a Google Sheet. 
+        The user can then share this code with other users. 
+        The user can join an existing session by entering the 6 digit code and clicking the "Join" button. 
+        This will check if the code exists in the Google Sheet. 
+        If the code exists, the user will be redirected to the main activity page. 
+        If the code does not exist, an error message will be displayed.
+
+    Potential Refactorings
+        The app could be refactored to use a single page with multiple divs/components that are shown/hidden depending on the user's actions.
+            This would make it easier to pass data between pages and make it easier to directly embed in other site without the use of Iframes.
+
+        The app could be refactored to use a database instead of Google Sheets.
+        Improve documentation
+        Improve accessibility and responsiveness (Mobile device support)
+        Improve security (Authentication and authorization)
+ -->
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -5,7 +30,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Activity 1.3</title>
         <!-- Incorporating Google Fonts -->
-        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap" rel="stylesheet">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap"
+            rel="stylesheet"
+        />
         <style>
             /* Resetting default margin and padding */
             * {
@@ -15,8 +43,8 @@
             }
 
             body {
-                font-family: 'Poppins', sans-serif;
-                background-color: #e6ecf0;
+                font-family: "Poppins", sans-serif;
+                /* background-color: #e6ecf0; */
                 background-color: #e6ecf000;
                 padding: 40px 0;
             }
@@ -83,361 +111,403 @@
             input {
                 background-color: #f6f8fa;
                 color: #333;
-                border: 1px solid #e1e4e8
-                ; }
-
-                input:focus {
-            outline: none;
-            border-color: #2ea44f;
-        }
-
-        label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: 500;
-        }
-
-        #join-new-session-btn {
-            visibility: hidden;
-            /* background-color: #0366d6; */
-        }
-        #copy-to-clipboard-btn {
-            visibility: hidden;
-            margin-top: 0px;
-            /* background-color: #0366d6; */
-        }
-
-        #join-new-session-btn:hover {
-            /* background-color: #024ea1; */
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                flex-direction: column;
+                border: 1px solid #e1e4e8;
             }
 
-            .box {
-                margin-bottom: 20px;
+            input:focus {
+                outline: none;
+                border-color: #2ea44f;
             }
 
-            button,
-            input {
-                width: 100%;
+            label {
+                display: block;
+                margin-bottom: 10px;
+                font-weight: 500;
             }
-        }
 
+            #join-new-session-btn {
+                visibility: hidden;
+                /* background-color: #0366d6; */
+            }
+            #copy-to-clipboard-btn {
+                visibility: hidden;
+                margin-top: 0px;
+                /* background-color: #0366d6; */
+            }
 
-        .tooltip {
-  position: relative;
-  display: inline-block;
-}
+            #join-new-session-btn:hover {
+                /* background-color: #024ea1; */
+            }
 
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 140px;
-  background-color: #555;
-  color: #fff;
-  text-align: center;
-  border-radius: 6px;
-  padding: 5px;
-  position: absolute;
-  z-index: 1;
-  bottom: 150%;
-  left: 50%;
-  margin-left: -75px;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
+            @media (max-width: 768px) {
+                .container {
+                    flex-direction: column;
+                }
 
-.tooltip .tooltiptext::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: #555 transparent transparent transparent;
-}
+                .box {
+                    margin-bottom: 20px;
+                }
 
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
-}
+                button,
+                input {
+                    width: 100%;
+                }
+            }
 
+            .tooltip {
+                position: relative;
+                display: inline-block;
+            }
 
-/* spinner CSS */
+            .tooltip .tooltiptext {
+                visibility: hidden;
+                width: 140px;
+                background-color: #555;
+                color: #fff;
+                text-align: center;
+                border-radius: 6px;
+                padding: 5px;
+                position: absolute;
+                z-index: 1;
+                bottom: 150%;
+                left: 50%;
+                margin-left: -75px;
+                opacity: 0;
+                transition: opacity 0.3s;
+            }
 
-.spinner-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 10px;
-    margin-bottom: 10px;
-}
+            .tooltip .tooltiptext::after {
+                content: "";
+                position: absolute;
+                top: 100%;
+                left: 50%;
+                margin-left: -5px;
+                border-width: 5px;
+                border-style: solid;
+                border-color: #555 transparent transparent transparent;
+            }
 
+            .tooltip:hover .tooltiptext {
+                visibility: visible;
+                opacity: 1;
+            }
 
-.lds-spinner {
-  color: official;
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
-}
-.lds-spinner div {
-  transform-origin: 40px 40px;
-  animation: lds-spinner 1.2s linear infinite;
-}
-.lds-spinner div:after {
-  content: " ";
-  display: block;
-  position: absolute;
-  top: 3px;
-  left: 37px;
-  width: 6px;
-  height: 18px;
-  border-radius: 20%;
-  background: #25d583;
-}
-.lds-spinner div:nth-child(1) {
-  transform: rotate(0deg);
-  animation-delay: -1.1s;
-}
-.lds-spinner div:nth-child(2) {
-  transform: rotate(30deg);
-  animation-delay: -1s;
-}
-.lds-spinner div:nth-child(3) {
-  transform: rotate(60deg);
-  animation-delay: -0.9s;
-}
-.lds-spinner div:nth-child(4) {
-  transform: rotate(90deg);
-  animation-delay: -0.8s;
-}
-.lds-spinner div:nth-child(5) {
-  transform: rotate(120deg);
-  animation-delay: -0.7s;
-}
-.lds-spinner div:nth-child(6) {
-  transform: rotate(150deg);
-  animation-delay: -0.6s;
-}
-.lds-spinner div:nth-child(7) {
-  transform: rotate(180deg);
-  animation-delay: -0.5s;
-}
-.lds-spinner div:nth-child(8) {
-  transform: rotate(210deg);
-  animation-delay: -0.4s;
-}
-.lds-spinner div:nth-child(9) {
-  transform: rotate(240deg);
-  animation-delay: -0.3s;
-}
-.lds-spinner div:nth-child(10) {
-  transform: rotate(270deg);
-  animation-delay: -0.2s;
-}
-.lds-spinner div:nth-child(11) {
-  transform: rotate(300deg);
-  animation-delay: -0.1s;
-}
-.lds-spinner div:nth-child(12) {
-  transform: rotate(330deg);
-  animation-delay: 0s;
-}
-@keyframes lds-spinner {
-  0% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
+            /* spinner CSS */
 
+            .spinner-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
 
-    </style>
-</head>
-<body>
-    <div class="header">
-        <!-- <h2>Activity 1.3</h2> -->
-        <!-- <p>Instructions here</p> -->
-    </div>
-    <div class="container">
-        <div class="box">
-            <h3>Create a new session</h3>
-            <button id="new-session-btn">Generate code</button>
-            <br>
+            .lds-spinner {
+                color: official;
+                display: inline-block;
+                position: relative;
+                width: 80px;
+                height: 80px;
+            }
+            .lds-spinner div {
+                transform-origin: 40px 40px;
+                animation: lds-spinner 1.2s linear infinite;
+            }
+            .lds-spinner div:after {
+                content: " ";
+                display: block;
+                position: absolute;
+                top: 3px;
+                left: 37px;
+                width: 6px;
+                height: 18px;
+                border-radius: 20%;
+                background: #25d583;
+            }
+            .lds-spinner div:nth-child(1) {
+                transform: rotate(0deg);
+                animation-delay: -1.1s;
+            }
+            .lds-spinner div:nth-child(2) {
+                transform: rotate(30deg);
+                animation-delay: -1s;
+            }
+            .lds-spinner div:nth-child(3) {
+                transform: rotate(60deg);
+                animation-delay: -0.9s;
+            }
+            .lds-spinner div:nth-child(4) {
+                transform: rotate(90deg);
+                animation-delay: -0.8s;
+            }
+            .lds-spinner div:nth-child(5) {
+                transform: rotate(120deg);
+                animation-delay: -0.7s;
+            }
+            .lds-spinner div:nth-child(6) {
+                transform: rotate(150deg);
+                animation-delay: -0.6s;
+            }
+            .lds-spinner div:nth-child(7) {
+                transform: rotate(180deg);
+                animation-delay: -0.5s;
+            }
+            .lds-spinner div:nth-child(8) {
+                transform: rotate(210deg);
+                animation-delay: -0.4s;
+            }
+            .lds-spinner div:nth-child(9) {
+                transform: rotate(240deg);
+                animation-delay: -0.3s;
+            }
+            .lds-spinner div:nth-child(10) {
+                transform: rotate(270deg);
+                animation-delay: -0.2s;
+            }
+            .lds-spinner div:nth-child(11) {
+                transform: rotate(300deg);
+                animation-delay: -0.1s;
+            }
+            .lds-spinner div:nth-child(12) {
+                transform: rotate(330deg);
+                animation-delay: 0s;
+            }
+            @keyframes lds-spinner {
+                0% {
+                    opacity: 1;
+                }
+                100% {
+                    opacity: 0;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <!-- <h2>Activity 1.3</h2> -->
+            <!-- <p>Instructions here</p> -->
+        </div>
+        <div class="container">
+            <div class="box">
+                <h3>Create a new session</h3>
+                <button id="new-session-btn">Generate code</button>
+                <br />
 
-            <div class="spinner-container">
-            <!-- spinner -->
-                <div class="lds-spinner" id="loading-spinner" style="display: none;">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
+                <div class="spinner-container">
+                    <!-- spinner -->
+                    <div
+                        class="lds-spinner"
+                        id="loading-spinner"
+                        style="display: none"
+                    >
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
                 </div>
-            </div>
 
-            <div id="new-session-id-display"></div>
-            <div class="tooltip">
-                <button id="copy-to-clipboard-btn" onmouseout="handleMouseOut()">
-                    <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
-                    Copy link to clipboard</button>
+                <div id="new-session-id-display"></div>
+                <div class="tooltip">
+                    <button
+                        id="copy-to-clipboard-btn"
+                        onmouseout="handleMouseOut()"
+                    >
+                        <span class="tooltiptext" id="myTooltip"
+                            >Copy to clipboard</span
+                        >
+                        Copy link to clipboard
+                    </button>
+                </div>
+                <button id="join-new-session-btn">Join this Session</button>
             </div>
-            <button id="join-new-session-btn">Join this Session</button>
+            <div class="box">
+                <h3>Join an existing session</h3>
+                <label for="session-id-input">Enter code here</label>
+                <input id="session-id-input" type="text" />
+                <button id="join-existing-session-btn">Join</button>
+            </div>
         </div>
-        <div class="box">
-            <h3>Join an existing session</h3>
-            <label for="session-id-input">Enter code here</label>
-            <input id="session-id-input" type="text" />
-            <button id="join-existing-session-btn">Join</button>
-        </div>
-    </div>
-    <script>
-
-function handleMouseOut() {
-  var tooltip = document.getElementById("myTooltip");
-  tooltip.innerHTML = "Copy to clipboard";
-}
+        <script>
+            function handleMouseOut() {
+                var tooltip = document.getElementById("myTooltip");
+                tooltip.innerHTML = "Copy to clipboard";
+            }
 
             let newSessionId = null;
 
-// Click handler for starting a new session
-document
-    .getElementById("new-session-btn")
-    .addEventListener("click", function () {
+            // Click handler for starting a new session
+            document
+                .getElementById("new-session-btn")
+                .addEventListener("click", function () {
+                    // Show the loading spinner
+                    document.getElementById("loading-spinner").style.display =
+                        "block";
 
-        // Show the loading spinner
-        document.getElementById("loading-spinner").style.display = "block";
+                    let randomInteger = Math.floor(Math.random() * 1000000) + 1;
 
-        let randomInteger = Math.floor(Math.random() * 1000000) + 1;
+                    let url =
+                        "https://api.sheety.co/f86a219e4c66ae9bacf55c87219398c1/activeSessions1/sessions";
+                    let body = {
+                        session: {
+                            sessionId: randomInteger,
+                        },
+                    };
+                    fetch(url, {
+                        method: "POST",
+                        body: JSON.stringify(body),
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                    })
+                        .then((response) => response.json())
+                        .then((json) => {
+                            // Update the div with the new sessionId
+                            document.getElementById(
+                                "new-session-id-display"
+                            ).textContent =
+                                "New Session ID: " + json.session.sessionId;
+                            // console.log(json.session);
 
-        let url =
-            "https://api.sheety.co/f86a219e4c66ae9bacf55c87219398c1/activeSessions1/sessions";
-        let body = {
-            session: {
-                sessionId: randomInteger,
-            },
-        };
-        fetch(url, {
-            method: "POST",
-            body: JSON.stringify(body),
-            headers: {
-                "Content-Type": "application/json",
-            },
-        })
-            .then((response) => response.json())
-            .then((json) => {
-                // Update the div with the new sessionId
-                document.getElementById(
-                    "new-session-id-display"
-                ).textContent =
-                    "New Session ID: " + json.session.sessionId;
-                console.log(json.session);
+                            // show the join session button and copy to clipboard button
+                            document.getElementById(
+                                "join-new-session-btn"
+                            ).style.visibility = "visible";
 
-                // show the join session button and copy to clipboard button
-                document.getElementById(
-                    "join-new-session-btn"
-                ).style.visibility = "visible";
+                            document.getElementById(
+                                "copy-to-clipboard-btn"
+                            ).style.visibility = "visible";
 
-                document.getElementById(
-                    "copy-to-clipboard-btn"
-                ).style.visibility = "visible";
-                
-                // disable the new session button
-                document.getElementById(
-                    "new-session-btn"
-                ).disabled = true;
+                            // disable the new session button
+                            document.getElementById(
+                                "new-session-btn"
+                            ).disabled = true;
 
-                newSessionId = randomInteger;
+                            newSessionId = randomInteger;
 
-                // Hide the loading spinner
-                document.getElementById("loading-spinner").style.display = "none";
-            })
-            .catch((error) => {
-                // Hide the loading spinner in case of an error too
-                document.getElementById("loading-spinner").style.display = "none";
-                console.error("There was an error fetching the data:", error);
-            });
-    });
+                            // Hide the loading spinner
+                            document.getElementById(
+                                "loading-spinner"
+                            ).style.display = "none";
+                        })
+                        .catch((error) => {
+                            // Hide the loading spinner in case of an error too
+                            document.getElementById(
+                                "loading-spinner"
+                            ).style.display = "none";
+                            console.error(
+                                "There was an error fetching the data:",
+                                error
+                            );
+                            alert("There was an error generating a new code");
+                        });
+                });
 
-    // Click handler for the Join new Session button - redirects user to the main activity page with newly created sessionId in the URL
-    document
-    .getElementById("join-new-session-btn")
-    .addEventListener("click", function () {
-        // Redirect to a spefified link
-        window.location.href = `https://jackliddy.github.io/R2R-activity-1-3/activity.html?sessionId=${newSessionId}`;
-        // window.location.href = `http://127.0.0.1:5501/R2R-activity-1-3%20V2/activity.html?sessionId=${newSessionId}`;
-    });
-
-    // Click handler for the Copy to clipboard button - copies sharable link
-        document
-    .getElementById("copy-to-clipboard-btn")
-    .addEventListener("click", function () {
-
-        let enteredSessionId = parseInt(
-            document.getElementById("session-id-input").value
-        );
-
-        let sessionLink = `https://jackliddy.github.io/R2R-activity-1-3/activity.html?sessionId=${newSessionId}`;
-        navigator.clipboard.writeText(sessionLink);
-
-        // visual feedback of copy operation
-        let tooltip = document.getElementById("myTooltip");
-        tooltip.innerHTML = "Copied Link";
-
-    });
-
-
-    // Click handler for the Join existing Session button
-        document
-    .getElementById("join-existing-session-btn")
-    .addEventListener("click", function () {
-        let enteredSessionId = parseInt(
-            document.getElementById("session-id-input").value
-        );
-        console.log(enteredSessionId);
-
-        let url =
-            "https://api.sheety.co/f86a219e4c66ae9bacf55c87219398c1/activeSessions1/sessions";
-        fetch(url)
-            .then((response) => response.json())
-            .then((json) => {
-                let sessionExists = json.sessions.some(
-                    (session) =>
-                        session.sessionId === enteredSessionId
-                );
-                if (sessionExists) {
-                    console.log("Session exists!");
-                    // Redirect to the main page
+            // Click handler for the Join new Session button - redirects user to the main activity page with newly created sessionId in the URL
+            document
+                .getElementById("join-new-session-btn")
+                .addEventListener("click", function () {
                     // Redirect to a spefified link
-                    window.location.href = `https://jackliddy.github.io/R2R-activity-1-3/activity.html?sessionId=${enteredSessionId}`;
-                    // window.location.href = `http://127.0.0.1:5501/R2R-activity-1-3%20V2/activity.html?sessionId=${enteredSessionId}`;
-                } else {
-                    console.log("Session does not exist.");
-                    // Display an error message
-                }
-                console.log(json.sessions);
-            })
-            .catch((error) => {
-                console.error(
-                    "There was an error fetching the data:",
-                    error
-                );
-            });
-    });
-        </script>
-</body>
+                    window.location.href = `https://jackliddy.github.io/R2R-activity-1-3/activity.html?sessionId=${newSessionId}`;
+                    // window.location.href = `http://127.0.0.1:5501/R2R-activity-1-3%20V2/activity.html?sessionId=${newSessionId}`;
+                });
 
-</body>
+            // Click handler for the Copy to clipboard button - copies sharable link
+            document
+                .getElementById("copy-to-clipboard-btn")
+                .addEventListener("click", function () {
+                    let enteredSessionId = parseInt(
+                        document.getElementById("session-id-input").value
+                    );
+
+                    let sessionLink = `https://jackliddy.github.io/R2R-activity-1-3/activity.html?sessionId=${newSessionId}`;
+                    navigator.clipboard.writeText(sessionLink);
+
+                    // visual feedback of copy operation
+                    let tooltip = document.getElementById("myTooltip");
+                    tooltip.innerHTML = "Copied Link";
+                });
+
+            // Click handler for the Join existing Session button
+            document
+                .getElementById("join-existing-session-btn")
+                .addEventListener("click", function () {
+                    let sessionIdInput = parseInt(
+                        document.getElementById("session-id-input").value
+                    );
+                    let inputString =
+                        document.getElementById("session-id-input").value;
+
+                    // console.log(sessionIdInput);
+
+                    let sessionId = "";
+
+                    if (sessionIdInput || inputString) {
+                        // Check if the entered string is a url containing a sessionId parameter of the format "https://jackliddy.github.io/R2R-activity-1-3/activity.html?sessionId=48705"
+                        // If contains the string "sessionId=" then it is a url containing a sessionId parameter
+                        // console.log(typeof inputString);
+                        if (inputString.includes("sessionId=")) {
+                            console.log("URL entered: " + inputString);
+
+                            // If the url contains a sessionId parameter, extract the sessionId from the url
+                            let URLsessionId =
+                                inputString.split("sessionId=")[1];
+                            console.log(URLsessionId);
+                            if (URLsessionId) {
+                                console.log(
+                                    "Session fetched from URL:" + URLsessionId
+                                );
+                                sessionId = URLsessionId;
+                            } else {
+                                console.log("No sessionId found in URL");
+                            }
+                        }
+                        // Otherwise expect input as a number
+                        else {
+                            console.log("Number entered");
+                            sessionId = sessionIdInput;
+                        }
+                    } else {
+                        // Alert the user that they need to enter a sessionId
+                        alert("Please enter a sessionId");
+                    }
+
+                    let url =
+                        "https://api.sheety.co/f86a219e4c66ae9bacf55c87219398c1/activeSessions1/sessions";
+                    fetch(url)
+                        .then((response) => response.json())
+                        .then((json) => {
+                            let sessionExists = json.sessions.some(
+                                (session) => session.sessionId == sessionId
+                            );
+
+                            if (sessionExists) {
+                                // console.log("Session exists!");
+                                // Redirect to the main page
+                                window.location.href = `https://jackliddy.github.io/R2R-activity-1-3/activity.html?sessionId=${sessionId}`;
+                                // window.location.href = `http://127.0.0.1:5504/R2R-activity-1-3%20V6/activity.html?sessionId=${sessionId}`;
+                            } else {
+                                // console.log("Session does not exist.");
+                                alert("Session does not exist.");
+                            }
+                            // console.log(json.sessions);
+                        })
+                        .catch((error) => {
+                            console.error(
+                                "There was an error fetching the data:",
+                                error
+                            );
+                            alert("There was an error fetching the data");
+                        });
+                });
+        </script>
+    </body>
 </html>
