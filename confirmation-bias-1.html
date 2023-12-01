@@ -1,0 +1,565 @@
+<!-- 
+    Confirmation Bias Activity
+
+    This activity is emulate Peter Wason's confirmation bias experiment.
+    The user is presented with three numbers that follow a certain rule, which they have to eventually determine.
+    The user must then enter three numbers that they think follow the same rule.
+    The user's entries are displayed in a table, along with the reason they think the numbers follow the rule.
+    The point is for users to realize that they are biased towards confirming their own hypothesis, and that they should try to disprove it instead.
+
+
+ -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Confirmation Bias</title>
+        <style>
+            /* Simple CSS for styling */
+            /* form, table {
+            margin: 20px;
+            padding: 10px;
+        }
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 5px;
+            text-align: left;
+        } */
+
+            body {
+                font-family: Arial, sans-serif;
+                background-color: #f4f4f4;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+            }
+
+            .input-pane {
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px;
+            }
+
+
+            form {
+                /* background-color: #fff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                margin-bottom: 20px; */
+            }
+
+            table {
+                background-color: #fff;
+                border-collapse: collapse;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                min-width: 300px;
+            }
+            th,
+            td {
+                padding: 10px;
+                border: 1px solid #ddd;
+            }
+            th {
+                background-color: #f0f0f0;
+            }
+            tr:hover {
+                background-color: #f5f5f5;
+            }
+            input[type="number"],
+            input[type="text"] {
+                padding: 10px;
+                margin: 5px 0;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                width: calc(100% - 22px);
+            }
+            input[type="submit"] {
+                background-color: #4caf50;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                margin-top: 10px;
+            }
+            input[type="submit"]:hover {
+                background-color: #45a049;
+            }
+
+            /* input[type="number"],
+            input[type="text"] {
+                padding: 10px;
+                margin: 5px 0;
+                border: 1px solid #ddd;
+                border-radius: 5px;
+                width: calc(100% - 22px);
+            } */
+            button {
+                background-color: #4caf50;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                margin-top: 10px;
+            }
+            button:hover {
+                background-color: #45a049;
+            }
+
+            .app-container {
+                /* width: 500px; */
+                display: flex;
+                align-items: flex-start;
+                /* min-width: 300px; */
+            }
+
+            .slider {
+                /* -webkit-appearance: none; */
+                width: 100%;
+                /* height: 25px; */
+                /* background: #d3d3d3; */
+                /* outline: none; */
+                /* opacity: 0.7; */
+                -webkit-transition: 0.2s;
+                /* transition: opacity 0.2s; */
+            }
+
+
+            /* The Modal (background) */
+            .modal {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                left: 0;
+                top: 0;
+                width: 100%; 
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+
+            }
+
+            /* Modal Content */
+            .modal-content {
+                background-color: #fefefe;
+                margin: 15% auto; /* 15% from the top and centered */
+
+                padding: 20px;
+                border: 1px solid #888;
+                width: 30%; /* Could be more or less, depending on screen size */
+            }
+
+            /* The Close Button */
+            .close {
+                color: #aaa;
+                float: right;
+                font-size: 28px;
+                font-weight: bold;
+            }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+
+        </style>
+    </head>
+    <body>
+        <div class="app-container">
+
+
+            
+            <div class="input-pane" id="admin-panel">
+                <!-- H1 -->
+                <h1>Dev setup panel</h1>
+                <p>Manualy select the rule in the UI for testing / demo purposes</p>
+                <label for="rule">Rule:</label>
+                <select id="rule" name="rule">
+                    <!-- <option value="Increase by 1">Increase by 1</option> -->
+                </select>
+            </div>
+            <div class="input-pane">
+                <h1>User guessing panel</h1>
+
+                <form id="dataForm">
+                    <label for="number1">Number 1:</label>
+                    <input
+                        type="number"
+                        id="number1"
+                        name="number1"
+                        required
+                    /><br /><br />
+                    <label for="number2">Number 2:</label>
+                    <input
+                        type="number"
+                        id="number2"
+                        name="number2"
+                        required
+                    /><br /><br />
+                    <label for="number3">Number 3:</label>
+                    <input
+                        type="number"
+                        id="number3"
+                        name="number3"
+                        required
+                    /><br /><br />
+                    <label for="reason">Reason for choosing(Remove/Change?):</label>
+                    <input
+                        type="text"
+                        id="reason"
+                        name="reason"
+                        required
+                    /><br /><br />
+                    <!-- checkbox input for if it confirms rule or not -->
+                    <!-- <label for="confirm">Confirm Rule:</label>
+                    <input
+                        type="checkbox"
+                        id="confirm"
+                        name="confirm"
+                        value="confirm"
+                    /><br /><br />  -->
+
+
+                    <input type="submit" value="Submit" />
+                    <!-- <button id="showRuleBtn" type="button">Show Rule</button> -->
+                </form>
+
+                <br /><br /><br />
+
+
+                <form id="ruleForm">
+                    <p>Think you figured out the rule? Guess it here!</p>
+
+                    <label for="ruleGuess">Rule:</label>
+                    <input
+                        type="text"
+                        id="ruleGuess"
+                        name="ruleGuess"
+                        required
+                    /><br /><br />
+                    <!-- slider here -->
+                    <label for="myRange" id="confidence-label" >Confidence: 50%</label> 
+                    <!-- <input type="range" min="0" max="100" value="50" class="slider" id="myRange"> -->
+                    <input type="range" min="0" max="100" value="50" class="slider" id="myRange" oninput="updateSliderLabel()">
+                    <br /><br />                    
+
+                    <input type="submit" value="Guess Rule" />
+                </form>
+
+            
+            </div>
+
+            <!-- Div to display the API response -->
+            <!-- <div id="apiResponse"></div> -->
+
+            <!-- Table to Display Entries -->
+            <table id="dataTable">
+                <tr id="tableBody">
+                    <th>Entry #</th>
+                    <th>Instance</th>
+                    <th>Reason</th>
+                    <th>Matches Rule</th>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Modal -->
+        <div id="ruleModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+              
+                <h2>Your Guess: <span id="ruleGuessLabel"></span></h2>
+                <br />
+                <h2>Confidence: <span id="confidence-label-modal"></span></h2>
+                <br />
+                <h2>Correct Rule: <span id="correctRule"></span></h2>
+
+                <p id="modalText"> Some additional text here</p>
+
+                <button id="closeModal">Okay</button>
+            </div>
+        </div>
+
+
+
+        <script>
+
+
+            // Update confidence percentage on slider change
+            // var slider = document.getElementById("myRange");
+            // var output = document.getElementById("confidence-label");
+            // output.innerHTML = "Confidence: " + slider.value + "%";
+
+
+            function updateSliderLabel() {
+                var slider = document.getElementById("myRange");
+                var output = document.getElementById("confidence-label");
+                output.innerHTML = "Confidence: " + slider.value + "%";
+            }
+
+
+
+            // functions to confirm if sequences of 3 numbers follow a rule
+            function isIncreasingByOne(a, b, c) {
+               return b === a + 1 && c === b + 1;
+            }
+            function isDecreasingByOne(a, b, c) {
+                return b === a - 1 && c === b - 1;
+            }
+            function isIncreasingByTwo(a, b, c) {
+                console.log('checking if increasing by 2');
+                console.log('numbers(post type conversation): ' + a + ', ' + b + ', ' + c);
+
+                let isTrue = (b === a + 2 && c === b + 2);
+                console.log('is true: ' + isTrue);
+                return isTrue;
+                // return b === a + 2 && c === b + 2;
+            }
+            function isDecreasingByTwo(a, b, c) {
+                return b === a - 2 && c === b - 2;
+            }
+            function isFibonacci(a, b, c) {
+                return a + b === c;
+            }
+            function isIncreasing(a, b, c) {
+                return b > a && c > b;
+            }
+            function isDecreasing(a, b, c) {
+                return b < a && c < b;
+            }
+            function areAllNumbersPositive(num1, num2, num3) {
+                return num1 > 0 && num2 > 0 && num3 > 0;
+            }
+            function areAllNumbersNegative(num1, num2, num3) {
+                return num1 < 0 && num2 < 0 && num3 < 0;
+            }
+            function any3Numbers(num1, num2, num3) {
+                return true;
+            }
+            function isPrime(num) {
+                for (var i = 2; i < num; i++) if (num % i === 0) return false;
+                return num > 1;
+            }
+            function areAllNumbersPrime(num1, num2, num3) {
+                return isPrime(num1) && isPrime(num2) && isPrime(num3);
+            }
+            function sqareOfPrevious(num1, num2, num3) {
+                return num1 * num1 === num2 && num2 * num2 === num3;
+            }
+
+            // dictionary matching rule names to functions
+            var ruleDict = {
+                "Increase by 1": isIncreasingByOne,
+                "Decrease by 1": isDecreasingByOne,
+                "Increase by 2": isIncreasingByTwo,
+                "Decrease by 2": isDecreasingByTwo,
+                "Fibonacci": isFibonacci,
+                "Increasing order": isIncreasing,
+                "Decreasing order": isDecreasing,
+                "All positive": areAllNumbersPositive,
+                "All negative": areAllNumbersNegative,
+                "Any 3 numbers (feels too hard lol)": any3Numbers,
+                "All prime (also feels hard + dont use primes over 5 digits)": areAllNumbersPrime
+            };
+
+            // Populate rule dropdown
+            var ruleDropdown = document.getElementById("rule");
+            for (var key in ruleDict) {
+                var option = document.createElement("option");
+                option.text = key;
+                ruleDropdown.add(option);
+            }
+
+
+
+            // App States
+            let entryCount = 0;
+        
+            // Get input parameters from URL (hardcode for now)
+
+
+            // Handle Form Submission and Update Table
+            document
+                .getElementById("dataForm")
+                .addEventListener("submit", function (event) {
+                    event.preventDefault();
+
+                    // Getting form data
+                    var number1 = document.getElementById("number1").value;
+                    var number2 = document.getElementById("number2").value;
+                    var number3 = document.getElementById("number3").value;
+                    var reason = document.getElementById("reason").value;
+
+                    // Adding a new row to the table
+                    var table = document.getElementById("dataTable");
+                    var newRow = table.insertRow();
+                    var cell1 = newRow.insertCell(0);
+                    var cell2 = newRow.insertCell(1);
+                    var cell3 = newRow.insertCell(2);
+                    var cell4 = newRow.insertCell(3);
+
+                    // Entry count
+                    entryCount++;
+                    cell1.innerHTML = entryCount;
+                    // Instance data
+                    cell2.innerHTML = number1 + ", " + number2 + ", " + number3;
+                    // Reason
+                    cell3.innerHTML = reason;
+                    
+                    // Get correct rule from admin panel
+                    var correctRule = document.getElementById("rule").value;
+
+                    console.log('numbers(pre type conversation): ' + number1 + ', ' + number2 + ', ' + number3);
+                    console.log('correct rule: ', correctRule);
+
+                    // Check if the numbers follow the rule
+                    // var isCorrect = ruleDict[correctRule](number1, number2, number3);
+
+                    // Check if the numbers follow the rule
+                    var isCorrect = ruleDict[correctRule](parseInt(number1), parseInt(number2), parseInt(number3));
+
+
+                    cell4.innerHTML = isCorrect;
+
+                    console.log('is correct: ' + isCorrect);
+
+                    // Clearing the form for next entry
+                    document.getElementById("dataForm").reset();
+                });
+
+            // Handle rule guess submission
+            document
+                .getElementById("ruleForm")
+                .addEventListener("submit", function (event) {
+                    event.preventDefault();
+
+                    // Getting form data
+                    let ruleGuess = document.getElementById("ruleGuess").value;
+
+                    // Adding a new row to the table
+                    var table = document.getElementById("dataTable");
+                    // path if we want to allow user to keep guessing?
+                    // addSingleRowToChart('Rule: ' + ruleGuess);
+
+                    // Get correct rule from admin panel
+                    var correctRule = document.getElementById("rule").value;
+
+                    //get confidence value from slider
+                    var confidence = document.getElementById("myRange").value;
+                    console.log('confidence: ' + confidence);
+
+
+                    
+                    // Open modal
+                    // Get the m
+                    openModal(ruleGuess, confidence);
+
+
+                    // Clearing the form for next entry
+                    document.getElementById("ruleForm").reset();
+
+                    updateSliderLabel();
+                });
+
+
+
+            // Remove?
+            // document.getElementById("showRuleBtn").addEventListener("click", function(event){
+            //     event.preventDefault();
+            //     addSingleRowToChart('Correct Rule: ' + correctRule, "#e8f5e9");
+
+            //     // End activity after correct rule showed
+            // });
+                
+
+            function addSingleRowToChart(inputString, color){
+                // Adds a single row to the table that is not broken into cells 
+                var table = document.getElementById("dataTable");
+                var newRow = table.insertRow();
+                var newCell = newRow.insertCell(0);
+                // Get number of columns in table
+                var colCount = table.rows[0].cells.length;
+                newCell.colSpan = colCount;
+                newCell.innerHTML = inputString;
+                newCell.style.textAlign = "center";
+
+                // set color of new row if specified
+                if (color) {
+                    newCell.style.backgroundColor = color;
+                }
+                // cell color light green
+                // newCell.style.backgroundColor = "#e8f5e9";
+            }
+
+
+            // Test table data
+            // addSingleRowToChart('Rule: ' + correctRule);
+            // addSingleRowToChart('Rule: ' + correctRule);
+            // addSingleRowToChart('Rule: ' + correctRule);
+            // addSingleRowToChart('Rule: ' + correctRule);
+
+            // Test: set default text/values for all fields
+            // document.getElementById("number1").value = 1;
+            // document.getElementById("number2").value = 2;
+            // document.getElementById("number3").value = 3;
+            // document.getElementById("reason").value = "Increase by 1";
+            // document.getElementById("ruleGuess").value = "Increase by 1";
+
+            // Get the modal
+            var modal = document.getElementById("ruleModal");
+
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+
+            // Get the button that closes the modal
+            var closeButton = document.getElementById("closeModal");
+
+            // When the user clicks the button, open the modal 
+            function openModal(ruleGuess, confidence) {
+                
+                // log rule guess
+                console.log('rule guess: ' + ruleGuess);
+
+                // Get correct rule from admin panel
+                let correctRule = document.getElementById("rule").value;
+
+                // Set text in modal
+                document.getElementById("ruleGuessLabel").innerHTML = ruleGuess;
+                document.getElementById("correctRule").innerHTML = correctRule;
+                document.getElementById("confidence-label-modal").innerHTML = confidence + "%";
+
+                modal.style.display = "block";
+            }
+
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            // When the user clicks on "Okay", close the modal
+            closeButton.onclick = function() {
+                modal.style.display = "none";
+            }
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+
+
+
+        </script>
+    </body>
+</html>
