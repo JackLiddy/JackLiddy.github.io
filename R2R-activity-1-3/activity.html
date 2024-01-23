@@ -69,6 +69,17 @@
                 padding: 5px;
                 font-size: 12px;
             }
+            /* note - highlight border on focus / mouseover */
+            .sticky-note:focus,
+            .sticky-note:hover {
+                border: 2px solid #854abe87;
+            }
+            /* make text within the sticky note not draggable */
+
+
+
+
+
 
             #whiteboard {
                 width: 70vw;
@@ -401,16 +412,50 @@
             whiteboard.addEventListener("drop", (e) => {
                 e.preventDefault();
 
+                // If text is selected and dragged, don't allow dropping on board (previous bug)
+                if (window.getSelection().toString()) return;
+
+                // If text within a note is highlighted, don't allow dropping on of that note in board
+                // if (e.target.classList.contains("sticky-note")) return;
+                
+
+                // Validate a draggable Note is being dropped
                 if (!draggedNote) return;
 
                 // Correcting for any potential border or padding on the whiteboard
                 const boardRect = whiteboard.getBoundingClientRect();
 
+                // console.log('Dragged note offset width: ', draggedNote.offsetWidth);
+                // Calculate the difference between the mouse position and the top left corner of the dragged note
+
+                // let mouse = {
+                //     x: e.clientX,
+                //     y: e.clientY,
+                // };
+                // let noteRect = draggedNote.getBoundingClientRect();
+
+                // console.log('Note rect', noteRect);
+
+                // let diffX = mouse.x - noteRect.x;
+                // let diffY = mouse.y - noteRect.y;
+
+                // console.log('Dragged note offset x: ', diffX);
+                // console.log('Dragged note offset y: ', diffY);
+                // Note: X and Y offet is being based on the location where the note is picked up, not the location where it is dropped, ex: dropped in same location but different 
+
+
                 // Calculate the notes left and top positions as a percentage of the whiteboard width and height
                 let leftPx =
                     e.clientX - boardRect.left - draggedNote.offsetWidth / 2;
                 let topPx =
-                    e.clientY - boardRect.top - draggedNote.offsetHeight / 2;
+                    e.clientY - boardRect.top - draggedNote.offsetHeight / 2 ;
+
+                // let leftPx =
+                //     e.clientX - boardRect.left ;
+                // let topPx =
+                //     e.clientY - boardRect.top ;
+                // console.log('leftPx: ', leftPx);
+                // console.log('topPx: ', topPx);
 
                 // Replace the original note with a placeholder in its original location in the sticky header - maintains original grid positioning
                 const placeholder = document.createElement("div");
