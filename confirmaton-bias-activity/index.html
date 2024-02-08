@@ -353,6 +353,30 @@
             left: -72px;
         }
 
+
+        .instructions-image {
+            position: relative;
+    width: 115px;
+
+            /* display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                width: 40%;
+                height: 100%; */
+            /* background-color: #ffffff; */
+        }
+
+        .instructions-image img {
+            width: 100%; 
+    /* height: 100%; */
+    /* background-color: #ffffff; */
+    width: 127px;
+    position: absolute;
+    /* bottom: -116px; */
+    left: -15%;
+        }        
+
         #rule {
             background-color: #6d39a8;
             color: white;
@@ -539,18 +563,37 @@
 
         .instructions-text-container {
             background-color: #6d39a8;
-            padding: 20px;
-            border-radius: 10px;
-            width: 80%;
-            max-width: 600px;
-            /* Limit max width for better readability */
-            margin: auto;
-            /* Center the container vertically and horizontally */
-            text-align: left;
-            /* position: relative; For positioning the close button */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+    padding: 30px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 801px;
+    margin: auto;
+    text-align: left;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    align-content: flex-start;
+    justify-content: flex-start;
+
+        }
+
+        .instructions-text{
+            background-color: #6d39a8;
+    /* padding: 4px; */
+    border-radius: 10px;
+    width: 80%;
+    max-width: 700px;
+    margin: auto;
+    text-align: left;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+        }
+
+        .instructions-text p {
+            font-size: 20px;
+            margin: 14px 10;
+
         }
 
         .close-modal-button {
@@ -576,35 +619,44 @@
 <body>
     <div class="app-container">
         <div class="instructions-modal">
+
             <div class="instructions-text-container">
-                <h1>Instructions</h1>
-                <p>Your mission: discover my number series rule.</p>
-                <p>
-                    Your aim is to discover my rule by writing down sets of
-                    three numbers, together with reasons for your choice of
-                    them.
-                </p>
-                <p>
-                    After you have written down each set, I shall tell you
-                    whether your numbers conform to the rule or not.
-                </p>
-                <p>
-                    There is no time limit but you should try to discover
-                    this rule by citing the minimum sets of numbers.
-                </p>
-                <p>
-                    Remember that your aim is not simply to find numbers
-                    which conform to the rule, but to discover the rule
-                    itself.
-                </p>
-                <p>
-                    When you feel highly confident that you have discovered
-                    it, and not before, you can submit your final answer.
-                </p>
-                <button class="close-modal-button" onclick="closeInstructionsModal()">
-                    Close
-                </button>
+                <div class="instructions-text">
+                    <h1>Our biased brains!</h1>
+                    <p>Your mission: discover my number series rule.</p>
+                    <p>
+                        Your aim is to discover my rule by writing down sets of
+                        three numbers, together with reasons for your choice of
+                        them.
+                    </p>
+                    <p>
+                        After you have written down each set, I shall tell you
+                        whether your numbers conform to the rule or not.
+                    </p>
+                    <p>
+                        There is no time limit but you should try to discover
+                        this rule by citing the minimum sets of numbers.
+                    </p>
+                    <p>
+                        Remember that your aim is not simply to find numbers
+                        which conform to the rule, but to discover the rule
+                        itself.
+                    </p>
+                    <p>
+                        When you feel highly confident that you have discovered
+                        it, and not before, you can submit your final answer.
+                    </p>
+                    <button class="close-modal-button" onclick="closeInstructionsModal()">
+                        Close
+                    </button>
+                </div>
+                <!-- image from assets:raven-white-bg-01.svg -->
+                <div class="instructions-image">
+                    <img class="rule-description-raven" src="assets/raven-white-bg-01.svg" width="70px" />
+                </div>
+
             </div>
+
         </div>
 
         <!-- input pane used for admin mode -->
@@ -749,6 +801,9 @@
                     <button id="compare-results-btn" onclick="viewResultsComparison()">
                         Compare my results
                     </button>
+                    <!-- <button id="learn-more-btn" >
+                        Learn more about bias
+                    </button> -->
                 </div>
             </div>
         </div>
@@ -769,9 +824,9 @@
         <!-- Previous outer-container re-used -->
         <div class="guess-summary-area">
             <div class="summary-header-text" id="results-summary">
-                <h3>
+                <!-- <h3> -->
                     <!-- You tried to falsify your hypothesis 0% of the time. -->
-                </h3>
+                <!-- </h3> -->
                 <!-- <h3>You did not guess my rule.</h3> -->
             </div>
             <div class="summary-body">
@@ -779,7 +834,7 @@
                     <!-- image -->
                     <!-- <img class="chart-image" src="assets/Screenshot.png" width="70px" />
                      -->
-                     <div class="chart-container" style="position: relative; height:70%; width:70%">
+                     <div class="chart-container" style="position: relative; height:80%; width:80%; margin-top: 25px;">
                         <!-- <canvas id="myChart"  width="400px" height="100px"></canvas> -->
                         <canvas id="my-graph"></canvas>
                     </div>
@@ -790,6 +845,9 @@
                         Students who tried to falsify their hypothesis were
                         more likely to guess my rule and to guess it sooner
                     </h2>
+                    <button id="learn-more-btn" >
+                        Learn more about bias
+                    </button>
                 </div>
             </div>
         </div>
@@ -1222,7 +1280,7 @@
             cell = row.insertCell(3);
             cell.innerHTML = "<b>Confidence</b>";
             cell = row.insertCell(4);
-            cell.innerHTML = "<b>Tried to falsify</b>";
+            cell.innerHTML = "<b>Attempt to falsify</b>";
 
             // Create table body
             var body = table.createTBody();
@@ -1310,10 +1368,12 @@
             // Add current user data as a point to graph
 
 
-            // Add h3 to id=results-summary
+            // Convert proportionDisproveAttempts to percent and round to 1 decimal place
+            percentDisproveAttempts = (proportionDisproveAttempts * 100).toFixed(1);
+
+
             let resultsSummary = document.getElementById("results-summary");
-            resultsSummary.innerHTML = `<h3>You tried to falsify your hypothesis ${proportionDisproveAttempts *
-                100}% of the time.</h3>`;
+            resultsSummary.innerHTML = `<h3>You tried to falsify your hypothesis ${percentDisproveAttempts}% of the time.</h3>`;
 
             renderComparisonGraph(numGuesses, proportionDisproveAttempts);
 
@@ -1352,18 +1412,18 @@
             let guessNumberText = guessNumber === 0 ? "first" : "next";
 
             let confirmMessage = disproveFeedback[guessNumber]
-                ? "confirm"
-                : "falsify";
+                ? "falsify"
+                : "confirm";
             console.log("contents of disproveFeedback: ", disproveFeedback);
 
             let confirmMsg = `<p>What I mean by that is that the number series you used in your guess was a number series that fit the rule that you hypothesized to be my rule.</p>
-                                    <p>Therefore, first guess was not an attempt to falsify your hypothesis.</p>`;
+                                    <p>Therefore, your guess was not an attempt to falsify your hypothesis.</p>`;
             let falsifyMsg = `<p>What I mean by that is that the number series you used in your guess was a number series that did not fit the rule that you hypothesized to be my rule.</p>
                                 <p>Therefore, your guess was an attempt to falsify your hypothesis.</p>`;
             // ternary operator
             let feedbackEnding = disproveFeedback[guessNumber]
-                ? confirmMsg
-                : falsifyMsg;
+                ? falsifyMsg
+                : confirmMsg;
 
             let feedbackText = `<p>For your ${guessNumberText} guess, your hypothesis was <b>${guessRule}</b>.</p>
                 <p>The number series you used for your first guess was <b>${guessSequence}</b>.</p>
@@ -1423,7 +1483,7 @@
                     },
                 ],
                 temperature: 1,
-                max_tokens: 256,
+                max_tokens: 700,
                 top_p: 1,
                 frequency_penalty: 0,
                 presence_penalty: 0,
@@ -1471,9 +1531,12 @@
                         // Render disprove attempts in tables Tried to falsify column
                         let table = document.getElementById("resultsTable");
                         for (let i = 0; i < disproveAttempts.length; i++) {
+
+                            let isFalsifyAttempt = disproveAttempts[i].disproveAttempt ? 'Yes' : 'No';
+
                             let cell = table.rows[i + 1].cells[4];
                             cell.innerHTML =
-                                disproveAttempts[i].disproveAttempt;
+                                isFalsifyAttempt;
                         }
                     })
                     .catch((error) => {
@@ -1495,58 +1558,81 @@
             // Add current user data as a point to graph
             const ctx = document.getElementById('my-graph');
 
-            new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: [1, 2, 3, 4, 5, 6, 7, 8],
-                datasets: [{
-                label: 'Previous participants',
-                data: [0.2, 0.4, 0.7, 0.8, 1.0],
-                borderWidth: 1,
-                backgroundColor: 'rgba(0, 255, 0, 0.6)',
-                },
-            {
-                type: 'bubble', // 'bubble' type will create a point
-                label: 'You',
-                data: [{x: numGuesses, y: proportionDisproveAttempts, r: 10}], // x and y are coordinates, r is the radius of the point
-                backgroundColor: 'rgba(255, 0, 0, 0.6)', // color of the point
-            }]
-            },
-            options: {
-                plugins: {
-                legend: {
-                    labels: {
-                    color: 'rgb(0, 0, 0)',
-                    font: {
-                        size: 16
-                    }
-                    }
-                },
-                title: {
-                    display: true,
-                    text: ''
-                }
-                },
-                scales: {
-                x: {
-                    title: {
-                    display: true,
-                    text: 'Attempts to guess the rule'
-                    },
-                    beginAtZero: true
-                },
-                y: {
-                    title: {
-                    display: true,
-                    text: 'Proportion of incompatible instances'
-                    },
-                    beginAtZero: true
-                }
-                },
-                responsive: true,
-                maintainAspectRatio: false,
-            }
-            });
+new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: [1, 2, 3, 4, 5, 6, 7, 8],
+    datasets: [{
+      label: 'Previous participants (Test Data)',
+      data: [0.2, 0.4, 0.7, 0.8, 1.0],
+      borderWidth: 3,
+      backgroundColor: 'rgba(0, 255, 0, 0.8)',
+      radius: 6,
+    },
+    {
+      type: 'bubble', // 'bubble' type will create a point
+      label: 'You',
+      data: [{x: numGuesses, y: proportionDisproveAttempts, r: 10}], // x and y are coordinates, r is the radius of the point
+      backgroundColor: 'rgba(255, 0, 0, 0.6)', // color of the point
+    }]
+  },
+  options: {
+    plugins: {
+      legend: {
+        labels: {
+          color: 'rgb(0, 0, 0)',
+          font: {
+            size: 16
+          }
+        },
+        onClick: null // Disable legend click event
+      },
+      title: {
+        display: true,
+        text: ''
+      },
+      tooltip: { 
+        enabled: false
+      }
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: 'Number of attempts to guess the rule',
+          font: {
+            size: 20
+          }
+        },
+        beginAtZero: true,
+        ticks: {
+          font: {
+            size: 14
+          }
+        }
+      },
+      y: {
+        title: {
+          display: true,
+          text: 'Proportion of incompatible instances',
+          font: {
+            size: 20
+          }
+        },
+        beginAtZero: true,
+        ticks: {
+          font: {
+            size: 14
+          }
+        }
+      }
+    },
+    responsive: true,
+    maintainAspectRatio: false,
+  }
+});
+
+
         }
 
 
