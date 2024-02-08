@@ -1361,7 +1361,7 @@
 
             let feedbackText = `<p>For your ${guessNumberText} guess, your hypothesis was <b>${guessRule}</b>.</p>
                 <p>The number series you used for your first guess was <b>${guessSequence}</b>.</p>
-                <p>Your guess was an attempt to <b>${confirmMessage}</b> your hypothesis.</p>
+                <p>Our AI model predicts that your guess was an attempt to <b>${confirmMessage}</b> your hypothesis.</p>
                 ${feedbackEnding}`;
 
             if (disproveFeedback.length === 0) {
@@ -1518,21 +1518,21 @@
                 },
                 title: {
                     display: true,
-                    text: 'Custom Chart Title'
+                    text: ''
                 }
                 },
                 scales: {
                 x: {
                     title: {
                     display: true,
-                    text: 'How many guesses until they hit Final Guess'
+                    text: 'Attempts to guess the rule'
                     },
                     beginAtZero: true
                 },
                 y: {
                     title: {
                     display: true,
-                    text: 'Proportion of attempts to falsify'
+                    text: 'Proportion of incompatible instances'
                     },
                     beginAtZero: true
                 }
