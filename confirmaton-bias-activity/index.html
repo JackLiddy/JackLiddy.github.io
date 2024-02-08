@@ -770,9 +770,9 @@
         <div class="guess-summary-area">
             <div class="summary-header-text" id="results-summary">
                 <h3>
-                    You tried to falsify your hypothesis 0% of the time.
+                    <!-- You tried to falsify your hypothesis 0% of the time. -->
                 </h3>
-                <h3>You did not guess my rule.</h3>
+                <!-- <h3>You did not guess my rule.</h3> -->
             </div>
             <div class="summary-body">
                 <div class="summary-body-left">
@@ -1308,6 +1308,12 @@
             // TODO: Add graph to page
             // Add sample data to draw line graph - later replace with API call
             // Add current user data as a point to graph
+
+
+            // Add h3 to id=results-summary
+            let resultsSummary = document.getElementById("results-summary");
+            resultsSummary.innerHTML = `<h3>You tried to falsify your hypothesis ${proportionDisproveAttempts *
+                100}% of the time.</h3>`;
 
             renderComparisonGraph(numGuesses, proportionDisproveAttempts);
 
