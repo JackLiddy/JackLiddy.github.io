@@ -547,7 +547,7 @@
         }
 
         .instructions-modal {
-            display: none;
+            display: flex;
             position: fixed;
             z-index: 1;
             left: 0;
@@ -613,6 +613,13 @@
         .close-modal-button:hover {
             background-color: #e1e1e1;
         }
+
+
+        .feedback-text {
+            display: flex;
+            flex-direction: column;
+        }
+
     </style>
 </head>
 
@@ -795,12 +802,24 @@
                 <div class="summary-body-right">
                     <div class="feedback-text"></div>
                     <!-- button -->
+
+                    <button id="initial-page-btn" onclick="reloadInitialPage()">
+                        Previous page
+                    </button>
+
+                    <button id="previous-guess-btn" onclick="viewPreviousGuess()">
+                        View previous guess
+                    </button>
+
                     <button id="next-guess-btn" onclick="viewNextGuess()">
                         Explore my next guess
                     </button>
                     <button id="compare-results-btn" onclick="viewResultsComparison()">
                         Compare my results
                     </button>
+                    <!-- <button id="override-feedback-btn" onclick="overrideAIFeedback()">
+                        Override AI feedback
+                    </button> -->
                     <!-- <button id="learn-more-btn" >
                         Learn more about bias
                     </button> -->
@@ -845,6 +864,10 @@
                         Students who tried to falsify their hypothesis were
                         more likely to guess my rule and to guess it sooner
                     </h2>
+                    <button onclick="reloadComparisonPage()" >
+                        Previous page
+                    </button>
+
                     <button id="learn-more-btn" >
                         Learn more about bias
                     </button>
@@ -1354,7 +1377,46 @@
             renderGuessFeedback(currentRow);
         }
 
-        function viewPreviousGuess() { }
+        function viewPreviousGuess() { 
+            console.log("viewing previous guess");
+            var table = document.getElementById("resultsTable");
+
+            // In case of going back from final guess, swap out button for "View Results Comparison" button with "Next Guess" button
+            document.getElementById("compare-results-btn").style.display = "none";
+            document.getElementById("next-guess-btn").style.display = "block";
+            
+            // Remove highlight from current row
+            table.rows[currentRow + 1].classList.remove("highlighted-row");
+
+            // Move to previous row
+            currentRow--;
+            if (currentRow < 0) {
+                currentRow = 0; // Stays at the first row when it reaches the beginning
+            }
+
+            // Add highlight to new row
+            table.rows[currentRow + 1].classList.add("highlighted-row");
+
+            // console.log its data
+            console.log(userEntries[currentRow]);
+            renderGuessFeedback(currentRow);
+        }
+
+        function reloadInitialPage() {
+            // Reload the page to start over
+            location.reload();
+        }
+
+        function reloadComparisonPage() {
+            // Reload the previous page displaying the results comparison
+            document.querySelector(".comparison-page-container").style.display =
+                "none";
+
+            // Show results page container
+            document.querySelector(".results-page-container").style.display =
+                "flex";
+
+        }
 
 
         // Control function to progress to the comparison page
@@ -1633,6 +1695,69 @@ new Chart(ctx, {
 });
 
 
+        }
+
+
+        function overrideAIFeedback() {
+            // When triggered, replace each entry in the 'Attempt to falsify' column with a checkbox to allow user to override AI feedback
+            // Each check box will be checked if the corresponding entry in disproveFeedback is true
+            // When the user clicks the submit button, the disproveFeedback array will be updated with the new values
+
+            // Select table
+            var table = document.getElementById("resultsTable");
+
+            // Iterate through each row in the table
+            for (let i = 0; i < table.rows.length - 1; i++) {
+                // Create a new cell for each row
+                let cell = table.rows[i + 1].insertCell(5);
+                // Create a new checkbox for each cell
+                let checkbox = document.createElement("input");
+                checkbox.type = "checkbox";
+                checkbox.checked = disproveFeedback[i];
+                checkbox.id = `checkbox-${i}`;
+                cell.appendChild(checkbox);
+            }
+
+            // Create a new button to submit the new values
+            let submitButton = document.createElement("button");
+            submitButton.innerHTML = "Submit";
+            submitButton.onclick = submitOverride;
+            document.querySelector(".summary-body-right").appendChild(submitButton);
+
+            // Hide the override button
+            document.getElementById("override-feedback-btn").style.display = "none";
+
+            // Add a new button to cancel the override
+            // let cancelButton = document.createElement("button");
+            // cancelButton.innerHTML = "Cancel";
+            // cancelButton.onclick = cancelOverride;
+            // document.querySelector(".summary-body-right").appendChild(cancelButton);
+
+        }
+
+        function submitOverride() {
+            // When triggered, update the disproveFeedback array with the new values from the checkboxes
+            // Select table
+            var table = document.getElementById("resultsTable");
+
+            // Iterate through each row in the table
+            for (let i = 0; i < table.rows.length - 1; i++) {
+                // Get the value of the checkbox
+                let checkbox = document.getElementById(`checkbox-${i}`);
+                disproveFeedback[i] = checkbox.checked;
+            }
+
+            // Hide the submit button
+            document.querySelector(".summary-body-right").removeChild(document.querySelector(".summary-body-right").lastChild);
+
+            // Hide the cancel button
+            document.querySelector(".summary-body-right").removeChild(document.querySelector(".summary-body-right").lastChild);
+
+            // Show the override button
+            document.getElementById("override-feedback-btn").style.display = "block";
+
+            // Re-render the feedback
+            renderGuessFeedback(currentRow);
         }
 
 
