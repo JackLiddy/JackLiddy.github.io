@@ -124,14 +124,13 @@
             // Open activity in new tab button
             document.getElementById('open-new-tab').addEventListener('click', function() {
                 // Open the activity in a new tab
-                
-                window.open('https://jackliddy.github.io/R2R-activity-1-3-V2/index.html?sessionID=' + currentSessionID);
+                window.open('http://127.0.0.1:5500/index.html?sessionID=' + currentSessionID);
             });
 
             // Copy link to clipboard button
             document.getElementById('copy-link').addEventListener('click', function() {
                 // Copy the link to the clipboard
-                var link = 'https://jackliddy.github.io/R2R-activity-1-3-V2/index.html?sessionID=' + currentSessionID;
+                var link = 'http://127.0.0.1:5500/index.html?sessionID=' + currentSessionID;
                 var textArea = document.createElement("textarea");
                 textArea.value = link;
                 document.body.appendChild(textArea);
@@ -147,7 +146,7 @@
             });
 
             // Set the QR code to link to the activity
-            qrcode.makeCode('https://jackliddy.github.io/R2R-activity-1-3-V2/index.html?sessionID=' + currentSessionID);
+            qrcode.makeCode('http://127.0.0.1:5500/index.html?sessionID=' + currentSessionID);
 
             // Hide the initial screen
             document.querySelector('.initial-screen').style.display = 'none';
