@@ -32,7 +32,7 @@
             .header {
                 padding-top: 0px;
             }
-            img {
+            .raven img {
                 position: absolute;
                 left: -177px;
                 top: -1px;
@@ -458,6 +458,9 @@
                         </button>
                     </div>
 
+                    <!-- QR code here -->
+                    <div id="qrcode"></div>
+
                     <div class="raven">
                         <img
                             src="raven-white-bg-09.svg"
@@ -474,6 +477,9 @@
                     </div>
 
                     <p>(Answer on your own device)</p>
+
+                    <!-- Display the current number of responses -->
+                    <p id="response-counter">Responses: 0</p>
 
                     <div class="button-footer">
                         <button class="countdown-btn">Countdown</button>
@@ -568,6 +574,9 @@
             </div>
         </div>
 
+<!-- QR code library -->
+<script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+
         <script>
             // Get button element
             const generateLinkBtn =
@@ -655,6 +664,18 @@
                             // console.log("content pane hidden");
 
 
+
+                            // Render the QR code
+                            var qrcode = new QRCode(document.getElementById("qrcode"), {
+                                width: 200,
+                                height: 200
+                            });
+                            const urlParams = new URLSearchParams(window.location.search);
+                            const question = urlParams.get("question");
+                            let sessionLink = `https://jackliddy.github.io/R2R-prompting/R2R-audience.html?labSession=${labId}&question=${question}`;
+
+                            // Set the QR code to link to the activity
+                            qrcode.makeCode(sessionLink);
 
                             // Display the lab content pane
                             const labContent =
@@ -954,6 +975,8 @@
             }
 
             function startCountdown() {
+                countResponsesController();
+
                 // When called, this function should start a countdown timer and display the time remaining in the countdown button
                 // When the countdown reaches 0, the timer should be replaced with "Time Up!"
 
@@ -978,6 +1001,53 @@
                     }
                 }, 1000);
             }
+
+
+            function countResponsesController () {
+                // Repeatedly call checkResponses() every 5 seconds and stop after 30 seconds
+                let countResponses = setInterval(() => {
+                    checkResponses();
+                    console.log('responses checked');
+                }, 5000);
+                setTimeout(() => {
+                    clearInterval(countResponses);
+                }, 60000);                
+            }
+
+
+            // Function to repeatedly check the number of responses and update the counter
+            function checkResponses() {
+                // Fetch all answers from backend with same id
+                // Count the number of responses
+                // Update the response counter
+
+                let url = `https://api.sheety.co/f86a219e4c66ae9bacf55c87219398c1/c4RLabPrefill/submissions?filter[labId]=${labId}`;
+                fetch(url)
+                    .then((response) => response.json())
+                    .then((json) => {
+
+                        if (json.submissions.length > 0) {
+                            // console.log(
+                            //     "json.submissions.length: ",
+                            //     json.submissions.length
+                            // );
+
+                            // Fetch non-presenting lab members from sessionData
+
+                            const submissions = json.submissions;
+
+                            // Update the response counter
+                            const responseCounter = document.querySelector(
+                                "#response-counter"
+                            );
+                            responseCounter.innerHTML = `Responses: ${submissions.length}`;
+                        } else {
+                            console.log("No lab sessions exist with that ID");
+
+                        }
+                    });
+            }
+
 
 
             // If there is a URL parameter ?labSession=70523 then return that value. Else, return false.
