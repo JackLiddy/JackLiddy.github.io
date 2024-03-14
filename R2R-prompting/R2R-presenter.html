@@ -388,6 +388,13 @@
     right: 305px;
 }
 
+
+.initial-frame {
+display: flex;
+
+
+}
+
         </style>
     </head>
     <body>
@@ -426,50 +433,54 @@
                         />
                     </div>
                 </div>
+                
+                <div class="initial-frame">
 
-                <div class="start-content">
-                    <div class="header">
-                        <h2>Time to hear your thoughts!</h2>
-                    </div>
-
-                    <p>
-                        Click the button below to generate a link/code your lab
-                        mates can use to participate in the lesson by offering
-                        their own answers.
-                    </p>
-
-                    <div class="button-footer">
-                        <div class="tooltip">
-                            <button
-                                class="link-btn"
-                                id="copy-to-clipboard-btn"
-                                onmouseout="handleMouseOut()"
-                                onclick="onLinkClick()"
-                            >
-                                <span class="tooltiptext" id="myTooltip"
-                                    >Copy to clipboard</span
+                    <div class="start-content">
+                        <div class="header">
+                            <h2>Time to hear your thoughts!</h2>
+                        </div>
+    
+                        <p>
+                            Click the button below to generate a link/code your lab
+                            mates can use to participate in the lesson by offering
+                            their own answers.
+                        </p>
+    
+                        <div class="button-footer">
+                            <div class="tooltip">
+                                <button
+                                    class="link-btn"
+                                    id="copy-to-clipboard-btn"
+                                    onmouseout="handleMouseOut()"
+                                    onclick="onLinkClick()"
                                 >
-                                Copy link
+                                    <span class="tooltiptext" id="myTooltip"
+                                        >Copy to clipboard</span
+                                    >
+                                    Copy link
+                                </button>
+                            </div>
+    
+                            <button class="start-btn" onclick="startLab()">
+                                Start
                             </button>
                         </div>
-
-                        <button class="start-btn" onclick="startLab()">
-                            Start
-                        </button>
+    
                     </div>
-
-                    <!-- QR code here -->
-                    <div id="qrcode"></div>
-
-                    <div class="raven">
-                        <img
-                            src="raven-white-bg-09.svg"
-                            alt=""
-                            width="400"
-                            height="400"
-                        />
-                    </div>
+                                            <!-- QR code here -->
+                                            <div id="qrcode"></div>
+    
+                                            <div class="raven">
+                                                <img
+                                                    src="raven-white-bg-09.svg"
+                                                    alt=""
+                                                    width="400"
+                                                    height="400"
+                                                />
+                                            </div>
                 </div>
+
 
                 <div class="lab-content">
                     <div class="header" id="question-text">
@@ -684,6 +695,10 @@
                             labContent.style.justifyContent = "space-between";
                             labContent.style.height = "100%";
 
+                            // set initial frame to display
+                            const initialFrame = document.querySelector(".initial-frame");
+                            initialFrame.style.display = "flex";
+
                             // Set link button text to link
                             const linkBtn = document.querySelector(".link-btn");
                             // linkBtn.innerHTML = `${labID}`;
@@ -773,6 +788,7 @@
                 const content = document.querySelector(".start-content");
                 content.style.display = "none";
                 console.log("content pane hidden");
+                
 
                 // Display the lab content pane
                 const labContent = document.querySelector(".lab-content");
