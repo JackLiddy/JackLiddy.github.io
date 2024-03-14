@@ -430,7 +430,14 @@
             flex-direction: row;
             justify-content: space-evenly;
             /* margin-top: 40px; */
-            height: 80%;
+            height: 65%;
+        }
+        .comparison-summary-body {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            /* margin-top: 40px; */
+            height: 75%;
         }
 
         .summary-body-left {
@@ -620,11 +627,44 @@
             flex-direction: column;
         }
 
+        .loader {
+                display: none;
+                position: absolute;
+                width: 300px;
+                aspect-ratio: 1;
+                border-radius: 50%;
+                background: radial-gradient(farthest-side, #703ca1 94%, #0000)
+                        top/40px 40px no-repeat,
+                    conic-gradient(#0000 30%, #854abe);
+                -webkit-mask: radial-gradient(
+                    farthest-side,
+                    #0000 calc(100% - 40px),
+                    #000 0
+                );
+                animation: l13 1s infinite linear;
+                top: 35%;
+            }
+            @keyframes l13 {
+                100% {
+                    transform: rotate(1turn);
+                }
+            }
+
+            .summary-page-buttons {
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: space-between;
+                width: 80%;
+                gap: 10px;
+            }
+
     </style>
 </head>
 
 <body>
     <div class="app-container">
+        <!-- <div class="loader" id="loader"></div> -->
         <div class="instructions-modal">
 
             <div class="instructions-text-container">
@@ -668,6 +708,7 @@
 
         <!-- input pane used for admin mode -->
         <div class="input-pane" id="admin-panel">
+            <!-- <div class="loader" id="loader"></div> -->
             <h1>Dev setup panel</h1>
             <p>
                 Manualy select the rule in the UI for testing / demo
@@ -681,6 +722,8 @@
 
         <!-- standard input pane to be used -->
         <div class="input-pane">
+            <div class="loader" id="loader"></div>
+
             <!-- <button id="help-btn" onclick="openInstructionsModal()">
                 Help
             </button> -->
@@ -777,20 +820,27 @@
                 <img class="rule-description-raven" src="assets/raven-white-bg-05.svg" width="70px" />
             </div>
             <div class="rule-description-text">
-                <h2>My rule is:</h2>
-                <h2>ANY INCREASING SERIES OF NUMBERS</h2>
+                <h2>Your final guess:</h2>
+                <h2 id="final-guess-text"></h2>
+                <h2>The Correct Rule is:</h2>
+                <h2 id="correct-rule-text">ANY INCREASING SERIES OF NUMBERS</h2>
             </div>
         </div>
 
         <!-- Guess summary -->
         <div class="guess-summary-area">
+
+            <!-- button -->
+            <!-- <button id="initial-page-btn" onclick="reloadInitialPage()">
+                Previous page
+            </button> -->
             <div class="summary-header-text">
                 <h3>
                     Which of your guesses were attempts to CONFIRM your
                     belief in what you thought the rule was?
                 </h3>
                 <h3>
-                    Which of your guesses were attempts to FAlSIFY your
+                    Which of your guesses were attempts to FALSIFY your
                     belief in what you thought the rule was?
                 </h3>
             </div>
@@ -803,7 +853,7 @@
                     <div class="feedback-text"></div>
                     <!-- button -->
 
-                    <button id="initial-page-btn" onclick="reloadInitialPage()">
+                    <!-- <button id="initial-page-btn" onclick="reloadInitialPage()">
                         Previous page
                     </button>
 
@@ -816,7 +866,7 @@
                     </button>
                     <button id="compare-results-btn" onclick="viewResultsComparison()">
                         Compare my results
-                    </button>
+                    </button> -->
                     <!-- <button id="override-feedback-btn" onclick="overrideAIFeedback()">
                         Override AI feedback
                     </button> -->
@@ -824,6 +874,22 @@
                         Learn more about bias
                     </button> -->
                 </div>
+            </div>
+            <div class="summary-page-buttons">
+                <button id="initial-page-btn" onclick="reloadInitialPage()">
+                    Previous page
+                </button>
+
+                <button id="previous-guess-btn" onclick="viewPreviousGuess()">
+                    View previous guess
+                </button>
+
+                <button id="next-guess-btn" onclick="viewNextGuess()">
+                    Explore my next guess
+                </button>
+                <button id="compare-results-btn" onclick="viewResultsComparison()">
+                    Compare my results
+                </button>
             </div>
         </div>
     </div>
@@ -848,7 +914,7 @@
                 <!-- </h3> -->
                 <!-- <h3>You did not guess my rule.</h3> -->
             </div>
-            <div class="summary-body">
+            <div class="comparison-summary-body">
                 <div class="summary-body-left">
                     <!-- image -->
                     <!-- <img class="chart-image" src="assets/Screenshot.png" width="70px" />
@@ -1318,15 +1384,31 @@
                 cell = row.insertCell(2);
                 cell.innerHTML = userGuesses[i].rule;
                 cell = row.insertCell(3);
-                cell.innerHTML = userGuesses[i].confidence;
+                cell.innerHTML = userGuesses[i].confidence + "%";
                 cell = row.insertCell(4);
                 // cell.innerHTML = userGuesses[i].triedToFalsify;
             }
+
+            // Show loader
+            document.querySelector(".loader").style.display = "block";
+            // disable buttons
+            document.getElementById("submitGuessBtn").disabled = true;
+            document.getElementById("finalGuessBtn").disabled = true;
+
             // Fetch AI feedback then render custom feedback message
             fetchDisprovalFeedback()
                 .then(() => {
 
-                // TODO Hide loading spinner
+                // Hide loader
+                document.querySelector(".loader").style.display = "none";
+                document.getElementById("submitGuessBtn").disabled = false;
+                document.getElementById("finalGuessBtn").disabled = false;
+                // TODO
+                // Render the currect rule
+                // document.getElementById("correct-rule-text").innerHTML = correctRule;
+
+                // Render the final guess
+                document.getElementById("final-guess-text").innerHTML = userEntries[userEntries.length - 1].rule;
 
 
                 // Hide current page and show results page
@@ -1615,9 +1697,15 @@
 
         // Render the comparison graph
         function renderComparisonGraph(numGuesses, proportionDisproveAttempts) {
+            // Destroy element with id 'my-graph' to prevent multiple graphs from being drawn
+            document.getElementById('my-graph').remove();
+            // Create a new canvas element to draw the graph
+            let newCanvas = document.createElement('canvas');
+            newCanvas.id = 'my-graph';
+            document.querySelector('.chart-container').appendChild(newCanvas);
+
+
             // Add graph to page
-            // Add sample data to draw line graph - later replace with API call
-            // Add current user data as a point to graph
             const ctx = document.getElementById('my-graph');
 
 new Chart(ctx, {
