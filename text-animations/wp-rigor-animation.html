@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Rigor</title>
+
+<!-- readex pro font from cdn -->
+<!-- <link rel="stylesheet" href="https://use.typekit.net/rdp3zqo.css"> -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@160..700&display=swap" rel="stylesheet">
+
+</head>
+<style>
+body, html {
+    /* height: 100%; */
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* font-family: Arial, sans-serif; */
+    font-family: Readex Pro, sans-serif;
+    color: #1D1F25;
+
+    overflow: hidden;
+}
+
+.text-animation-container {
+    text-align: center;
+}
+
+#dynamicText {
+    position: relative;
+    transition: opacity 1s ease-in-out, left 1s ease-in-out;
+    opacity: 0;
+    left: 0;
+}
+
+h1 {
+    /* font-size: 2.5em; */
+    /* margin-bottom: 0.5em; */
+    font-size:50px;
+}
+p {
+    font-size: 24px;
+}
+
+html {
+    display: block;
+    width: 100%;
+    height: 250px;
+    border: none;
+    overflow: hidden;
+}
+/* if on mobile, make height 350 */
+@media (max-width: 600px) {
+    html {
+        height: 350px;
+    }
+}
+
+
+</style>
+
+<body>
+
+    <div class="text-animation-container">
+        <h1>What is scientific rigor?</h1>
+        <p id="dynamicText">getting unstuck with the help of colleagues…</p>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const phrases = [
+        "getting unstuck with the help of colleagues…",
+        "correctly randomizing your treatment and control groups…",
+        "setting exclusion criteria for unforeseen experimental issues…",
+        "distinguishing between causation and correlation…",
+        "using proper controls to diagnose experimental problems…",
+        "writing readable and correct scientific code…",
+        "validating code with testing…",
+        "not being led astray by confirmation bias…",
+        "distinguishing between experimental artifacts and true results…",
+        "formulating well-specified research questions…",
+        "efficiently finding background literature…",
+        "combining evidence together from multiple studies…",
+        "critically evaluating the evidence in published results…",
+        "calculating an appropriate sample size to achieve power…",
+        "checking the assumptions of a regression analysis…",
+        "employing good practices in data mining…",
+        "correctly interpreting those dreaded p-values…",
+        "identifying red flags in published research…",
+        "communicating results with good data visualization…",
+        "sharing data to advance discovery…",
+        "distinguishing between exploratory and confirmatory research…",
+        "recording important methodological details in lab notebooks…",
+        "reporting study findings accurately…",
+        "being on the lookout for outcome switching…",
+        "dusting off your file-drawer manuscripts for publication…",
+        "critically evaluating statistical claims…"
+    ];
+    let currentPhraseIndex = 0;
+    const textElement = document.getElementById('dynamicText');
+
+    // Initially set the first phrase with no animation
+    textElement.textContent = phrases[0];
+    textElement.style.opacity = 1;
+    // textElement.style.opacity = 1;
+
+    setInterval(() => {
+    // Fade out and slide to the left
+    textElement.style.opacity = 0;
+    textElement.style.left = '-100px';
+
+    // Change text after fade out and slide in from the right
+    setTimeout(() => {
+        currentPhraseIndex = (currentPhraseIndex + 1) % phrases.length;
+        textElement.textContent = phrases[currentPhraseIndex];
+        textElement.style.left = '100px';
+
+        // Fade in with new text and slide to the center
+        setTimeout(() => {
+            textElement.style.opacity = 1;
+            textElement.style.left = '0';
+        }, 1000); // Match this timeout with the CSS transition time
+    }, 1000);
+},4000); // Change text every 5 seconds
+
+
+        });
+    </script>
+</body>
+</html>
