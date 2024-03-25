@@ -341,6 +341,7 @@
                 justify-content: space-between;
                 align-items: center;
                 text-align: center;
+                font-size: 13px;
             }
 
             .enter-id-btn {
@@ -391,9 +392,14 @@
 
 .initial-frame {
 display: flex;
-
-
 }
+
+
+
+#start-page-raven {
+    display: none;
+}
+
 
         </style>
     </head>
@@ -424,14 +430,14 @@ display: flex;
                         />
                     </div>
 
-                    <div class="raven">
+                    <!-- <div class="raven">
                         <img
                             src="raven-white-bg-04 (2).svg"
                             alt=""
                             width="400"
                             height="400"
                         />
-                    </div>
+                    </div> -->
                 </div>
                 
                 <div class="initial-frame">
@@ -442,9 +448,10 @@ display: flex;
                         </div>
     
                         <p>
-                            Click the button below to generate a link/code your lab
-                            mates can use to participate in the lesson by offering
-                            their own answers.
+                            Click "Share Link" to copy a link to the answer screen.
+                        </p>
+                        <p>
+                            You can also scan the QR code below to access the answer screen
                         </p>
     
                         <div class="button-footer">
@@ -458,7 +465,7 @@ display: flex;
                                     <span class="tooltiptext" id="myTooltip"
                                         >Copy to clipboard</span
                                     >
-                                    Copy link
+                                    Share Link
                                 </button>
                             </div>
     
@@ -471,7 +478,7 @@ display: flex;
                                             <!-- QR code here -->
                                             <div id="qrcode"></div>
     
-                                            <div class="raven">
+                                            <div class="raven" id="start-page-raven">
                                                 <img
                                                     src="raven-white-bg-09.svg"
                                                     alt=""
@@ -539,6 +546,8 @@ display: flex;
                     <div class="header" id="manual-entry-text">
                         <h3>We couldnt detect a cookie storing your most recently entered lab group</h2>
                         <h3>Please enter your lab ID in the field below</h2>
+                        
+                        <h3>If you dont have a lab group or ID, just leave the field blank and we'll make you a new one</h2>
                     </div>
 
                     <!-- <div class="button-footer">
@@ -598,12 +607,12 @@ display: flex;
             // Add event listener
             generateLinkBtn.addEventListener("click", () => {
                 const cookieValue = checkCookie();
+                console.log('cookieValue: ', cookieValue);
                 const labUrlParam = checkUrlParam();
                 if (labUrlParam){
                     showLink(labUrlParam);
                 }
                 else if (cookieValue) {
-                    // alert("Cookie exists");
                     // alert(cookieValue);
                     // Generate link
 
@@ -618,6 +627,7 @@ display: flex;
                     console.log('cookie does not exist');
                     // Handle manual entry of lab ID
                     showManualEntry();
+                    // 
                 }
             });
 
@@ -651,7 +661,7 @@ display: flex;
                         let labExists = json.table1.some(
                             (entry) => entry.labId == labID
                         );
-                        if (labExists) {
+                        if (labExists || true) {
                             console.log("Lab exists!");
                             // Display link and start button
 
@@ -687,6 +697,12 @@ display: flex;
 
                             // Set the QR code to link to the activity
                             qrcode.makeCode(sessionLink);
+
+                            // Display the raven on the start page 
+                            const startPageRaven = document.querySelector("#start-page-raven");
+                            startPageRaven.style.display = "flex";
+
+
 
                             // Display the lab content pane
                             const labContent =
@@ -747,6 +763,12 @@ display: flex;
                 // run showLink() function with entered lab ID
             }
 
+            function createNewSession() {
+                // Create a new lab session and begin the lab
+
+            }
+
+
             function onLinkClick() {
                 console.log("link clicked");
                 // let enteredSessionId = parseInt(
@@ -795,6 +817,12 @@ display: flex;
                 labContent.style.display = "flex";
                 labContent.style.justifyContent = "space-between";
                 labContent.style.height = "100%";
+
+                // Hide the start page screen initial-frame
+                const initialFrame = document.querySelector(".initial-frame");
+                initialFrame.style.display = "none";
+
+
 
                 // Fetch the question from the URL parameter 'question'
                 const urlParams = new URLSearchParams(window.location.search);
@@ -977,6 +1005,11 @@ display: flex;
                 // Show lab content pane
                 const labContent = document.querySelector(".lab-content");
                 labContent.style.display = "flex";
+
+                // Restart countdown timer
+                startCountdown();
+
+
             }
 
             function manualEnterId() {
@@ -984,6 +1017,17 @@ display: flex;
                 let enteredLabId = document.getElementById("session-id-input")
                     .value;
                 console.log("enteredLabId: ", enteredLabId);
+
+                if (enteredLabId == "") {
+                    // If no lab ID is entered, create a new lab session
+                    // createNewSession();
+
+                    // Generate a random lab ID
+                    enteredLabId = Math.floor(Math.random() * 100000);
+                    console.log("new lab ID: ", enteredLabId);
+                } 
+
+
                 labId = enteredLabId;
 
                 // Start lab with entered lab ID and manual entry parameter true
