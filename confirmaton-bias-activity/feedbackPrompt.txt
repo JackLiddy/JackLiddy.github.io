@@ -7,7 +7,7 @@ The hidden rule is: "Any sequence of increasing numbers", but the participant is
 
 Their method of figuring out the hidden rule is by guessing a sequence of 3 numbers and receiving feedback on whether it conforms to the hidden rule or not. Upon each guess, they might revise their current guess of what the hidden rule is. 
 
-For each guess I have collected the following data: The participants current guess of what the rule is, the participant's sequence of 3 numbers that they are currently testing, our calculation of whether their numbers sequence matches the hidden rule (true/false), and their percent of confidence that their proposed rule is currently correct. 
+For each guess I have collected the following data: The participants current guess of what the rule is, the participant's sequence of 3 numbers that they are currently testing, our calculation of whether their numbers sequence matches the hidden rule (true/false).
 
 Please analyze the data provided and determine at each step whether the participant appears to be using their number sequence guess to disprove their current hypothesis, or confirm their hypothesis. If they appear to be disposing their hypothesis, assign the value 'true' to disproveAttempt. I request that your response be structured to reflect this evaluation for each guess, considering the progression in their guesses, the feedback received, and changes in their confidence levels.
 

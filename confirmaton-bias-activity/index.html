@@ -54,6 +54,23 @@
             width: 550px;
         }
 
+
+        .input-pane-final-guess {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+            margin-bottom: 20px;
+            box-shadow: 4px 4px 3px 0px #6d39a8;
+            width: 550px;
+            display: none;
+        }
+
         #dataForm {
             display: flex;
             flex-direction: column;
@@ -670,29 +687,19 @@
 
             <div class="instructions-text-container">
                 <div class="instructions-text">
-                    <h1>Our biased brains!</h1>
-                    <p>Your mission: discover my number series rule.</p>
+                    <h1>Deduce my number rule!</h1>
+                    <p>I have a SECRET rule that matches SOME sequence of three numbers.</p>
+                    <p>e.g. Each number is a multiple of 3.</p>
+
+                    <h1>Instructions!</h1>
                     <p>
-                        Your aim is to discover my rule by writing down sets of
-                        three numbers, together with reasons for your choice of
-                        them.
+                        1. Test sequences of three integers against my rule.I will tell you if your sequence matches.
                     </p>
                     <p>
-                        After you have written down each set, I shall tell you
-                        whether your numbers conform to the rule or not.
+                        2. Here is a clue: the sequence {2, 4, 6} DOES match the rule.
                     </p>
                     <p>
-                        There is no time limit but you should try to discover
-                        this rule by citing the minimum sets of numbers.
-                    </p>
-                    <p>
-                        Remember that your aim is not simply to find numbers
-                        which conform to the rule, but to discover the rule
-                        itself.
-                    </p>
-                    <p>
-                        When you feel highly confident that you have discovered
-                        it, and not before, you can submit your final answer.
+                        3. When you are confident that you know the rule, submit your final guess!
                     </p>
                     <button class="close-modal-button" onclick="closeInstructionsModal()">
                         Close
@@ -722,8 +729,8 @@
         </div>
 
         <!-- standard input pane to be used -->
-        <div class="input-pane">
-            <div class="loader" id="loader"></div>
+        <div class="input-pane" id="input-pane">
+            <!-- <div class="loader" id="loader"></div> -->
 
             <!-- <button id="help-btn" onclick="openInstructionsModal()">
                 Help
@@ -731,7 +738,7 @@
             <!-- <h1>Activity 1.1 Confirmation Bias</h1> -->
 
             <div class="input-form-header">
-                <h3>Let's start guessing</h3>
+                <h3>Test a sequence of three integers</h3>
                 <button id="help-btn" onclick="openInstructionsModal()">
                     Help
                 </button>
@@ -739,10 +746,11 @@
 
             <form id="dataForm">
                 <!-- <h3>Let's start guessing</h3> -->
-                <p>
+                
+                <!-- <p>
                     Enter a series of three numbers to see if that series
                     meets my rule
-                </p>
+                </p> -->
                 <div id="seriesEntryForm">
                     <input type="number" id="number1" maxlength="4" pattern="\d*" inputmode="numeric" max="9999"
                         required />
@@ -756,34 +764,115 @@
 
                 <!-- <label for="rule">Rule:</label> -->
 
-                <h3>What rule are you guessing?</h3>
+                <h3>What is the hypothesis for your sequence?</h3>
 
-                <p>Type the rule you are testing with your above guess</p>
+                <!-- <p>Type the rule you are testing with your above guess</p> -->
 
                 <div id="rule-input-area">
                     <input type="text" id="rule" name="rule" required />
                 </div>
                 <br /><br />
 
-                <h3>
+                <!-- <h3>
                     How confident are you that you have guessed the rule?
-                </h3>
+                </h3> -->
 
-                <p>
+                <!-- <p>
                     Drag Rigorous Raven to show your confidence in your
                     guess
-                </p>
+                </p> -->
 
-                <label for="myRange" id="confidence-label">Confidence: 50%</label>
+                <!-- <label for="myRange" id="confidence-label">Confidence: 50%</label> -->
 
                 <div class="confidence-and-submit-container">
-                    <input type="range" min="0" max="100" value="50" class="slider" id="myRange"
-                        oninput="updateSliderLabel()" />
+                    <!-- <input type="range" min="0" max="100" value="50" class="slider" id="myRange" -->
+                        <!-- oninput="updateSliderLabel()" /> -->
 
-                    <input type="submit" value="Submit Your Guess" name="submitGuessBtn" id="submitGuessBtn" />
+                    <input type="submit" value="Guess the Rule!" name="submitGuessBtn" id="guessRuleBtn" />
+
+
+                    <input type="submit" value="Test the Sequence!" name="submitGuessBtn" id="submitGuessBtn" />
+
+                    <!-- <input type="submit" value="Submit Your Guess" name="submitGuessBtn" id="submitGuessBtn" /> -->
+                    
                 </div>
 
+
+
                 <input type="submit" value="Submit Final Guess" name="finalGuessBtn" id="finalGuessBtn" />
+            </form>
+        </div>
+
+
+        <div class="input-pane-final-guess" id="input-pane-final-guess">
+            <div class="loader" id="loader"></div>
+
+            <!-- <button id="help-btn" onclick="openInstructionsModal()">
+                Help
+            </button> -->
+            <!-- <h1>Activity 1.1 Confirmation Bias</h1> -->
+
+            <div class="input-form-header">
+                <h3>What is your guess for my rule?</h3>
+                <button id="help-btn" onclick="openInstructionsModal()">
+                    Help
+                </button>
+            </div>
+
+            <form id="dataForm-final-guess">
+                <!-- <h3>Let's start guessing</h3> -->
+                
+                <!-- <p>
+                    Enter a series of three numbers to see if that series
+                    meets my rule
+                </p> -->
+                <!-- <div id="seriesEntryForm">
+                    <input type="number" id="number1" maxlength="4" pattern="\d*" inputmode="numeric" max="9999"
+                        required />
+                    <span>,</span>
+                    <input type="number" id="number2" maxlength="4" pattern="\d*" inputmode="numeric" max="9999"
+                        required />
+                    <span>,</span>
+                    <input type="number" id="number3" maxlength="4" pattern="\d*" inputmode="numeric" max="9999"
+                        required />
+                </div> -->
+
+                <!-- <label for="rule">Rule:</label> -->
+
+                <h3>What is your guess for my rule?</h3>
+
+                <!-- <p>Type the rule you are testing with your above guess</p> -->
+
+                <div id="rule-input-area">
+                    <input type="text" id="rule" name="rule" required />
+                </div>
+                <br /><br />
+
+                <!-- <h3>
+                    How confident are you that you have guessed the rule?
+                </h3> -->
+
+                <!-- <p>
+                    Drag Rigorous Raven to show your confidence in your
+                    guess
+                </p> -->
+
+                <!-- <label for="myRange" id="confidence-label">Confidence: 50%</label> -->
+
+                <div class="confidence-and-submit-container">
+                    <!-- <input type="range" min="0" max="100" value="50" class="slider" id="myRange" -->
+                        <!-- oninput="updateSliderLabel()" /> -->
+
+
+                    <input type="submit" value="Submit Final Guess!" name="submit-rule-btn" id="submit-rule-btn" />
+                    <input type="submit" value="Actually, I want to test more sequences!" name="test-more-sequences-btn" id="test-more-sequences-btn" />
+
+                    <!-- <input type="submit" value="Test the Sequence!" name="submitGuessBtn" id="submitGuessBtn" /> -->
+
+                    <!-- <input type="submit" value="Submit Your Guess" name="submitGuessBtn" id="submitGuessBtn" /> -->
+                </div>
+
+                <!-- <input type="submit" value="Submit Final Guess" name="finalGuessBtn" id="finalGuessBtn" /> -->
             </form>
         </div>
 
@@ -791,11 +880,11 @@
             <!-- Table to Display Entries -->
             <table id="dataTable">
                 <tr id="tableBody">
-                    <th>Entry #</th>
-                    <th>Instance</th>
-                    <th>Rule</th>
-                    <th>Matches Rule</th>
-                    <th>Confidence</th>
+                    <th>#</th>
+                    <th>Sequence</th>
+                    <th>Hypothesis</th>
+                    <th>Matches the Rule?</th>
+                    <!-- <th>Confidence</th> -->
                 </tr>
             </table>
             <div class="final-guess-panel">
@@ -804,7 +893,10 @@
                     When you think you know my rule, submit your final guess and find out!
                 </p>
                 <button id="finalGuessBtn" onclick="submitFinalGuess()">
-                    Submit Your Final Guess
+                    Guess the Rule!
+                </button>
+                <button id="finalGuessBtn" onclick="submitFinalGuess()">
+                    Test the Sequence!
                 </button>
             </div>
         </div>
@@ -837,13 +929,11 @@
             </button> -->
             <div class="summary-header-text">
                 <h3>
-                    Which of your guesses were attempts to CONFIRM your
-                    belief in what you thought the rule was?
-                </h3>
-                <h3>
+                    Here are my guesses as to which of your sequences were attempts to CONFIRM your hypothesis and which ones were attempts to FALSIFY your hypothesis.             </h3>
+                <!-- <h3>
                     Which of your guesses were attempts to FALSIFY your
                     belief in what you thought the rule was?
-                </h3>
+                </h3> -->
             </div>
             <div class="summary-body">
                 <div class="summary-body-left">
@@ -1179,6 +1269,33 @@
         enforceMaxLength("number2");
         enforceMaxLength("number3");
 
+
+        // Get the guessRuleBtn
+        let guessRuleBtn = document.getElementById("guessRuleBtn");
+        guessRuleBtn.addEventListener("click", function () {
+            // Prevent default button behavior
+            event.preventDefault();
+            console.log("guessRuleBtn clicked");
+
+            // Hide the input pane and reveal the final guess pane
+            document.getElementById("input-pane").style.display = "none";
+            document.getElementById("input-pane-final-guess").style.display = "flex";
+        });
+
+        // Handle the test-more-sequences-btn
+        let testMoreSequencesBtn = document.getElementById("test-more-sequences-btn");
+        testMoreSequencesBtn.addEventListener("click", function () {
+            // Prevent default button behavior
+            event.preventDefault();
+            console.log("testMoreSequencesBtn clicked");
+            // Hide the final guess pane and reveal the input pane
+            document.getElementById("input-pane-final-guess").style.display = "none";
+            document.getElementById("input-pane").style.display = "flex";
+        });
+
+
+
+
         // Handle guess Submission and Update Table
         document
             .getElementById("dataForm")
@@ -1190,7 +1307,7 @@
                 let handler = submitter.id;
 
                 let clickedButtonId = event.submitter.id;
-                if (clickedButtonId === "finalGuessBtn") {
+                if (clickedButtonId === "submit-rule-btn") {
                     // submitFinalGuess();
                     console.log("finalGuessBtn pressed");
                     submitFinalGuess();
@@ -1199,7 +1316,31 @@
                     // submitGuess();
                     console.log("submitGuessBtn pressed"); // triggered on enter key
                     submitGuess();
-                    updateSliderLabel();
+                    // updateSliderLabel();
+                    // return;
+                } else {
+                    console.log("Error: unknown button clicked");
+                }
+
+                return;
+            }
+            );
+
+            // Handle final submission phase
+                document
+            .getElementById("dataForm-final-guess")
+            .addEventListener("submit", function (event) {
+                // Rest of event handler ...
+                event.preventDefault();
+
+                let submitter = event.submitter;
+                let handler = submitter.id;
+
+                let clickedButtonId = event.submitter.id;
+                if (clickedButtonId === "submit-rule-btn") {
+                    // submitFinalGuess();
+                    console.log("finalGuessBtn pressed");
+                    submitFinalGuess();
                     // return;
                 } else {
                     console.log("Error: unknown button clicked");
@@ -1217,21 +1358,22 @@
             let cell2 = newRow.insertCell(1);
             let cell3 = newRow.insertCell(2);
             let cell4 = newRow.insertCell(3);
-            let cell5 = newRow.insertCell(4);
+            // let cell5 = newRow.insertCell(4);
 
             entryCount++;
 
             // Display entry in table
-            cell1.innerHTML = entryCount;
+            // cell1.innerHTML = entryCount;
+            cell1.innerHTML = "--";
             cell2.innerHTML =
                 initialSeries[0] +
                 ", " +
                 initialSeries[1] +
                 ", " +
                 initialSeries[2];
-            cell3.innerHTML = "First Guess";
-            cell4.innerHTML = "true";
-            cell5.innerHTML = "";
+            cell3.innerHTML = "(Initially provided match)";
+            cell4.innerHTML = "TRUE✅";
+            // cell5.innerHTML = "";
         }
         addInitialEntryToChart();
 
@@ -1241,7 +1383,7 @@
             let number2 = document.getElementById("number2").value;
             let number3 = document.getElementById("number3").value;
             let rule = document.getElementById("rule").value;
-            let confidence = document.getElementById("myRange").value;
+            // let confidence = document.getElementById("myRange").value;
 
             // Get correct rule from admin panel
             let correctRule = document.getElementById("correctRule").value;
@@ -1258,11 +1400,11 @@
 
             // Add entry to userEntries array
             userEntries.push({
-                entryNumber: entryCount,
+                entryNumber: (entryCount - 1),
                 sequence: number1 + ", " + number2 + ", " + number3,
                 rule: rule,
                 matchesRule: isCorrect,
-                confidence: confidence,
+                // confidence: confidence,
             });
 
             console.log(userEntries);
@@ -1274,16 +1416,20 @@
             let cell2 = newRow.insertCell(1);
             let cell3 = newRow.insertCell(2);
             let cell4 = newRow.insertCell(3);
-            let cell5 = newRow.insertCell(4);
+            // let cell5 = newRow.insertCell(4);
 
             entryCount++;
 
+
+            let isCorrectText = isCorrect ? "TRUE✅" : "FALSE❌";
+
+
             // Display entry in table
-            cell1.innerHTML = entryCount;
+            cell1.innerHTML = entryCount - 1;
             cell2.innerHTML = number1 + ", " + number2 + ", " + number3;
             cell3.innerHTML = rule;
-            cell4.innerHTML = isCorrect;
-            cell5.innerHTML = confidence + "%";
+            cell4.innerHTML = isCorrectText;
+            // cell5.innerHTML = confidence + "%";
 
             // console.log('numbers(pre type conversation): ' + number1 + ', ' + number2 + ', ' + number3);
 
@@ -1291,10 +1437,10 @@
             document.getElementById("dataForm").reset();
 
             // If the user has submitted 3 entries, display the final guess button
-            if (entryCount === 3) {
-                document.getElementById("finalGuessBtn").style.display =
-                    "block";
-            }
+            // if (entryCount === 3) {
+            //     document.getElementById("finalGuessBtn").style.display =
+            //         "block";
+            // }
         }
 
         function addSingleRowToChart(inputString, color) {
@@ -1325,7 +1471,7 @@
 
         // Function to submitFinalGuess
         async function submitFinalGuess() {
-            submitGuess();
+            // submitGuess();
             loadResultsPage();
             return; // Exit execution until use for rendering comparison
         }
@@ -1362,15 +1508,19 @@
 
             var cell = row.insertCell(0);
             cell.classList.add("results-table-cell");
-            cell.innerHTML = "<b>Series</b>";
+            cell.innerHTML = "<b>Sequence</b>";
             cell = row.insertCell(1);
-            cell.innerHTML = "<b>Matches Rule</b>";
+            cell.innerHTML = "<b>Hypothesis</b>";
             cell = row.insertCell(2);
-            cell.innerHTML = "<b>Rule Guess</b>";
+            cell.innerHTML = "<b>Matches the Rule?</b>";
+            // cell = row.insertCell(3);
+            // cell.innerHTML = "<b>Confidence</b>";
             cell = row.insertCell(3);
-            cell.innerHTML = "<b>Confidence</b>";
-            cell = row.insertCell(4);
-            cell.innerHTML = "<b>Attempt to falsify</b>";
+            cell.innerHTML = "<b> CONFIRM or FALSIFY</b>";
+
+
+            console.log("userGuesses: ", userGuesses);
+            
 
             // Create table body
             var body = table.createTBody();
@@ -1381,13 +1531,15 @@
                 var cell = row.insertCell(0);
                 cell.innerHTML = userGuesses[i].sequence;
                 cell = row.insertCell(1);
-                cell.innerHTML = userGuesses[i].matchesRule;
-                cell = row.insertCell(2);
                 cell.innerHTML = userGuesses[i].rule;
+                cell = row.insertCell(2);
+                cell.innerHTML = userGuesses[i].matchesRule;
+                // cell = row.insertCell(3);
+                // cell.innerHTML = userGuesses[i].confidence + "%";
                 cell = row.insertCell(3);
-                cell.innerHTML = userGuesses[i].confidence + "%";
-                cell = row.insertCell(4);
+                cell.innerHTML = '<p>CONFIRM</p>';
                 // cell.innerHTML = userGuesses[i].triedToFalsify;
+                // cell.innerHTML = userGuesses[i].matchesRule; ''
             }
 
             // Show loader
@@ -1518,7 +1670,8 @@
 
 
             let resultsSummary = document.getElementById("results-summary");
-            resultsSummary.innerHTML = `<h3>You tried to falsify your hypothesis ${percentDisproveAttempts}% of the time.</h3>`;
+            resultsSummary.innerHTML = `<h3>You tried to falsify your hypothesis ${percentDisproveAttempts}% of the time.</h3> 
+            <h3>You did / did not successfully identify my rule.</h3>`;
 
             renderComparisonGraph(numGuesses, proportionDisproveAttempts);
 
@@ -1561,23 +1714,28 @@
                 : "confirm";
             console.log("contents of disproveFeedback: ", disproveFeedback);
 
-            let confirmMsg = `<p>What I mean by that is that the number series you used in your guess was a number series that fit the rule that you hypothesized to be my rule.</p>
-                                    <p>Therefore, your guess was not an attempt to falsify your hypothesis.</p>`;
-            let falsifyMsg = `<p>What I mean by that is that the number series you used in your guess was a number series that did not fit the rule that you hypothesized to be my rule.</p>
-                                <p>Therefore, your guess was an attempt to falsify your hypothesis.</p>`;
-            // ternary operator
+            // let confirmMsg = `<p>What I mean by that is that the number series you used in your guess was a number series that fit the rule that you hypothesized to be my rule.</p>
+            //                         <p>Therefore, your guess was not an attempt to falsify your hypothesis.</p>`;
+            // let falsifyMsg = `<p>What I mean by that is that the number series you used in your guess was a number series that did not fit the rule that you hypothesized to be my rule.</p>
+            //                     <p>Therefore, your guess was an attempt to falsify your hypothesis.</p>`;
+
+            let confirmMsg = `<p>In other words, the number sequence you used was one <b>that fit your hypothesis.</b></p>`;
+            let falsifyMsg = `<p>In other words, the number sequence you used was one <b>that did not fit your hypothesis.</b></p>`;
+
+
             let feedbackEnding = disproveFeedback[guessNumber]
                 ? falsifyMsg
                 : confirmMsg;
 
             let feedbackText = `<p>For your ${guessNumberText} guess, your hypothesis was <b>${guessRule}</b>.</p>
-                <p>The number series you used for your first guess was <b>${guessSequence}</b>.</p>
-                <p>Our AI model predicts that your guess was an attempt to <b>${confirmMessage}</b> your hypothesis.</p>
+                <p>Your number series was <b>${guessSequence}</b>.</p>
+                <p>This sequence was an attempt to <b>${confirmMessage}</b> your hypothesis.</p>
                 ${feedbackEnding}`;
+                
 
             if (disproveFeedback.length === 0) {
                 feedbackText = `<p>For your ${guessNumberText} guess, your hypothesis was <b>${guessRule}</b>.</p>
-                    <p>The number series you used for your first guess was <b>${guessSequence}</b>.</p>
+                    <p>Your number series was<b>${guessSequence}</b>.</p>
                     <p>There was an error processing your AI-powered feedback.</p>
                     <p>Unfortunately, I don't have any further feedback for you at this time.</p>`;
             }
@@ -1678,8 +1836,9 @@
                         for (let i = 0; i < disproveAttempts.length; i++) {
 
                             let isFalsifyAttempt = disproveAttempts[i].disproveAttempt ? 'Yes' : 'No';
+                            console.log('isFalsifyAttempt: ', isFalsifyAttempt);
 
-                            let cell = table.rows[i + 1].cells[4];
+                            let cell = table.rows[i + 1].cells[3];
                             cell.innerHTML =
                                 isFalsifyAttempt;
                         }
